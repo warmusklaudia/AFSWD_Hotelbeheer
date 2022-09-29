@@ -1,0 +1,26 @@
+{
+  "name": "afswd_eindopdracht",
+  "version": "1.0.0",
+  "description": "This is our final project for the course Advanced Frontend Web Development",
+  "workspaces":[
+    "api",
+    "pwa"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warmusklaudia/AFSWD_Eindopdracht.git"
+  },
+  "keywords": [],
+  "author": "CD & KW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/warmusklaudia/AFSWD_Eindopdracht/issues"
+  },
+  "homepage": "https://github.com/warmusklaudia/AFSWD_Eindopdracht#readme",
+  "volta": {
+    "node": "16.14.0"
+  }
+}
