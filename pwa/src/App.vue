@@ -1,7 +1,10 @@
 <template>
   <div>
-    <p class="font-title">Hello!</p>
+    <RouterView class="min-h-screen" />
   </div>
 </template>
 
-<style lang="ts"></style>
+<style setup lang="ts">
+import useFirebase from "@/composables/useFirebase";
+
+</style>
