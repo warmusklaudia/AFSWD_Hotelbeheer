@@ -8,7 +8,7 @@ import {
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('../components/holders/Appholder.vue'),
+    component: () => import('../components/holders/AppHolder.vue'),
     children: [
       {
         path: '',
