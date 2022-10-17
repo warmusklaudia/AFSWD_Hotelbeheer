@@ -1,5 +1,5 @@
 <template>
-    <header class="px-6 mb-6 py-6 md:py-0 md:bg-themeOffWhite drop-shadow-md">
+    <header class="px-6 py-6 md:py-0 md:bg-themeOffWhite drop-shadow-md">
         <nav class="mx-auto flex max-w-6xl items-center justify-between">
             <router-link class="rounded-md outline-none focus-visible:right-2" to="/">
                 <Building />
