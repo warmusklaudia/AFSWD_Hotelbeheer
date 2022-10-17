@@ -1,5 +1,5 @@
 <template>
-    <div class="px-6">
+    <div class="px-6 ">
         <main class="mx-auto max-w-6xl">
             <div class="flex justify-between items-center">
                 <h1 class="font-title text-5xl font-bold text-themeGreen">{{ title }}</h1>

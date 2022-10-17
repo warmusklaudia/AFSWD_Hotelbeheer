@@ -1,6 +1,6 @@
 <template>
     <ul
-        class="grid w-full font-title font-bold grid-cols-5 items-center text-center text-xs sm:w-auto sm:space-x-3 sm:text-left sm:text-sm">
+        class="grid w-full font-title font-bold grid-cols-5 items-center text-center text-xs sm:w-auto sm:space-x-3 sm:text-left sm:text-sm ">
         <li>
             <router-link class="inline-block rounded-sm px-3 py-6 outline-none focus-visible:ring-2" to="/"
                 exact-active-class="opacity-60">
