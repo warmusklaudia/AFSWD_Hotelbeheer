@@ -11,6 +11,7 @@
   "dependencies": {
     "@unocss/reset": "^0.45.29",
     "firebase": "^9.12.1",
+    "lucide-vue-next": "^0.91.0",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "vue": "^3.2.37",

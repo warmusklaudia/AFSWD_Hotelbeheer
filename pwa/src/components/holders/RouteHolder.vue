@@ -2,7 +2,7 @@
     <div class="px-6">
         <main class="mx-auto max-w-6xl">
             <div class="flex justify-between items-center">
-                <h1 class="font-title text-5xl font-bold text-theme">{{ title }}</h1>
+                <h1 class="font-title text-5xl font-bold text-themeGreen">{{ title }}</h1>
             </div>
             <slot></slot>
         </main>

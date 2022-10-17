@@ -9,10 +9,23 @@ export default defineConfig({
   plugins: [
     vue(),
     Unocss({
+      theme: {
+        colors: {
+          themeGreen: '#25321E',
+          themeBrown: '#AD8945',
+          themeOffWhite: '#FEFAF7',
+          themeWhite: '#FAFAFA',
+        },
+      },
       rules: [
         ['font-title', { 'font-family': 'Playfair Display, serif' }],
         ['font-text', { 'font-family': 'Lato, sans-serif' }],
-        ['text-theme', { color: '#25321E' }],
+        [
+          /^text-(.*)$/,
+          ([, c], { theme }) => {
+            if (theme.colors[c]) return { color: theme.colors[c] }
+          },
+        ],
       ],
     }),
     VitePluginFonts({
