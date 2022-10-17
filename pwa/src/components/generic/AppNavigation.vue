@@ -37,17 +37,17 @@
             </router-link>
         </li>
 
-        <li class="hidden pl-6 sm:block">
-            <router-link v-if="user" class="pl-6" to="/profile">
+        <li class="hidden pl-6 sm:block ">
+            <router-link v-if="user" class="rounded-sm px-3 py-6 outline-none focus-visible:ring-2" to="/profile">
                 {{ user.displayName }}
             </router-link>
-            <router-link v-else class="pl-6" to="/auth/login">Login</router-link>
+            <router-link v-else class="rounded-sm py-6 outline-none focus-visible:ring-2" to="/auth/login">Login</router-link>
         </li>
-        <li class="hidden pl-6 sm:block">
+        <li class="hidden sm:block">
             <ul class="flex">
-                <li class="px-3">$10.00</li>
-                <li class="px-3">
-                    <select name="" id="">
+                <li v-if="user" class="px-3">$10.00</li>
+                <li class="px-3 ">
+                    <select name="" id="" class="bg-transparent	rounded-sm py-6 outline-none focus-visible:ring-2 cursor-pointer	">
                         <option value="">ENG</option>
                         <option value="">NL</option>
                         <option value="">FR</option>
