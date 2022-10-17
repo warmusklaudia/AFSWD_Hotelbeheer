@@ -1,6 +1,6 @@
 <template>
     <ul
-        class="grid w-full font-title font-bold grid-cols-4 items-center text-center text-xs sm:w-auto sm:space-x-3 sm:text-left sm:text-sm">
+        class="grid w-full font-title font-bold grid-cols-5 items-center text-center text-xs sm:w-auto sm:space-x-3 sm:text-left sm:text-sm">
         <li>
             <router-link class="inline-block rounded-sm px-3 py-6 outline-none focus-visible:ring-2" to="/"
                 exact-active-class="opacity-60">
@@ -11,14 +11,14 @@
         <li>
             <router-link class="inline-block rounded-sm px-3 py-6 outline-none focus-visible:ring-2" to="/rooms"
                 active-class="opacity-60">
-                <Feather class="mx-auto mb-2 h-5 sm:hidden" />
+                <Bed class="mx-auto mb-2 h-5 sm:hidden" />
                 <p>Rooms</p>
             </router-link>
         </li>
         <li>
             <router-link class="inline-block rounded-sm px-3 py-6 outline-none focus-visible:ring-2" to="/services"
                 active-class="opacity-60">
-                <Clipboard class="mx-auto mb-2 h-5 sm:hidden" />
+                <Bath class="mx-auto mb-2 h-5 sm:hidden" />
                 <p>Services</p>
             </router-link>
         </li>
@@ -43,7 +43,7 @@
             </router-link>
             <router-link v-else class="pl-6" to="/auth/login">Login</router-link>
         </li>
-        <li>
+        <li class="hidden pl-6 sm:block">
             <ul class="flex">
                 <li class="px-3">$10.00</li>
                 <li class="px-3">
@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import useAuthentication from '../../composables/useAuthentication'
-import { Home, Feather, Clipboard, Scroll } from 'lucide-vue-next'
+import { Home, Bed, Clipboard, Scroll, Bath } from 'lucide-vue-next'
 
 const { user } = useAuthentication()
 
