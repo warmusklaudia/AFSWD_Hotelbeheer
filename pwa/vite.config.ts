@@ -11,8 +11,10 @@ export default defineConfig({
     Unocss({
       theme: {
         colors: {
-          'themeGreen': '#25321E',
-          'themeBrown': '#AD8945',
+          themeGreen: '#25321E',
+          themeBrown: '#AD8945',
+          themeOffWhite: '#FEFAF7',
+          themeWhite: '#FAFAFA',
         },
       },
       rules: [
