@@ -12,7 +12,6 @@ const { user } = useAuthentication()
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    //@ts-ignore
     component: () => import('../components/holders/AppHolder.vue'),
     children: [
       {
