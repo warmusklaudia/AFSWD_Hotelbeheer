@@ -18,7 +18,7 @@
         <li>
             <router-link class="inline-block rounded-sm px-3 py-6 outline-none focus-visible:ring-2" to="/services"
                 active-class="opacity-60">
-                <Bath class="mx-auto mb-2 h-5 sm:hidden" />
+                <ConciergeBell class="mx-auto mb-2 h-5 sm:hidden" />
                 <p>Services</p>
             </router-link>
         </li>
@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import useAuthentication from '../../composables/useAuthentication'
-import { Home, Bed, Clipboard, Scroll, Bath } from 'lucide-vue-next'
+import { Home, Bed, Clipboard, Scroll, ConciergeBell } from 'lucide-vue-next'
 
 const { user } = useAuthentication()
 
