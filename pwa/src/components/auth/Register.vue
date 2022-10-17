@@ -93,7 +93,7 @@ const submitForm = () => {
 
     register(userInput.name, userInput.email, userInput.password)
         .then((u) => {
-            replace('auth/login')
+            replace('/auth/login')
         })
         .catch((error) => (errorMessage.value = error.message))
         .finally(() => {
