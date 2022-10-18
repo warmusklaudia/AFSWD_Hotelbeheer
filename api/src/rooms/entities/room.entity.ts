@@ -6,8 +6,8 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ObjectId } from 'mongodb';
 import { Reservation } from "src/reservations/entities/reservation.entity";
+import { ObjectId } from "mongodb";
 
 @Entity()
 @ObjectType({ description: 'room' })
