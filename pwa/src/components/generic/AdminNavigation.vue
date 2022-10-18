@@ -1,21 +1,25 @@
 <template>
-  <nav v-if="showNav"
-    class="bg-themeOffWhite flex w-44 min-h-screen md:w-52 flex-col justify-between p-4 shadow-lg"
+  <nav
+    v-if="showNav"
+    class="bg-themeOffWhite flex min-h-screen w-44 flex-col justify-between p-4 shadow-lg md:w-52"
   >
     <section>
-        <div class="flex justify-end -mr-8">
-            <div @click="showNav = false"  class="bg-themeGreen rounded-full w-10 h-10 text-white flex justify-center items-center cursor-pointer shadow-md">
-                <ChevronsLeft/>
-            </div>
+      <div class="-mr-8 flex justify-end">
+        <div
+          @click="showNav = false"
+          class="bg-themeGreen flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md"
+        >
+          <ChevronsLeft />
         </div>
+      </div>
 
-      <div class="font-title my-6 flex flex-col items-center">
+      <div class="font-title mb-6 mt-2 flex flex-col items-center">
         <div
           class="bg-themeGreen w-18 h-18 flex items-center justify-center rounded-full"
         >
           <p class="text-xl text-white">KW</p>
         </div>
-        <p class="text-themeGreen pt-2 lg:text-lg font-bold tracking-wider">
+        <p class="text-themeGreen pt-2 font-bold tracking-wider lg:text-lg">
           Klaudia Warmus
         </p>
       </div>
@@ -87,7 +91,7 @@
     </section>
 
     <ul
-      class="text-themeGreen border-themeBrown font-title space-y-2 border-t border-opacity-25  text-sm lg:text-base"
+      class="text-themeGreen border-themeBrown font-title space-y-2 border-t border-opacity-25 text-sm lg:text-base"
     >
       <li>
         <button
@@ -99,13 +103,18 @@
       </li>
     </ul>
   </nav>
-  
-  <div v-else class="bg-themeOffWhite flex min-h-screen w-11 flex-col justify-between p-4 shadow-lg">
-    <div @click="showNav = true" class="flex justify-end -mr-8">
-            <div class="bg-themeGreen rounded-full w-10 h-10 text-white flex justify-center items-center cursor-pointer shadow-md">
-                <ChevronsRight/>
-            </div>
-        </div>
+
+  <div
+    v-else
+    class="bg-themeOffWhite flex min-h-screen w-11 flex-col justify-between p-4 shadow-lg"
+  >
+    <div @click="showNav = true" class="-mr-8 flex justify-end">
+      <div
+        class="bg-themeGreen flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md"
+      >
+        <ChevronsRight />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -120,9 +129,9 @@ import {
   Luggage,
   LogOut,
   ChevronsLeft,
-  ChevronsRight
+  ChevronsRight,
 } from 'lucide-vue-next'
-import { ref, Ref } from 'vue';
+import { ref, Ref } from 'vue'
 export default {
   components: {
     Home,
@@ -134,14 +143,14 @@ export default {
     Luggage,
     LogOut,
     ChevronsLeft,
-    ChevronsRight
+    ChevronsRight,
   },
 
   setup() {
     let showNav: Ref<boolean> = ref(true)
 
     return {
-        showNav,
+      showNav,
     }
   },
 }
