@@ -67,6 +67,16 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/admin',
+    redirect: '/admin/home',
+    children: [
+      {
+        path: 'home',
+        component: () => import('../screens/admin/Home.vue')
+      }
+    ]
+  },
 ]
 
 const router: Router = createRouter({
