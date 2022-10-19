@@ -19,7 +19,7 @@
         >
           <p class="text-xl text-white">KW</p>
         </div>
-        <p class="text-themeGreen pt-2 font-bold tracking-wider lg:text-lg">
+        <p class="text-sm md:text-base text-themeGreen pt-2 font-bold tracking-wider lg:text-lg">
           Klaudia Warmus
         </p>
       </div>
