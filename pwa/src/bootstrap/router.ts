@@ -74,6 +74,14 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'home',
         component: () => import('../screens/admin/Home.vue')
+      },
+      {
+        path: 'rooms',
+        component: () => import('../screens/admin/Rooms.vue')
+      },
+      {
+        path:'cleaning',
+        component: () => import('../screens/admin/Cleaning.vue')
       }
     ]
   },

@@ -19,14 +19,14 @@
         >
           <p class="text-xl text-white">KW</p>
         </div>
-        <p class="text-sm md:text-base text-themeGreen pt-2 font-bold tracking-wider lg:text-lg">
+        <p class="text-sm text-center md:text-base text-themeGreen pt-2 font-bold tracking-wider lg:text-lg">
           Klaudia Warmus
         </p>
       </div>
       <ul class="text-themeGreen font-title text-sm lg:text-base">
         <li>
           <router-link
-            to=""
+            to="/admin/home"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <Home />
@@ -35,7 +35,7 @@
         </li>
         <li>
           <router-link
-            to="#"
+            to="/admin/rooms"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <BedDouble />
@@ -44,7 +44,7 @@
         </li>
         <li>
           <router-link
-            to="#"
+            to="/admin/cleaning"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <ShowerHead />
