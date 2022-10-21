@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectId } from 'mongodb';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
 import { Room } from './entities/room.entity';
@@ -20,7 +20,6 @@ export class RoomsService {
     r.description = createRoomInput.description;
     r.category = createRoomInput.category;
     r.rating = createRoomInput.rating;
-    r.roomsAvailable = createRoomInput.roomsAvailable;
     r.reservationId = createRoomInput.reservationId;
 
     return this.roomsRepository.save(r);
@@ -30,8 +29,8 @@ export class RoomsService {
     return this.roomsRepository.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} reservation`;
+  findOne(id: string): Promise<Room> {
+    return this.roomsRepository.findOneBy({ id });
   }
 
   update(updateRoomInput: UpdateRoomInput) {
@@ -42,13 +41,12 @@ export class RoomsService {
     update.description = updateRoomInput.description;
     update.category = updateRoomInput.category;
     update.rating = updateRoomInput.rating;
-    update.roomsAvailable = updateRoomInput.roomsAvailable;
     update.reservationId = updateRoomInput.reservationId;
 
     return this.roomsRepository.save(update);
   }
 
-  remove(id: string) {
+  remove(id: string): Promise<DeleteResult> {
     return this.roomsRepository.delete(id);
   }
 }
