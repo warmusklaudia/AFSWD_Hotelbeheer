@@ -18,7 +18,7 @@ export class User {
 
   @Field()
   @Column()
-  prefferedLanguage?: string;
+  preferredLanguage?: string;
 
   @Field()
   @Column()

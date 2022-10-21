@@ -40,19 +40,7 @@ export class Room {
 
   @Field()
   @Column()
-  roomsAvailable: number;
-
-  @Field()
-  @Column()
-  cleaned?: boolean;
-
-  @Field()
-  @Column()
-  occupied: boolean;
-
-  @Field()
-  @Column()
-  roomAccesCode: string;
+  AccesCode: string;
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

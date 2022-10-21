@@ -16,7 +16,4 @@ export class CreateRoomInput {
 
   @Field() // GraphQL
   category: string;
-
-  @Field() // GraphQL
-  roomsAvailable: number;
 }

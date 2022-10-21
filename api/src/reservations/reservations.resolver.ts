@@ -1,35 +1,78 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { ReservationsService } from './reservations.service';
 import { Reservation } from './entities/reservation.entity';
 import { CreateReservationInput } from './dto/create-reservation.input';
 import { UpdateReservationInput } from './dto/update-reservation.input';
+import {
+  ClientMessage,
+  MessageTypes,
+} from 'src/bootstrap/entities/ClientMessage';
+import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 
 @Resolver(() => Reservation)
 export class ReservationsResolver {
-  constructor(private readonly reservationsService: ReservationsService) {}
+  constructor(
+    private readonly reservationsService: ReservationsService,
+    private readonly usersService: UsersService,
+  ) {}
+
+  @ResolveField()
+  user(@Parent() r: Reservation): Promise<User> {
+    return this.usersService.findOne(r.userId);
+  }
 
   @Mutation(() => Reservation)
-  createReservation(@Args('createReservationInput') createReservationInput: CreateReservationInput) {
+  createReservation(
+    @Args('createReservationInput')
+    createReservationInput: CreateReservationInput,
+  ): Promise<Reservation> {
     return this.reservationsService.create(createReservationInput);
   }
 
   @Query(() => [Reservation], { name: 'reservations' })
-  findAll() {
+  findAll(): Promise<Reservation[]> {
     return this.reservationsService.findAll();
   }
 
   @Query(() => Reservation, { name: 'reservation' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<Reservation> {
     return this.reservationsService.findOne(id);
   }
 
   @Mutation(() => Reservation)
-  updateReservation(@Args('updateReservationInput') updateReservationInput: UpdateReservationInput) {
-    return this.reservationsService.update(updateReservationInput.id, updateReservationInput);
+  updateReservation(
+    @Args('updateReservationInput')
+    updateReservationInput: UpdateReservationInput,
+  ) {
+    return this.reservationsService.update(updateReservationInput);
   }
 
   @Mutation(() => Reservation)
-  removeReservation(@Args('id', { type: () => Int }) id: number) {
-    return this.reservationsService.remove(id);
+  async removeReservation(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<ClientMessage> {
+    const deleted = await this.reservationsService.remove(id);
+    if (deleted.affected <= 1)
+      return {
+        type: MessageTypes.success,
+        message: 'Reservation deleted',
+        statusCode: 200,
+      };
+
+    return {
+      type: MessageTypes.error,
+      message: 'Delete action went wrong.',
+      statusCode: 400,
+    };
   }
 }
