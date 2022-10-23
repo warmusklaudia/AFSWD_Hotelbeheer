@@ -36,7 +36,7 @@
 
             <button
                 class=":disabled='loading' mt-6 flex w-full items-center justify-center rounded-md bg-themeBrown py-2 px-3 text-white outline-none ring-neutral-300 hover:bg-neutral-700 focus-visible:ring">
-                <span v-if="!loading"> Create account </span>
+                <span v-if="!loading"> Login </span>
                 <div v-else>
                     <Loader2 class="animate-spin" />
                 </div>
