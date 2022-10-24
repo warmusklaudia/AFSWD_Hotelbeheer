@@ -10,6 +10,10 @@ export class User {
 
   @Field()
   @Column()
+  uid: string;
+
+  @Field({defaultValue: 0})
+  @Column()
   amountCredits: number;
 
   @Field({ defaultValue: 0 })

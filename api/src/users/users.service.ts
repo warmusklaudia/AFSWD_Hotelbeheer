@@ -16,10 +16,9 @@ export class UsersService {
   create(createUserInput: CreateUserInput): Promise<User> {
     const u = new User();
 
-    u.amountCredits = createUserInput.amountCredits;
-    u.reservations = createUserInput.reservations;
+    u.uid = createUserInput.uid;
     u.preferredLanguage = createUserInput.preferredLanguage;
-    u.breakfastCode = createUserInput.breakfastCode;
+   
 
     return this.userRepository.save(u);
   }
@@ -36,11 +35,8 @@ export class UsersService {
     const update = new User();
 
     update.id = new ObjectId(updateUserInput.id);
-    update.amountCredits = updateUserInput.amountCredits;
-    update.reservations = updateUserInput.reservations;
     update.preferredLanguage = updateUserInput.preferredLanguage;
-    update.breakfastCode = updateUserInput.breakfastCode;
-
+    
     return this.userRepository.save(update);
   }
 
