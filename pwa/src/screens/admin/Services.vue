@@ -4,11 +4,11 @@
       <admin-navigation />
       <div class="w-5/6 p-6">
         <admin-header name="Services" />
-        <div class="flex w-full p-6">
-          <div class="">
+        <div class="flex w-full flex-col p-6 md:flex-row">
+          <div>
             <div
               @click="showDetails, (details = !details)"
-              class="flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md"
+              class="flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md md:w-72 lg:w-96"
             >
               <div class="flex gap-4">
                 <div
@@ -29,9 +29,9 @@
               </div>
             </div>
           </div>
-          <div v-if="details" class="pl-6">
+          <div v-if="details" class="pt-3 md:pt-0 md:pl-6">
             <div
-              class="absolute flex h-96 w-96 flex-col justify-between rounded-md bg-white p-6"
+              class="absolute flex h-80 w-80 flex-col justify-between rounded-md bg-white p-6 lg:h-96 lg:w-96"
             >
               <div>
                 <div class="flex items-center gap-4 pb-6">
@@ -55,7 +55,9 @@
                 MARK AS RESOLVED
               </button>
             </div>
-            <div class="bg-themeBrown m-2 h-96 w-96 rounded-md shadow-md"></div>
+            <div
+              class="bg-themeBrown m-2 h-80 w-80 rounded-md shadow-md lg:h-96 lg:w-96"
+            ></div>
           </div>
           <div v-else class="pl-6">
             <div class="flex h-full w-full items-center justify-center">

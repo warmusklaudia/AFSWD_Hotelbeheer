@@ -87,6 +87,18 @@ const routes: RouteRecordRaw[] = [
         path: 'services',
         component: () => import('../screens/admin/Services.vue'),
       },
+      {
+        path: 'breakfast-access',
+        component: () => import('../screens/admin/BreakfastAccess.vue'),
+      },
+      {
+        path: 'pricing',
+        component: () => import('../screens/admin/Pricing.vue'),
+      },
+      {
+        path: 'guests',
+        component: () => import('../screens/admin/Guests.vue'),
+      },
     ],
   },
 ]
