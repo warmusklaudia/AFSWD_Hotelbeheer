@@ -73,17 +73,21 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'home',
-        component: () => import('../screens/admin/Home.vue')
+        component: () => import('../screens/admin/Home.vue'),
       },
       {
         path: 'rooms',
-        component: () => import('../screens/admin/Rooms.vue')
+        component: () => import('../screens/admin/Rooms.vue'),
       },
       {
-        path:'cleaning',
-        component: () => import('../screens/admin/Cleaning.vue')
-      }
-    ]
+        path: 'cleaning',
+        component: () => import('../screens/admin/Cleaning.vue'),
+      },
+      {
+        path: 'services',
+        component: () => import('../screens/admin/Services.vue'),
+      },
+    ],
   },
 ]
 
