@@ -45,15 +45,63 @@
             ADD ROOM
           </button>
         </div>
-        <div></div>
+        <div class="flex flex-col">
+          <div
+            class="grid animate-pulse gap-12 sm:grid-cols-1 md:mx-6 md:grid-cols-2 lg:grid-cols-3"
+            v-if="loading"
+          >
+            <div v-for="i of skeletons" :key="i">
+              <div
+                class="@dark:bg-neutral-700 aspect-square rounded-md bg-neutral-300"
+              ></div>
+              <p
+                class="@dark:bg-neutral-600 my-1 h-6 w-full rounded bg-neutral-200"
+              ></p>
+            </div>
+          </div>
+          <div class="flex items-center" v-else-if="error">
+            <p class="ml-6 text-xl md:mr-2">Error happened</p>
+            <Frown />
+          </div>
+        </div>
       </div>
     </section>
   </main>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
-import { Search, Plus } from 'lucide-vue-next'
+import { Search, Plus, Frown } from 'lucide-vue-next'
+import { ref } from 'vue'
+import gql from 'graphql-tag'
+import { useQuery } from '@vue/apollo-composable'
+
+export default {
+  components: {
+    RouteHolder,
+    AdminNavigation,
+    AdminHeader,
+    Search,
+    Plus,
+    Frown,
+  },
+  setup() {
+    const { result, loading, error } = useQuery(gql`
+      query rooms {
+        rooms {
+          id
+        }
+      }
+    `)
+    const skeletons = ref<number>(6)
+    return {
+      result,
+      loading,
+      error,
+      skeletons,
+    }
+  },
+}
 </script>
