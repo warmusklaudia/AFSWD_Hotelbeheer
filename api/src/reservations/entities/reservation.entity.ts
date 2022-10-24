@@ -4,10 +4,12 @@ import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
+  Entity,
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+@Entity()
 @ObjectType({ description: 'reservation' })
 export class Reservation {
   @Field(() => ID, { description: 'id of the reservation' })

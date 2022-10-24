@@ -1,7 +1,14 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
-import { Column, ObjectIdColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ObjectIdColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
+@Entity()
 @ObjectType({ description: 'user' })
 export class User {
   @Field(() => ID, { description: 'id of the user' })
@@ -12,7 +19,7 @@ export class User {
   @Column()
   uid: string;
 
-  @Field({defaultValue: 0})
+  @Field({ defaultValue: 0 })
   @Column()
   amountCredits: number;
 
@@ -20,11 +27,19 @@ export class User {
   @Column()
   reservations: number;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   preferredLanguage?: string;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   breakfastCode?: string;
+
+  @Field({ nullable: true })
+  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  createdAt?: Date;
+
+  @Field({ nullable: true })
+  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  updatedAt?: Date;
 }
