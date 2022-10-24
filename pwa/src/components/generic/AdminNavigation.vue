@@ -19,7 +19,9 @@
         >
           <p class="text-xl text-white">KW</p>
         </div>
-        <p class="text-sm text-center md:text-base text-themeGreen pt-2 font-bold tracking-wider lg:text-lg">
+        <p
+          class="text-themeGreen pt-2 text-center text-sm font-bold tracking-wider md:text-base lg:text-lg"
+        >
           Klaudia Warmus
         </p>
       </div>
@@ -27,6 +29,7 @@
         <li>
           <router-link
             to="/admin/home"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <Home />
@@ -36,6 +39,7 @@
         <li>
           <router-link
             to="/admin/rooms"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <BedDouble />
@@ -45,6 +49,7 @@
         <li>
           <router-link
             to="/admin/cleaning"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <ShowerHead />
@@ -53,7 +58,8 @@
         </li>
         <li>
           <router-link
-            to="#"
+            to="/admin/services"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <UserCog />
@@ -62,7 +68,8 @@
         </li>
         <li>
           <router-link
-            to="#"
+            to="/admin/breakfast-access"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <Utensils />
@@ -71,7 +78,8 @@
         </li>
         <li>
           <router-link
-            to="#"
+            to="/admin/pricing"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <Coins />
@@ -80,7 +88,8 @@
         </li>
         <li>
           <router-link
-            to="#"
+            to="/admin/guests"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
           >
             <Luggage />
