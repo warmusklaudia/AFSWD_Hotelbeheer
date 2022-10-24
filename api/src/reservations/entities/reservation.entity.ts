@@ -1,16 +1,24 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
-import { Column, CreateDateColumn, ObjectIdColumn, UpdateDateColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  ObjectIdColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @ObjectType({ description: 'reservation' })
 export class Reservation {
   @Field(() => ID, { description: 'id of the reservation' })
   @ObjectIdColumn()
   id: ObjectId;
-  
-  @Field()
+
   @Column()
   userId: string;
+
+  @Field(() => User)
+  user: User;
 
   @Field({ defaultValue: 0 })
   @Column()

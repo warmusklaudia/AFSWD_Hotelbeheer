@@ -4,7 +4,19 @@
   </div>
 </template>
 
-<style setup lang="ts">
-import useFirebase from "@/composables/useFirebase";
+<script setup lang="ts">
+import useCustomUser from "./composables/useCustomUser"
+import useAuthentication from './composables/useAuthentication'
+import useGraphql from './composables/useGraphql'
+import { provide } from "@vue/runtime-core";
+import { DefaultApolloClient } from "@vue/apollo-composable";
 
-</style>
+const { user } = useAuthentication()
+const { apolloClient } = useGraphql()
+const { loadCustomUser } = useCustomUser()
+
+provide(DefaultApolloClient, apolloClient)
+
+if (user.value) loadCustomUser(user.value.uid)
+
+</script>
