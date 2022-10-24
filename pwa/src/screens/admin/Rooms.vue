@@ -45,7 +45,7 @@
             ADD ROOM
           </button>
         </div>
-        <div class="flex flex-col">
+        <div>
           <div
             class="grid animate-pulse gap-12 sm:grid-cols-1 md:mx-6 md:grid-cols-2 lg:grid-cols-3"
             v-if="loading"
