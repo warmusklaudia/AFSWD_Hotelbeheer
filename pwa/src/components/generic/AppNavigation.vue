@@ -44,7 +44,7 @@
             <router-link v-else class="rounded-sm py-6 outline-none focus-visible:ring-2" to="/auth/login">Login</router-link>
         </li>
         <li class="hidden sm:block">
-            <ul class="flex">
+            <ul class="flex items-center">
                 <li v-if="user" class="px-3">$10.00</li>
                 <li class="px-3 ">
                     <select name="" id="" class="bg-transparent	rounded-sm py-6 outline-none focus-visible:ring-2 cursor-pointer	">

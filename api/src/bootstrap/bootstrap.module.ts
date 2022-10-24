@@ -1,9 +1,16 @@
 import { DataSource } from 'typeorm';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      sortSchema: true,
+      autoSchemaFile: true,
+    }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'mongodb',
