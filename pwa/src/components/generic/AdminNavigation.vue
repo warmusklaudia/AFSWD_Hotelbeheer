@@ -104,6 +104,7 @@
     >
       <li>
         <button
+          @click="handleLogOut"
           class="hover:bg-themeBrown my-6 flex w-full items-center rounded p-2 hover:bg-opacity-20"
         >
           <LogOut />
@@ -141,6 +142,8 @@ import {
   ChevronsRight,
 } from 'lucide-vue-next'
 import { ref, Ref } from 'vue'
+import { useRouter } from 'vue-router'
+import useAuthentication from '../../composables/useAuthentication'
 export default {
   components: {
     Home,
@@ -156,10 +159,18 @@ export default {
   },
 
   setup() {
+    const { logout } = useAuthentication()
     let showNav: Ref<boolean> = ref(true)
+    const { replace } = useRouter()
+    const handleLogOut = () => {
+      logout().then(() => {
+        return replace('/')
+      })
+    }
 
     return {
       showNav,
+      handleLogOut,
     }
   },
 }
