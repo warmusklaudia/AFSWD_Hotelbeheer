@@ -8,7 +8,7 @@
           <div>
             <div
               @click="showDetails, (details = !details)"
-              class="flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md md:w-72 lg:w-96"
+              class="flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:w-72 lg:w-96"
             >
               <div class="flex gap-4">
                 <div
@@ -50,7 +50,7 @@
                 <p class="italic text-neutral-500">No message</p>
               </div>
               <button
-                class="border-themeBrown bg-themeOffWhite text-themeBrown rounded-md border px-6 py-2 text-sm"
+                class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
               >
                 MARK AS RESOLVED
               </button>

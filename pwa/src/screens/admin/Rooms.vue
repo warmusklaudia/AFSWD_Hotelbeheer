@@ -13,11 +13,11 @@
               type="text"
               name="rooms"
               id="rooms"
-              className="w-full border rounded-md border-themeBrown pl-10 py-2 block"
+              className="w-full border rounded-md border-themeBrown pl-10  py-2 block focus:outline-none focus:ring focus:ring-themeBrown"
               placeholder="Search"
             />
           </label>
-          <div class="pt-2 md:ml-3 md:flex md:items-center md:pt-0">
+          <div class="pt-2 md:ml-3 md:flex md:items-center md:pt-0 lg:w-2/5">
             <label
               for="roomsAvailable"
               class="flex cursor-pointer items-center"
@@ -39,7 +39,7 @@
             </label>
           </div>
           <button
-            class="border-themeBrown bg-themeOffWhite text-themeBrown flex items-center rounded-md border px-6 py-2 text-sm"
+            class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Plus class="mr-2" size="20" />
             ADD ROOM

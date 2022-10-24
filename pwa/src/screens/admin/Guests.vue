@@ -13,7 +13,7 @@
               type="text"
               name="rooms"
               id="rooms"
-              className="w-full border rounded-md border-themeBrown pl-10 py-2 block"
+              className="w-full border rounded-md border-themeBrown pl-10 py-2 block focus:outline-none focus:ring focus:ring-themeBrown"
               placeholder="Search"
             />
           </label>
