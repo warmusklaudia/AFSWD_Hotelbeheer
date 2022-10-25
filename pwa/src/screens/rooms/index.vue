@@ -1,6 +1,6 @@
 <template>
     <RouteHolder title="Rooms">
-        <div class="grid animate-pulse gap-12 sm:grid-cols-2 md:grid-cols-3 mt-6" v-if="loading">
+        <div class="grid animate-pulse gap-12 sm:grid-cols-2 md:grid-cols-3" v-if="loading">
             <div v-for="i of skeletons" :key="i">
                 <div class="@dark:bg-neutral-700 aspect-square rounded-md bg-neutral-300"></div>
                 <p class="@dark:bg-neutral-600 my-1 h-6 w-24 rounded bg-neutral-200"></p>
@@ -10,12 +10,14 @@
         <div v-else-if="error">
             <p>Error happened.</p>
         </div>
-        <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3 mt-6" v-else-if="result">
+        <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
             <RouterLink :to="`reservations/${r.id}`" v-for="r of result.rooms" :key="r.id">
                 <img v-if="r.category == 'luxe'" class="w-full mb-6 object-cover aspect-video" :src="luxe"
                     :alt="`picture of a ${r.category}-suite`" />
-                <img v-if="r.category == 'standaard'" class="w-full mb-6 object-cover aspect-video" :src="standard"
+                <img v-else-if="r.category == 'standard'" class="w-full mb-6 object-cover aspect-video" :src="standard"
                     :alt="`picture of a ${r.category}-suite`" />
+                <img v-else class="w-full mb-6 object-cover aspect-video" :src="standard"
+                    :alt="`picture of a standard-suite`" />
                 <ul class="flex gap-1">
                     <li v-for="n in r.rating">
                         <Star class="fill-themeBrown stroke-themeBrown" />

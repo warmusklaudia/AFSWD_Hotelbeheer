@@ -17,7 +17,7 @@
   },
   {
     "name": "Melkor Suite",
-    "category": "standaard",
+    "category": "standard",
     "description": "De Melkor suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar.",
     "rating": 3,
     "price": 125,
@@ -41,7 +41,7 @@
   },
   {
     "name": "Nienna Suite",
-    "category": "standaard",
+    "category": "standard",
     "description": "De Nienna suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar.",
     "rating": 4,
     "price": 125,
@@ -49,7 +49,7 @@
   },
   {
     "name": "Oromë Suite",
-    "category": "standaard",
+    "category": "standard",
     "description": "De Oromë suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar",
     "rating": 4,
     "price": 125,
@@ -57,7 +57,7 @@
   },
   {
     "name": "Vána  Suite",
-    "category": "standaard",
+    "category": "standard",
     "description": "De Vána suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar",
     "rating": 4,
     "price": 125,
