@@ -18,7 +18,10 @@ export class DatabaseSeedService {
     for (let jsonr of jsonRoomsSeed) {
       const r = new Room();
       r.name = jsonr.name;
+      r.category = jsonr.category;
       r.description = jsonr.description;
+      r.rating = jsonr.rating;
+      r.AccessCode = jsonr.accessCode;
 
       theRooms.push(r);
     }

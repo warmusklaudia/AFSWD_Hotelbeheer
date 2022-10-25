@@ -6,8 +6,8 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Reservation } from "src/reservations/entities/reservation.entity";
-import { ObjectId } from "mongodb";
+import { Reservation } from 'src/reservations/entities/reservation.entity';
+import { ObjectId } from 'mongodb';
 
 @Entity()
 @ObjectType({ description: 'room' })
@@ -24,10 +24,10 @@ export class Room {
   @Column()
   description: string;
 
-  @Field(() => Reservation)
+  @Field(() => Reservation, { nullable: true })
   reservation: Reservation;
 
-  @Column()
+  @Column({ nullable: true })
   reservationId: string;
 
   @Field()
@@ -40,7 +40,11 @@ export class Room {
 
   @Field()
   @Column()
-  AccesCode: string;
+  Location: string;
+
+  @Field()
+  @Column()
+  AccessCode: string;
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

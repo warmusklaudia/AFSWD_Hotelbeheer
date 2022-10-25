@@ -1,16 +1,19 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateUserInput {
   @Field()
-  amountCredits: number;
+  uid: string;
 
-  @Field()
-  reservations: number;
+  // @Field()
+  // preferredLanguage?: string;
 
-  @Field()
-  preferredLanguage: string;
+  // @Field()
+  // amountCredits?: number;
 
-  @Field()
-  breakfastCode: string;
+  // @Field()
+  // reservations?: number;
+
+  // @Field()
+  // breakfastCode?: string;
 }
