@@ -12,10 +12,10 @@
         </div>
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3 mt-6" v-else-if="result">
             <RouterLink :to="`reservations/${r.id}`" v-for="r of result.rooms" :key="r.id">
-                <img class="w-full mb-6 object-cover aspect-video" :src="luxe"
+                <img v-if="r.category == 'luxe'" class="w-full mb-6 object-cover aspect-video" :src="luxe"
                     :alt="`picture of a ${r.category}-suite`" />
-                <!-- <img class="w-full mb-6 object-cover aspect-video" :src="standard"
-                    :alt="`picture of a ${r.category}-suite`" /> -->
+                <img v-if="r.category == 'standaard'" class="w-full mb-6 object-cover aspect-video" :src="standard"
+                    :alt="`picture of a ${r.category}-suite`" />
                 <ul class="flex gap-1">
                     <li v-for="n in r.rating">
                         <Star class="fill-themeBrown stroke-themeBrown" />
@@ -47,6 +47,5 @@ import standard from '../../assets/standard-suite.webp'
 const { result, loading, error } = useQuery(GET_ROOMS)
 const skeletons: Ref<number> = ref(18)
 
-console.log(result)
 
 </script>
