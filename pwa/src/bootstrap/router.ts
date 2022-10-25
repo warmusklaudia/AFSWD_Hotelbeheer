@@ -77,7 +77,15 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'rooms',
-        component: () => import('../screens/admin/Rooms.vue'),
+        component: () => import('../screens/admin/rooms/Rooms.vue'),
+      },
+      {
+        path: 'rooms/:id',
+        component: () => import('../screens/admin/rooms/_id.vue'),
+      },
+      {
+        path: 'rooms/add',
+        component: () => import('../screens/admin/rooms/Add.vue'),
       },
       {
         path: 'cleaning',
