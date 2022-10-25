@@ -7,6 +7,7 @@ export const GET_ROOMS = gql`
       name
       description
       rating
+      category
     }
   }
 `

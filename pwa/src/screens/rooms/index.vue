@@ -12,12 +12,16 @@
         </div>
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3 mt-6" v-else-if="result">
             <RouterLink :to="`reservations/${r.id}`" v-for="r of result.rooms" :key="r.id">
+                <img class="w-full mb-6 object-cover aspect-video" :src="luxe"
+                    :alt="`picture of a ${r.category}-suite`" />
+                <!-- <img class="w-full mb-6 object-cover aspect-video" :src="standard"
+                    :alt="`picture of a ${r.category}-suite`" /> -->
                 <ul class="flex gap-1">
                     <li v-for="n in r.rating">
                         <Star class="fill-themeBrown stroke-themeBrown" />
                     </li>
                     <li v-if="r.rating < 5" v-for="n in 5 - r.rating">
-                        <Star class="fill-themeBrown stroke-themeBrown" />
+                        <Star />
                     </li>
                 </ul>
                 <h2 class="font-theme text-2xl font-title font-bold">{{ r.name }}</h2>
@@ -36,6 +40,9 @@ import { Star } from "lucide-vue-next";
 
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import { GET_ROOMS } from "../../graphql/query.room";
+
+import luxe from '../../assets/luxe-suite.webp'
+import standard from '../../assets/standard-suite.webp'
 
 const { result, loading, error } = useQuery(GET_ROOMS)
 const skeletons: Ref<number> = ref(18)
