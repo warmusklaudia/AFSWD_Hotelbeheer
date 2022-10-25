@@ -35,6 +35,30 @@ const routes: RouteRecordRaw[] = [
         meta: { needsAuthentication: true },
       },
       {
+        path: 'reservations/add',
+        redirect: '/reservations/add/1',
+        component: () => import('../screens/reservations/Add.vue'),
+        meta: { needsAuthentication: true },
+        children: [
+          {
+            path: '1',
+            component: () => import('../screens/reservations/steps/StepOne.vue'),
+          },
+          {
+            path: '2',
+            component: () => import('../screens/reservations/steps/StepTwo.vue'),
+          },
+          {
+            path: '3',
+            component: () => import('../screens/reservations/steps/StepThree.vue'),
+          },
+          {
+            path: '4',
+            component: () => import('../screens/reservations/steps/StepFour.vue'),
+          },
+        ],
+      },
+      {
         path: 'profile',
         component: () => import('../screens/Profile.vue'),
         meta: { needsAuthentication: true },
