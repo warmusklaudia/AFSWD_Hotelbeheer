@@ -30,7 +30,7 @@
           <router-link
             to="/admin/home"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
-            class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Home />
             <p class="ml-3">Home</p>
@@ -40,7 +40,7 @@
           <router-link
             to="/admin/rooms"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
-            class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <BedDouble />
             <p class="ml-3">Rooms</p>
@@ -50,7 +50,7 @@
           <router-link
             to="/admin/cleaning"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
-            class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <ShowerHead />
             <p class="ml-3">Cleaning</p>
@@ -60,7 +60,7 @@
           <router-link
             to="/admin/services"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
-            class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <UserCog />
             <p class="ml-3">Services</p>
@@ -70,7 +70,7 @@
           <router-link
             to="/admin/breakfast-access"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
-            class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Utensils />
             <p class="ml-3">Breakfast access</p>
@@ -80,7 +80,7 @@
           <router-link
             to="/admin/pricing"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
-            class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Coins />
             <p class="ml-3">Pricing</p>
@@ -90,7 +90,7 @@
           <router-link
             to="/admin/guests"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
-            class="hover:bg-themeBrown flex items-center rounded p-2 hover:bg-opacity-20"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Luggage />
             <p class="ml-3">Guests</p>
@@ -105,7 +105,7 @@
       <li>
         <button
           @click="handleLogOut"
-          class="hover:bg-themeBrown my-6 flex w-full items-center rounded p-2 hover:bg-opacity-20"
+          class="hover:bg-themeBrown focus:ring-themeBrown my-6 flex w-full items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
         >
           <LogOut />
           <p class="ml-3">Log out</p>

@@ -3,7 +3,7 @@
     <section class="flex h-full w-full">
       <admin-navigation />
       <div class="w-5/6 p-6">
-        <admin-header name="Cleaning" />
+        <admin-header name="Guests" />
         <div className="p-6 md:flex">
           <label for="rooms" class="relative block w-11/12 md:w-2/3 lg:w-1/3">
             <Search
@@ -35,7 +35,7 @@
                   class="absolute -left-1 -top-1 h-6 w-6 rounded-full bg-white shadow transition peer-checked:translate-x-full"
                 ></div>
               </div>
-              <div class="ml-3">Show cleaned</div>
+              <div class="ml-3">Show old guests</div>
             </label>
           </div>
         </div>
@@ -83,8 +83,8 @@ export default {
   },
   setup() {
     const { result, loading, error } = useQuery(gql`
-      query rooms {
-        rooms {
+      query guests {
+        guests {
           id
         }
       }
