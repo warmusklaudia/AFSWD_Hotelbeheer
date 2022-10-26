@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import * as jsonRoomsSeed from './data/rooms.json'; //tsconfig "resolveJsonModule": true,
+import * as jsonRoomsSeed from './data/roomsV2.json'; //tsconfig "resolveJsonModule": true,
 import { Room } from 'src/rooms/entities/room.entity';
 
 @Injectable()
@@ -18,10 +18,11 @@ export class DatabaseSeedService {
     for (let jsonr of jsonRoomsSeed) {
       const r = new Room();
       r.name = jsonr.name;
-      r.category = jsonr.category;
       r.description = jsonr.description;
       r.rating = jsonr.rating;
-      r.AccessCode = jsonr.accessCode;
+      r.category = jsonr.category;
+      r.location = jsonr.location;
+      r.accessCode = jsonr.accessCode;
 
       theRooms.push(r);
     }

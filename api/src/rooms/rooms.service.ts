@@ -21,6 +21,7 @@ export class RoomsService {
     r.category = createRoomInput.category;
     r.rating = createRoomInput.rating;
     r.reservationId = createRoomInput.reservationId;
+    r.location = createRoomInput.location;
 
     return this.roomsRepository.save(r);
   }
@@ -31,6 +32,16 @@ export class RoomsService {
 
   findOne(id: string): Promise<Room> {
     return this.roomsRepository.findOneBy({ id });
+  }
+
+  findByString(searchString: string): Promise<Room[]> {
+    return this.roomsRepository.find({
+      where: [
+        //TODO
+        //@ts-ignore
+        { name: { $regex: searchString, $options: 'i' } },
+      ],
+    });
   }
 
   update(updateRoomInput: UpdateRoomInput) {
