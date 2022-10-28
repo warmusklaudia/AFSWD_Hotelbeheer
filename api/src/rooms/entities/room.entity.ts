@@ -13,7 +13,7 @@ import { ObjectId } from 'mongodb';
 @ObjectType({ description: 'room' })
 export class Room {
   @Field(() => ID, { description: 'id of the room' })
-  @ObjectIdColumn({ name: '_id' })
+  @ObjectIdColumn()
   id: ObjectId;
 
   @Field() // GraphQL
