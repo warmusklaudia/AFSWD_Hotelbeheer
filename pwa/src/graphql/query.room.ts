@@ -25,6 +25,17 @@ export const ROOM_BY_ID = gql`
   }
 `
 
+export const GET_ROOM_By_ID = gql`
+  query GetRooms {
+    rooms {
+      id
+      name
+      description
+      rating
+      category
+    }
+  }
+`
 export const ROOM_BY_NAME_CAT = gql`
   query roomsByNameCat($searchRoomByName: String!, $searchRoomByCat: String!) {
     roomsByNameCat(
