@@ -40,11 +40,11 @@ export class Room {
 
   @Field()
   @Column()
-  Location: string;
+  location: string;
 
   @Field()
   @Column()
-  AccessCode: string;
+  accessCode: string;
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

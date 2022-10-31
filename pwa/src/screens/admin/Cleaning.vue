@@ -83,8 +83,8 @@ export default {
   },
   setup() {
     const { result, loading, error } = useQuery(gql`
-      query rooms {
-        rooms {
+      query x {
+        x {
           id
         }
       }

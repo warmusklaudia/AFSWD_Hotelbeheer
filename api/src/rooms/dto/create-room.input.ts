@@ -1,4 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
+import { Reservation } from 'src/reservations/entities/reservation.entity';
 
 @InputType()
 export class CreateRoomInput {
@@ -16,4 +17,7 @@ export class CreateRoomInput {
 
   @Field() // GraphQL
   category: string;
+
+  @Field() // GraphQL
+  location: string;
 }
