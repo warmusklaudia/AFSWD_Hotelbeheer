@@ -5,22 +5,20 @@
       @click="togglePopup()"
     ></div>
     <div
-      class="fixed top-1/2 left-1/2 z-30 h-96 w-2/5 -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white pt-6 text-lg shadow-lg"
+      class="fixed top-1/2 left-1/2 z-30 h-96 w-2/3 -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white pt-6 text-lg shadow-lg md:h-96 md:w-2/5"
     >
       <div class="flex h-full flex-col justify-between">
-        <div class="text-themeGreen mx-6 flex justify-between text-center">
-          <div></div>
-          <h2 class="font-title self-center text-2xl font-bold">
-            Room <span>{{ id }}</span>
-          </h2>
+        <div class="text-themeGreen mx-6 text-center">
           <button
             @click="togglePopup()"
-            class="border-themeGreen flex h-8 w-8 items-center justify-center self-end rounded-full border"
+            class="border-themeGreen float-right flex h-8 w-8 items-center justify-center self-end rounded-full border"
           >
             <X />
           </button>
+          <h2 class="font-title self-center text-2xl font-bold">
+            Room <span class="text-xl">{{ id }}</span>
+          </h2>
         </div>
-
         <ul class="ml-10 flex flex-col gap-2">
           <li>
             <label for="linens" class="flex gap-2">
@@ -109,6 +107,7 @@
         </ul>
         <div>
           <button
+            @click="togglePopup()"
             class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown m-auto mb-6 flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             MARK AS CLEANED
@@ -117,7 +116,7 @@
       </div>
     </div>
     <div
-      class="bg-themeBrown fixed top-1/2 left-1/2 z-20 m-2 h-96 w-2/5 -translate-x-1/2 -translate-y-1/2 transform rounded-lg pt-6 text-lg shadow-lg"
+      class="bg-themeBrown fixed top-1/2 left-1/2 z-20 m-2 h-96 w-2/3 -translate-x-1/2 -translate-y-1/2 transform rounded-lg pt-6 text-lg shadow-lg md:h-96 md:w-2/5"
     ></div>
   </div>
 </template>
