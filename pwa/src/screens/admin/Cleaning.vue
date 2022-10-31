@@ -4,7 +4,7 @@
       <admin-navigation />
       <div class="w-5/6 p-6">
         <admin-header name="Cleaning" />
-        <div className="p-6 md:flex">
+        <div class="p-6 md:flex">
           <label for="rooms" class="relative block w-11/12 md:w-2/3 lg:w-1/3">
             <Search
               class="pointer-events-none absolute top-1/2 ml-2 -translate-y-1/2 transform text-neutral-400"
@@ -63,7 +63,7 @@
           >
             <div v-for="r of result.rooms" :key="r.id">
               <button
-                class="rounded-md p-3 shadow-md"
+                class="rounded-md bg-white p-3 shadow-md"
                 @click=";[togglePopup(), checkId(r.id)]"
               >
                 <img

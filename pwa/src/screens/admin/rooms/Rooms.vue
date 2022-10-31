@@ -74,7 +74,7 @@
               v-for="r of result.rooms"
               :key="r.id"
             >
-              <div class="rounded-md p-3 shadow-md">
+              <div class="rounded-md bg-white p-3 shadow-md">
                 <img
                   v-if="r.category == 'luxe'"
                   class="mb-6 aspect-video w-full object-cover"
