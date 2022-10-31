@@ -57,6 +57,35 @@
             <p class="ml-6 text-xl md:mr-2">Error happened</p>
             <Frown />
           </div>
+          <div
+            class="grid gap-12 sm:grid-cols-1 md:mx-6 md:grid-cols-2 lg:grid-cols-3"
+            v-else-if="result"
+          >
+            <div v-for="r of result.rooms" :key="r.id">
+              <button class="rounded-md p-3 shadow-md" @click="togglePopup()">
+                <img
+                  v-if="r.category == 'luxe'"
+                  class="mb-6 aspect-video w-full object-cover"
+                  :src="luxe"
+                  :alt="`picture of a ${r.category}-suite`"
+                />
+                <img
+                  v-if="r.category == 'standaard'"
+                  class="mb-6 aspect-video w-full object-cover"
+                  :src="standard"
+                  :alt="`picture of a ${r.category}-suite`"
+                />
+                <div class="flex justify-between">
+                  <p>{{ r.name }}</p>
+                  <p class="first-letter:uppercase">{{ r.category }}</p>
+                </div>
+                <div class="bg-themeGreen h-1 w-full"></div>
+              </button>
+            </div>
+          </div>
+          <div v-if="showPopup">
+            <cleaning-pop-up />
+          </div>
         </div>
       </div>
     </section>
@@ -67,34 +96,47 @@
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
+import CleaningPopUp from '../../components/rooms/CleaningPopUp.vue'
 import { Search, Plus, Frown } from 'lucide-vue-next'
-import { ref } from 'vue'
-import gql from 'graphql-tag'
+import { ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
+import luxe from '../../assets/luxe-suite.webp'
+import standard from '../../assets/standard-suite.webp'
+import { GET_ROOMS } from '../../graphql/query.room'
 
 export default {
   components: {
     RouteHolder,
     AdminNavigation,
     AdminHeader,
+    CleaningPopUp,
     Search,
     Plus,
     Frown,
   },
   setup() {
-    const { result, loading, error } = useQuery(gql`
-      query x {
-        x {
-          id
-        }
-      }
-    `)
+    const { result, loading, error } = useQuery(GET_ROOMS)
+    let showPopup = ref<boolean>(false)
+
+    const togglePopup = () => {
+      //@ts-ignore
+      showPopup = !showPopup
+    }
+
+    watch(showPopup, () => {
+      console.log(showPopup)
+    })
+
     const skeletons = ref<number>(6)
     return {
+      togglePopup,
       result,
       loading,
       error,
       skeletons,
+      luxe,
+      standard,
+      showPopup,
     }
   },
 }
