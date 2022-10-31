@@ -62,7 +62,10 @@
             v-else-if="result"
           >
             <div v-for="r of result.rooms" :key="r.id">
-              <button class="rounded-md p-3 shadow-md" @click="togglePopup()">
+              <button
+                class="rounded-md p-3 shadow-md"
+                @click=";[togglePopup(), checkId(r.id)]"
+              >
                 <img
                   v-if="r.category == 'luxe'"
                   class="mb-6 aspect-video w-full object-cover"
@@ -84,7 +87,7 @@
             </div>
           </div>
           <div v-if="showPopup">
-            <cleaning-pop-up />
+            <cleaning-pop-up :togglePopup="() => togglePopup()" :id="roomId" />
           </div>
         </div>
       </div>
@@ -98,7 +101,7 @@ import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
 import CleaningPopUp from '../../components/rooms/CleaningPopUp.vue'
 import { Search, Plus, Frown } from 'lucide-vue-next'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import luxe from '../../assets/luxe-suite.webp'
 import standard from '../../assets/standard-suite.webp'
@@ -117,19 +120,20 @@ export default {
   setup() {
     const { result, loading, error } = useQuery(GET_ROOMS)
     let showPopup = ref<boolean>(false)
+    let roomId = ref<string>('')
 
     const togglePopup = () => {
-      //@ts-ignore
-      showPopup = !showPopup
+      showPopup.value = !showPopup.value
     }
 
-    watch(showPopup, () => {
-      console.log(showPopup)
-    })
+    const checkId = (id: string) => {
+      roomId.value = id
+    }
 
     const skeletons = ref<number>(6)
     return {
       togglePopup,
+      checkId,
       result,
       loading,
       error,
@@ -137,6 +141,7 @@ export default {
       luxe,
       standard,
       showPopup,
+      roomId,
     }
   },
 }

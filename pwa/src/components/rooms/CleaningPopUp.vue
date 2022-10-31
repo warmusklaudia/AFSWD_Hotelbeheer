@@ -2,7 +2,7 @@
   <div>
     <div
       class="fixed top-0 left-0 z-20 h-full w-full bg-neutral-900 bg-opacity-25"
-      @click="$emit('close')"
+      @click="togglePopup()"
     ></div>
     <div
       class="fixed top-1/2 left-1/2 z-30 h-96 w-2/5 -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white pt-6 text-lg shadow-lg"
@@ -11,10 +11,10 @@
         <div class="text-themeGreen mx-6 flex justify-between text-center">
           <div></div>
           <h2 class="font-title self-center text-2xl font-bold">
-            Room <span>{{ params.id }}</span>
+            Room <span>{{ id }}</span>
           </h2>
           <button
-            @click="$emit('close')"
+            @click="togglePopup()"
             class="border-themeGreen flex h-8 w-8 items-center justify-center self-end rounded-full border"
           >
             <X />
@@ -130,6 +130,16 @@ import { ROOM_BY_ID } from '../../graphql/query.room'
 import { Room } from '../../interfaces/interface.room'
 
 export default {
+  props: {
+    togglePopup: {
+      type: Function,
+      required: true,
+    },
+    id: {
+      type: String as () => string,
+      required: true,
+    },
+  },
   setup() {
     const { params } = useRoute()
     // const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
