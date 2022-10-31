@@ -45,7 +45,7 @@ export class ReservationsService {
     update.price = updateReservationInput.price;
     update.reservationStartDate = updateReservationInput.reservationStartDate;
     update.reservationEndDate = updateReservationInput.reservationEndDate;
-    
+
     return `This action updates a # reservation`;
   }
 
