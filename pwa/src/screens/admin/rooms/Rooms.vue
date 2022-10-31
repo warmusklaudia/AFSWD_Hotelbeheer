@@ -4,8 +4,8 @@
       <admin-navigation />
       <div class="w-5/6 p-6">
         <admin-header name="Rooms" />
-        <div className="p-6 md:flex md:justify-between">
-          <label for="rooms" class="relative block w-11/12 md:w-2/3 lg:w-1/3">
+        <div className="p-6 md:grid md:grid-cols-3">
+          <label for="rooms" class="relative block w-11/12 md:w-full">
             <Search
               class="pointer-events-none absolute top-1/2 ml-2 -translate-y-1/2 transform text-neutral-400"
             />
@@ -18,7 +18,7 @@
               placeholder="Search"
             />
           </label>
-          <div class="pt-2 md:ml-3 md:flex md:items-center md:pt-0 lg:w-2/5">
+          <div class="pt-2 md:ml-3 md:flex md:items-center md:pt-0">
             <label
               for="roomsAvailable"
               class="flex cursor-pointer items-center"
@@ -41,7 +41,7 @@
           </div>
           <router-link
             to="/admin/rooms/add"
-            class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
+            class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:w-2/3 md:place-self-end"
           >
             <Plus class="mr-2" size="20" />
             ADD ROOM
