@@ -30,11 +30,12 @@ export class ReservationsResolver {
   }
 
   @Mutation(() => Reservation)
-  createReservation(
+  async createReservation(
     @Args('createReservationInput')
     createReservationInput: CreateReservationInput,
   ): Promise<Reservation> {
-    return this.reservationsService.create(createReservationInput);
+    const res = await this.reservationsService.create(createReservationInput);
+    return res;
   }
 
   @Query(() => [Reservation], { name: 'reservations' })
