@@ -31,7 +31,8 @@ export class ReservationsService {
   }
 
   findOne(id: string): Promise<Reservation> {
-    return this.reservationsRepository.findOneBy({ id });
+    //@ts-ignore
+    return this.reservationsRepository.findOne(new ObjectId(id));
   }
 
   update(updateReservationInput: UpdateReservationInput) {

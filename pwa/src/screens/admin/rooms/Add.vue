@@ -103,7 +103,7 @@
               >
                 <span class="mb-2 block">Access code</span>
                 <input
-                  v-model="roomInput.reservationId"
+                  v-model="roomInput.accessCode"
                   id="access"
                   class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="text"
@@ -150,6 +150,8 @@ import standard from '../../../assets/standard-suite.webp'
 import { Search, Plus, Frown, X } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation } from '@vue/apollo-composable'
+import { Room } from '../../../interfaces/interface.room'
+import { GET_ROOMS } from '../../../graphql/query.room'
 export default {
   components: {
     RouteHolder,
@@ -168,10 +170,10 @@ export default {
     const roomInput = reactive({
       name: '',
       description: '',
-      reservationId: '0',
       rating: 5,
       category: '',
       location: '',
+      accessCode: '0',
     })
 
     const { mutate: addRoom } = useMutation(ADD_ROOM, () => ({
@@ -192,7 +194,7 @@ export default {
           loading.value = false
         })
 
-      console.log(room)
+      console.log(roomInput)
     }
     watch(roomInput, () => {
       console.log(roomInput.category)
