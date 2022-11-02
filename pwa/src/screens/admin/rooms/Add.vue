@@ -22,13 +22,25 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="roomErrors.name ? 'focus-within:text-red-600' : ''"
                 for="name"
               >
-                <span class="mb-2 block">Name</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.name ? 'text-red-600' : ''"
+                >
+                  Name
+                  {{ roomErrors.name ? `(${roomErrors.name})` : '' }}
+                </span>
                 <input
                   v-model="roomInput.name"
+                  :class="
+                    roomErrors.name
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown '
+                  "
                   id="name"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="text"
                   name="name"
                 />
@@ -37,13 +49,29 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="
+                  roomErrors.description ? 'focus-within:text-red-600' : ''
+                "
                 for="description"
               >
-                <span class="mb-2 block">Description</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.description ? 'text-red-600' : ''"
+                >
+                  Description
+                  {{
+                    roomErrors.description ? `(${roomErrors.description})` : ''
+                  }}
+                </span>
                 <textarea
                   v-model="roomInput.description"
+                  :class="
+                    roomErrors.description
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown '
+                  "
                   id="description"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   name="description"
                   cols="30"
                 ></textarea>
@@ -57,6 +85,8 @@
                 <span class="mb-2 block">Rating</span>
                 <input
                   v-model="roomInput.rating"
+                  min="1"
+                  max="5"
                   id="rating"
                   class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="number"
@@ -67,13 +97,25 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="roomErrors.category ? 'focus-within:text-red-600' : ''"
                 for="category"
               >
-                <span class="mb-2 block">Category</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.category ? 'text-red-600' : ''"
+                >
+                  Category
+                  {{ roomErrors.category ? `(${roomErrors.category})` : '' }}
+                </span>
                 <select
                   v-model="roomInput.category"
+                  :class="
+                    roomErrors.category
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown  '
+                  "
                   id="category"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   name="category"
                 >
                   <option value="Luxe">Luxe</option>
@@ -84,13 +126,25 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="roomErrors.location ? 'focus-within:text-red-600' : ''"
                 for="location"
               >
-                <span class="mb-2 block">Location</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.location ? 'text-red-600' : ''"
+                >
+                  Location
+                  {{ roomErrors.location ? `(${roomErrors.location})` : '' }}
+                </span>
                 <input
                   v-model="roomInput.location"
+                  :class="
+                    roomErrors.location
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown  '
+                  "
                   id="location"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="text"
                   name="location"
                 />
@@ -99,13 +153,29 @@
             <div class="mt-3 pb-6">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="
+                  roomErrors.accessCode ? 'focus-within:text-red-600' : ''
+                "
                 for="access"
               >
-                <span class="mb-2 block">Access code</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.accessCode ? 'text-red-600' : ''"
+                >
+                  Access code
+                  {{
+                    roomErrors.accessCode ? `(${roomErrors.accessCode})` : ''
+                  }}
+                </span>
                 <input
                   v-model="roomInput.accessCode"
+                  :class="
+                    roomErrors.accessCode
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown '
+                  "
                   id="access"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="text"
                   name="access"
                 />
@@ -167,6 +237,14 @@ export default {
     const loading = ref<boolean>(false)
     const errorMessage = ref<string>('')
 
+    const roomErrors = reactive({
+      name: '',
+      description: '',
+      category: '',
+      location: '',
+      accessCode: '',
+    })
+
     const roomInput = reactive({
       name: '',
       description: '',
@@ -182,7 +260,52 @@ export default {
       },
     }))
 
+    const isFormInvalid = (): boolean => {
+      let hasErrors: boolean = false
+      if (roomInput.name === '') {
+        roomErrors.name = 'Name is required'
+        hasErrors = true
+      } else {
+        roomErrors.name = ''
+      }
+
+      if (roomInput.description === '') {
+        roomErrors.description = 'Description is required'
+        hasErrors = true
+      } else {
+        roomErrors.description = ''
+      }
+
+      if (roomInput.category === '') {
+        roomErrors.category = 'Category is required'
+        hasErrors = true
+      } else {
+        roomErrors.category = ''
+      }
+
+      if (roomInput.location === '') {
+        roomErrors.location = 'Location is required'
+        hasErrors = true
+      } else {
+        roomErrors.location = ''
+      }
+
+      if (roomInput.accessCode === '') {
+        roomErrors.accessCode = 'Access code is required'
+        hasErrors = true
+      } else if (roomInput.accessCode.length <= 4) {
+        roomErrors.accessCode = 'Access code is too short'
+        hasErrors = true
+      } else {
+        roomErrors.accessCode = ''
+      }
+
+      if (hasErrors) return true
+      return false
+    }
+
     const submitForm = async () => {
+      if (isFormInvalid()) return
       loading.value = true
       const room = await addRoom()
         .catch((err) => {
@@ -196,12 +319,12 @@ export default {
 
       console.log(roomInput)
     }
-    watch(roomInput, () => {
-      console.log(roomInput.category)
-    })
+
+    watch(roomInput, () => isFormInvalid())
 
     return {
       roomInput,
+      roomErrors,
       skeletons,
       errorMessage,
       loading,
