@@ -67,13 +67,13 @@
                 @click=";[togglePopup(), checkId(r.id)]"
               >
                 <img
-                  v-if="r.category == 'luxe'"
+                  v-if="r.category == 'Luxe'"
                   class="mb-6 aspect-video w-full object-cover"
                   :src="luxe"
                   :alt="`picture of a ${r.category}-suite`"
                 />
                 <img
-                  v-if="r.category == 'standaard'"
+                  v-if="r.category == 'Standard'"
                   class="mb-6 aspect-video w-full object-cover"
                   :src="standard"
                   :alt="`picture of a ${r.category}-suite`"

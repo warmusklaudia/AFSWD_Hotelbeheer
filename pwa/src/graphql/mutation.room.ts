@@ -5,10 +5,10 @@ export const ADD_ROOM = gql`
     createRoom(createRoomInput: $createRoomInput) {
       name
       description
-      reservationId
       rating
       category
       location
+      accessCode
     }
   }
 `

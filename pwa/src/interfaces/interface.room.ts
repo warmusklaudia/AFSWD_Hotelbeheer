@@ -4,8 +4,7 @@ export interface Room {
   id: string
   name: string
   description: string
-  reservation: Reservation
-  reservationId: string
+  reservation?: Reservation
   rating: number
   category: string
   location: string

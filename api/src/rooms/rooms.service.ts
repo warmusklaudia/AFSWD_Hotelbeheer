@@ -22,6 +22,7 @@ export class RoomsService {
     r.rating = createRoomInput.rating;
     r.reservationId = createRoomInput.reservationId;
     r.location = createRoomInput.location;
+    r.accessCode = createRoomInput.accessCode;
 
     return this.roomsRepository.save(r);
   }
@@ -31,7 +32,8 @@ export class RoomsService {
   }
 
   findOne(id: string): Promise<Room> {
-    return this.roomsRepository.findOneBy({ id });
+    //@ts-ignore
+    return this.roomsRepository.findOne(new ObjectId(id));
   }
 
   findByString(searchString: string): Promise<Room[]> {

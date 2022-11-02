@@ -22,13 +22,25 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="roomErrors.name ? 'focus-within:text-red-600' : ''"
                 for="name"
               >
-                <span class="mb-2 block">Name</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.name ? 'text-red-600' : ''"
+                >
+                  Name
+                  {{ roomErrors.name ? `(${roomErrors.name})` : '' }}
+                </span>
                 <input
                   v-model="roomInput.name"
+                  :class="
+                    roomErrors.name
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown '
+                  "
                   id="name"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="text"
                   name="name"
                 />
@@ -37,13 +49,29 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="
+                  roomErrors.description ? 'focus-within:text-red-600' : ''
+                "
                 for="description"
               >
-                <span class="mb-2 block">Description</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.description ? 'text-red-600' : ''"
+                >
+                  Description
+                  {{
+                    roomErrors.description ? `(${roomErrors.description})` : ''
+                  }}
+                </span>
                 <textarea
                   v-model="roomInput.description"
+                  :class="
+                    roomErrors.description
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown '
+                  "
                   id="description"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   name="description"
                   cols="30"
                 ></textarea>
@@ -57,6 +85,8 @@
                 <span class="mb-2 block">Rating</span>
                 <input
                   v-model="roomInput.rating"
+                  min="1"
+                  max="5"
                   id="rating"
                   class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="number"
@@ -67,13 +97,25 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="roomErrors.category ? 'focus-within:text-red-600' : ''"
                 for="category"
               >
-                <span class="mb-2 block">Category</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.category ? 'text-red-600' : ''"
+                >
+                  Category
+                  {{ roomErrors.category ? `(${roomErrors.category})` : '' }}
+                </span>
                 <select
                   v-model="roomInput.category"
+                  :class="
+                    roomErrors.category
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown  '
+                  "
                   id="category"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   name="category"
                 >
                   <option value="Luxe">Luxe</option>
@@ -84,13 +126,25 @@
             <div class="mt-3">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="roomErrors.location ? 'focus-within:text-red-600' : ''"
                 for="location"
               >
-                <span class="mb-2 block">Location</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.location ? 'text-red-600' : ''"
+                >
+                  Location
+                  {{ roomErrors.location ? `(${roomErrors.location})` : '' }}
+                </span>
                 <input
                   v-model="roomInput.location"
+                  :class="
+                    roomErrors.location
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown  '
+                  "
                   id="location"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="text"
                   name="location"
                 />
@@ -99,13 +153,29 @@
             <div class="mt-3 pb-6">
               <label
                 class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                :class="
+                  roomErrors.accessCode ? 'focus-within:text-red-600' : ''
+                "
                 for="access"
               >
-                <span class="mb-2 block">Access code</span>
+                <span
+                  class="mb-2 block"
+                  :class="roomErrors.accessCode ? 'text-red-600' : ''"
+                >
+                  Access code
+                  {{
+                    roomErrors.accessCode ? `(${roomErrors.accessCode})` : ''
+                  }}
+                </span>
                 <input
-                  v-model="roomInput.reservationId"
+                  v-model="roomInput.accessCode"
+                  :class="
+                    roomErrors.accessCode
+                      ? ' border-red-800 ring-red-800'
+                      : 'border-themeBrown ring-themeBrown '
+                  "
                   id="access"
-                  class="border-themeBrown ring-themeBrown w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                  class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                   type="text"
                   name="access"
                 />
@@ -115,9 +185,15 @@
               class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
               :disabled="loading"
             >
-              <Plus class="mr-2" size="20" />
-              ADD ROOM
+              <div class="flex" v-if="!loading">
+                <Plus class="mr-2" size="20" />
+                ADD ROOM
+              </div>
+              <div v-else>
+                <Loader2 class="animate-spin" />
+              </div>
             </button>
+            <p class="pt-3 text-green-700 lg:text-lg">{{ successMessage }}</p>
           </form>
           <div class="hidden w-1/2 lg:block">
             <img
@@ -147,9 +223,11 @@ import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import { ADD_ROOM } from '../../../graphql/mutation.room'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
-import { Search, Plus, Frown, X } from 'lucide-vue-next'
+import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation } from '@vue/apollo-composable'
+import { Room } from '../../../interfaces/interface.room'
+import { GET_ROOMS } from '../../../graphql/query.room'
 export default {
   components: {
     RouteHolder,
@@ -159,19 +237,29 @@ export default {
     Plus,
     Frown,
     X,
+    Loader2,
   },
   setup() {
     const skeletons = ref<number>(6)
     const loading = ref<boolean>(false)
     const errorMessage = ref<string>('')
+    const successMessage = ref<string>('')
+
+    const roomErrors = reactive({
+      name: '',
+      description: '',
+      category: '',
+      location: '',
+      accessCode: '',
+    })
 
     const roomInput = reactive({
       name: '',
       description: '',
-      reservationId: '0',
-      rating: 5,
+      rating: 1,
       category: '',
       location: '',
+      accessCode: '',
     })
 
     const { mutate: addRoom } = useMutation(ADD_ROOM, () => ({
@@ -180,9 +268,54 @@ export default {
       },
     }))
 
+    const isFormInvalid = (): boolean => {
+      let hasErrors: boolean = false
+      if (roomInput.name === '') {
+        roomErrors.name = 'Name is required'
+        hasErrors = true
+      } else {
+        roomErrors.name = ''
+      }
+
+      if (roomInput.description === '') {
+        roomErrors.description = 'Description is required'
+        hasErrors = true
+      } else {
+        roomErrors.description = ''
+      }
+
+      if (roomInput.category === '') {
+        roomErrors.category = 'Category is required'
+        hasErrors = true
+      } else {
+        roomErrors.category = ''
+      }
+
+      if (roomInput.location === '') {
+        roomErrors.location = 'Location is required'
+        hasErrors = true
+      } else {
+        roomErrors.location = ''
+      }
+
+      if (roomInput.accessCode === '') {
+        roomErrors.accessCode = 'Access code is required'
+        hasErrors = true
+      } else if (roomInput.accessCode.length < 4) {
+        roomErrors.accessCode = 'Access code is too short'
+        hasErrors = true
+      } else {
+        roomErrors.accessCode = ''
+      }
+
+      if (hasErrors) return true
+      return false
+    }
+
     const submitForm = async () => {
+      if (isFormInvalid()) return
       loading.value = true
-      const room = await addRoom()
+      await addRoom()
         .catch((err) => {
           console.log({ err })
 
@@ -190,18 +323,22 @@ export default {
         })
         .finally(() => {
           loading.value = false
+          successMessage.value = 'Room successfully added'
+          roomInput.name = ''
+          roomInput.description = ''
+          roomInput.rating = 1
+          roomInput.category = ''
+          roomInput.location = ''
+          roomInput.accessCode = ''
         })
-
-      console.log(room)
     }
-    watch(roomInput, () => {
-      console.log(roomInput.category)
-    })
 
     return {
       roomInput,
+      roomErrors,
       skeletons,
       errorMessage,
+      successMessage,
       loading,
       luxe,
       standard,

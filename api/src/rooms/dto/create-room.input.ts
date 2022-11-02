@@ -9,7 +9,7 @@ export class CreateRoomInput {
   @Field({ nullable: true }) // GraphQL
   description?: string;
 
-  @Field() // GraphQL
+  @Field({ nullable: true }) // GraphQL
   reservationId: string;
 
   @Field({ defaultValue: 0 }) // GraphQL
@@ -20,4 +20,7 @@ export class CreateRoomInput {
 
   @Field() // GraphQL
   location: string;
+
+  @Field() // GraphQL
+  accessCode: string;
 }
