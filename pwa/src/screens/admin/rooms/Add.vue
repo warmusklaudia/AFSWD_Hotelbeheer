@@ -185,9 +185,15 @@
               class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
               :disabled="loading"
             >
-              <Plus class="mr-2" size="20" />
-              ADD ROOM
+              <div class="flex" v-if="!loading">
+                <Plus class="mr-2" size="20" />
+                ADD ROOM
+              </div>
+              <div v-else>
+                <Loader2 class="animate-spin" />
+              </div>
             </button>
+            <p class="pt-3 text-green-700 lg:text-lg">{{ successMessage }}</p>
           </form>
           <div class="hidden w-1/2 lg:block">
             <img
@@ -217,7 +223,7 @@ import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import { ADD_ROOM } from '../../../graphql/mutation.room'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
-import { Search, Plus, Frown, X } from 'lucide-vue-next'
+import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
@@ -231,11 +237,13 @@ export default {
     Plus,
     Frown,
     X,
+    Loader2,
   },
   setup() {
     const skeletons = ref<number>(6)
     const loading = ref<boolean>(false)
     const errorMessage = ref<string>('')
+    const successMessage = ref<string>('')
 
     const roomErrors = reactive({
       name: '',
@@ -248,10 +256,10 @@ export default {
     const roomInput = reactive({
       name: '',
       description: '',
-      rating: 5,
+      rating: 1,
       category: '',
       location: '',
-      accessCode: '0',
+      accessCode: '',
     })
 
     const { mutate: addRoom } = useMutation(ADD_ROOM, () => ({
@@ -293,7 +301,7 @@ export default {
       if (roomInput.accessCode === '') {
         roomErrors.accessCode = 'Access code is required'
         hasErrors = true
-      } else if (roomInput.accessCode.length <= 4) {
+      } else if (roomInput.accessCode.length < 4) {
         roomErrors.accessCode = 'Access code is too short'
         hasErrors = true
       } else {
@@ -307,7 +315,7 @@ export default {
     const submitForm = async () => {
       if (isFormInvalid()) return
       loading.value = true
-      const room = await addRoom()
+      await addRoom()
         .catch((err) => {
           console.log({ err })
 
@@ -315,18 +323,22 @@ export default {
         })
         .finally(() => {
           loading.value = false
+          successMessage.value = 'Room successfully added'
+          roomInput.name = ''
+          roomInput.description = ''
+          roomInput.rating = 1
+          roomInput.category = ''
+          roomInput.location = ''
+          roomInput.accessCode = ''
         })
-
-      console.log(roomInput)
     }
-
-    watch(roomInput, () => isFormInvalid())
 
     return {
       roomInput,
       roomErrors,
       skeletons,
       errorMessage,
+      successMessage,
       loading,
       luxe,
       standard,
