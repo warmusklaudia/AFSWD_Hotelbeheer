@@ -13,8 +13,8 @@ export const GET_ROOMS = gql`
 `
 
 export const GET_ROOM_By_ID = gql`
-  query GetRooms {
-    rooms {
+  query GetRooms($id: String!) {
+    room(id: $id) {
       id
       name
       description

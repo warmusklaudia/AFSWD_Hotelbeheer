@@ -30,7 +30,9 @@ export class RoomsService {
   }
 
   findOne(id: string): Promise<Room> {
-    return this.roomsRepository.findOneBy({ id });
+    //@ts-ignore
+    const room = this.roomsRepository.findOne(new ObjectId(id));
+    return room
   }
 
   update(updateRoomInput: UpdateRoomInput) {

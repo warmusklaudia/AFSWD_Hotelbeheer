@@ -2,28 +2,28 @@
     <ul
         class="grid w-full md:gap-3 font-title font-bold grid-cols-5 items-center text-center text-[11px] sm:w-auto sm:space-x-3 sm:text-left sm:text-sm ">
         <li>
-            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2" to="/"
+            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2 ring-themeBrown" to="/"
                 exact-active-class="opacity-60">
                 <Home class="mx-auto mb-2 h-5 sm:hidden" />
                 <p>Home</p>
             </router-link>
         </li>
         <li>
-            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2" to="/rooms"
+            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2 ring-themeBrown" to="/rooms"
                 active-class="opacity-60">
                 <Bed class="mx-auto mb-2 h-5 sm:hidden" />
                 <p>Rooms</p>
             </router-link>
         </li>
         <li>
-            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2" to="/services"
+            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2 ring-themeBrown" to="/services"
                 active-class="opacity-60">
                 <ConciergeBell class="mx-auto mb-2 h-5 sm:hidden" />
                 <p>Services</p>
             </router-link>
         </li>
         <li>
-            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2" to="/reservations"
+            <router-link class="inline-block rounded-sm py-6 outline-none focus-visible:ring-2 ring-themeBrown" to="/reservations"
                 active-class="opacity-60">
                 <Clipboard class="mx-auto mb-2 h-5 sm:hidden" />
                 <p>Reservations</p>
@@ -38,10 +38,10 @@
         </li>
 
         <li class="hidden sm:block ">
-            <router-link v-if="user" class="rounded-sm py-6 outline-none focus-visible:ring-2" to="/profile">
+            <router-link v-if="user" class="rounded-sm py-6 outline-none focus-visible:ring-2 ring-themeBrown" to="/profile">
                 {{ user.displayName }}
             </router-link>
-            <router-link v-else class="rounded-sm py-6 outline-none focus-visible:ring-2" to="/auth/login">Login
+            <router-link v-else class="rounded-sm py-6 outline-none focus-visible:ring-2 ring-themeBrown" to="/auth/login">Login
             </router-link>
         </li>
         <li class="hidden sm:block">
@@ -49,7 +49,7 @@
                 <li v-if="user" class="px-3">$10.00</li>
                 <li class="px-3 ">
                     <select name="" id=""
-                        class="bg-transparent	rounded-sm py-6 outline-none focus-visible:ring-2 cursor-pointer	">
+                        class="bg-transparent	rounded-sm py-6 outline-none focus-visible:ring-2 cursor-pointer ring-themeBrown">
                         <option value="">ENG</option>
                         <option value="">NL</option>
                         <option value="">FR</option>

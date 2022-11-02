@@ -29,7 +29,8 @@ export class UsersService {
   }
 
   findOne(id: string): Promise<User> {
-    return this.userRepository.findOneBy({ id });
+    //@ts-ignore
+    return this.userRepository.findOne(new ObjectId(id));
   }
 
   findOneByUid(uid: string): Promise<User> {
