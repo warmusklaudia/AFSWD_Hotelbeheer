@@ -22,3 +22,13 @@ export const ROOM_BY_ID = gql`
     }
   }
 `
+
+export const ROOM_BY_NAME = gql`
+  query roomsByName($searchRoomByName: String!) {
+    roomsByName(searchRoomByName: $searchRoomByName) {
+      id
+      name
+      category
+    }
+  }
+`

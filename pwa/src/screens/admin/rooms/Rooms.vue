@@ -71,7 +71,7 @@
           >
             <RouterLink
               :to="`/admin/rooms/${r.id}`"
-              v-for="r of result.rooms"
+              v-for="r of result.roomsByName"
               :key="r.id"
             >
               <div class="rounded-md bg-white p-3 shadow-md">
@@ -106,9 +106,9 @@ import RouteHolder from '../../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import { Search, Plus, Frown } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
-import { GET_ROOMS } from '../../../graphql/query.room'
+import { GET_ROOMS, ROOM_BY_NAME } from '../../../graphql/query.room'
 import { Room } from '../../../interfaces/interface.room'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
@@ -123,12 +123,14 @@ export default {
     Frown,
   },
   setup() {
-    const { result, loading, error } = useQuery(GET_ROOMS)
     const searchRoom = ref<string>('')
+    const { result, loading, error } = useQuery(ROOM_BY_NAME, {
+      searchRoomByName: searchRoom,
+    })
     const skeletons = ref<number>(6)
-
-    const filteredRooms = ref<Room[]>(result.value)
-    console.log(filteredRooms)
+    watch(searchRoom, () => {
+      console.log(result)
+    })
 
     return {
       result,
@@ -138,7 +140,6 @@ export default {
       luxe,
       standard,
       searchRoom,
-      filteredRooms,
     }
   },
 }
