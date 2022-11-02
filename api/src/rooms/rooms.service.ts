@@ -36,10 +36,11 @@ export class RoomsService {
     return this.roomsRepository.findOne(new ObjectId(id));
   }
 
-  findByName(searchString: string): Promise<Room[]> {
+  findByString(searchName: string, searchCategory: string): Promise<Room[]> {
     return this.roomsRepository.find({
       //@ts-ignore
-      name: { $regex: searchString, $options: 'i' },
+      name: { $regex: searchName, $options: 'i' },
+      category: { $regex: searchCategory, $options: 'i' },
     });
   }
 

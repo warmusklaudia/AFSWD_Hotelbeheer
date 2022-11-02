@@ -7,12 +7,12 @@
         <div className="p-6 md:grid md:grid-cols-3">
           <label for="rooms" class="relative block w-11/12 md:w-full">
             <Search
-              class="pointer-events-none absolute top-1/2 ml-2 -translate-y-1/2 transform text-neutral-400"
+              class="pointer-events-none absolute top-1/2 ml-2 -translate-y-1/2 transform text-neutral-600"
             />
             <input
               type="text"
               name="rooms"
-              v-model="searchRoom"
+              v-model="searchRoomName"
               id="rooms"
               className="w-full border rounded-md border-themeBrown pl-10  py-2 block focus:outline-none focus:ring focus:ring-themeBrown"
               placeholder="Search"
@@ -23,20 +23,14 @@
               for="roomsAvailable"
               class="flex cursor-pointer items-center"
             >
-              <div class="relative">
-                <input
-                  id="roomsAvailable"
-                  type="checkbox"
-                  class="peer sr-only"
-                />
-                <div
-                  class="peer-checked:bg-themeBrown h-4 w-10 rounded-full bg-gray-400 shadow-inner"
-                ></div>
-                <div
-                  class="absolute -left-1 -top-1 h-6 w-6 rounded-full bg-white shadow transition peer-checked:translate-x-full"
-                ></div>
-              </div>
-              <div class="ml-3">Show unavailable</div>
+              <select
+                v-model="searchRoomCat"
+                class="border-themeBrown focus:ring-themeBrown block w-full rounded-md border py-2 px-4 text-neutral-600 focus:outline-none focus:ring"
+              >
+                <option value="" selected disabled>Pick category</option>
+                <option value="Luxe">Luxe</option>
+                <option value="Standard">Standard</option>
+              </select>
             </label>
           </div>
           <router-link
@@ -71,7 +65,7 @@
           >
             <RouterLink
               :to="`/admin/rooms/${r.id}`"
-              v-for="r of result.roomsByName"
+              v-for="r of result.roomsByNameCat"
               :key="r.id"
             >
               <div class="rounded-md bg-white p-3 shadow-md">
@@ -108,7 +102,7 @@ import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import { Search, Plus, Frown } from 'lucide-vue-next'
 import { ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
-import { GET_ROOMS, ROOM_BY_NAME } from '../../../graphql/query.room'
+import { GET_ROOMS, ROOM_BY_NAME_CAT } from '../../../graphql/query.room'
 import { Room } from '../../../interfaces/interface.room'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
@@ -123,13 +117,15 @@ export default {
     Frown,
   },
   setup() {
-    const searchRoom = ref<string>('')
-    const { result, loading, error } = useQuery(ROOM_BY_NAME, {
-      searchRoomByName: searchRoom,
+    const searchRoomName = ref<string>('')
+    const searchRoomCat = ref<string>('')
+    const { result, loading, error } = useQuery(ROOM_BY_NAME_CAT, {
+      searchRoomByName: searchRoomName,
+      searchRoomByCat: searchRoomCat,
     })
     const skeletons = ref<number>(6)
-    watch(searchRoom, () => {
-      console.log(result)
+    watch(searchRoomCat, () => {
+      console.log(searchRoomCat)
     })
 
     return {
@@ -139,7 +135,8 @@ export default {
       skeletons,
       luxe,
       standard,
-      searchRoom,
+      searchRoomName,
+      searchRoomCat,
     }
   },
 }
