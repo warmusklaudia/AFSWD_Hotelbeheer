@@ -30,7 +30,7 @@
         <input id="amountDays"
           class="ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
           :class="stepOneErrors.amountDays ? 'border-red-500 text-red-600 ring-red-400' : ''" type="number"
-          name="amountDays" min="1" @input="setEndDate" />
+          name="amountDays" min="1" @input="setEndDate" :value="amountDays" />
       </label>
       <div v-if="stepOneErrors.amountDays != ''"
         class="text-red-600 bg-red-100 border-1 border-red-600 rounded-sm text-sm px-2 py-1 mt-2 flex items-center gap-2">
@@ -70,7 +70,7 @@
     </div>
 
   </section>
-  <section class="py-3">
+  <div class="py-3">
     <div class="mb-3 md:mb-6">
       <h2 class="font-title font-bold text-2xl md:text-3xl lg:text-4xl"
         :class="stepOneErrors.room ? 'text-red-600' : ''">
@@ -94,9 +94,9 @@
       <p>Error happened.</p>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-      <div v-for="r of result.rooms" :key="r.id" @click="setRoom(r.id), setSelectedRoom(r)"
+      <div v-for="r of result.rooms" :key="r.id" @click="setSelectedRoom(r)"
         class="cursor-pointer rounded hover:bg-neutral-200 hover:shadow-lg"
-        :class="r.id == reservationFormInput.room ? 'bg-neutral-200' : ''">
+        :class="r.id == selectedRoom.id ? 'bg-neutral-200' : ''">
         <img v-if="r.category == 'luxe'" class="aspect-video w-full object-cover" :src="luxe"
           :alt="`picture of a ${r.category}-suite`" />
         <img v-else-if="r.category == 'standard'" class="aspect-video w-full object-cover" :src="standard"
@@ -110,11 +110,12 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-end">
-      <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
-        @click="nextStep">Next</button>
-    </div>
-  </section>
+  </div>
+  
+  <div class="flex justify-end">
+    <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
+      @click="nextStep">Next</button>
+  </div>
 </template>
 <script setup lang="ts">
 import { useQuery } from '@vue/apollo-composable'
@@ -130,7 +131,7 @@ import standard from '../../../assets/standard-suite.webp'
 const { result, loading, error } = useQuery(GET_ROOMS)
 const skeletons = ref(18)
 
-const { reservationFormInput,selectedRoom, setEndDate, setRoom, setSelectedRoom, setAmountAdults, setAmountChildren, changeStepTo } = useFormUpdate()
+const { reservationFormInput, selectedRoom, amountDays, setEndDate, setSelectedRoom, setAmountAdults, setAmountChildren, changeStepTo } = useFormUpdate()
 
 const stepOneErrors = reactive({
   amountDays: '',

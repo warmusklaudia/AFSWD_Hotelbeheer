@@ -1,6 +1,6 @@
 <template>
-    <section>
-        <div class="grid sm:grid-cols-[1fr_2fr_2fr] md:gap-12">
+    <div class="grid gap-3">
+        <div class="grid sm:grid-cols-[auto_1fr] md:gap-12">
             <img v-if="selectedRoom.category == 'luxe'"
                 class="mb-6 aspect-square w-full object-cover rounded-xl shadow-md max-w-64" :src="luxe"
                 :alt="`picture of a ${selectedRoom.category}-suite`" />
@@ -49,15 +49,20 @@
                 </label>
             </li>
         </ul>
-        <div class="flex justify-end gap-3">
-            <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
-                @click="changeStepTo(2)">Previous</button>
-            <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
-                @click="changeStepTo(4)">Submit</button>
-        </div>
-    </section>
+    </div>
+
+    <div class="flex justify-end gap-3">
+        <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
+            @click="changeStepTo(2)">Previous</button>
+        <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
+            @click="submitForm">Submit</button>
+    </div>
+
 </template>
+
 <script setup lang="ts">
+import { ref } from "vue";
+import { useMutation } from "@vue/apollo-composable";
 import { Star } from "lucide-vue-next";
 
 import useFormUpdate from "../../../composables/useFormUpdate";
@@ -65,5 +70,40 @@ import useFormUpdate from "../../../composables/useFormUpdate";
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 
-const { selectedRoom, changeStepTo } = useFormUpdate()
+import { ADD_RESERVATION } from "../../../graphql/mutation.reservation";
+
+const errorMessage = ref('')
+const { reservationFormInput, selectedRoom, changeStepTo } = useFormUpdate()
+
+const { mutate: addReservation } = useMutation(ADD_RESERVATION, () => ({
+    variables: {
+        createReservationInput: reservationFormInput,
+    },
+}))
+
+const prices = [
+    {
+        name: 'luxe',
+        price: 500
+    },
+    {
+        name: 'standard',
+        price: 300
+    },
+    {
+        name: 'breakfast',
+        price: 120
+    }
+]
+
+const submitForm = async () => {
+    console.log('submitting form')
+    console.log(reservationFormInput)
+
+    // const reservation = await addReservation().catch((err) => {
+    //     errorMessage.value = err.message
+    // })
+
+    // changeStepTo(4)
+}
 </script>

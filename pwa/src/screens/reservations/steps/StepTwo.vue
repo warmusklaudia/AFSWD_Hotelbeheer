@@ -1,6 +1,6 @@
 <template>
-  <section class="mt-12">
-    <div class="grid sm:grid-cols-[1fr_2fr_2fr] md:gap-12">
+  <div>
+    <div class="grid sm:grid-cols-[auto_1fr] md:gap-12">
       <img v-if="selectedRoom.category == 'luxe'"
         class="mb-6 aspect-square w-full object-cover rounded-xl shadow-md max-w-64" :src="luxe"
         :alt="`picture of a ${selectedRoom.category}-suite`" />
@@ -23,14 +23,14 @@
       </div>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6 md:gap-12 mt-6">
+    <div class="grid md:grid-cols-3 gap-6 md:gap-x-12 mt-6">
       <label class="mb-1 block text-neutral-500 focus-within:text-neutral-900" for="amountChildren">
         <span class="font-title mb-2 block">
           First Name
         </span>
         <input id="amountChildren"
           class="ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
-          type="number" name="amountChildren" />
+          type="text" name="amountChildren" />
       </label>
       <label class="mb-1 block text-neutral-500 focus-within:text-neutral-900" for="amountChildren">
         <span class="font-title mb-2 block">
@@ -38,7 +38,7 @@
         </span>
         <input id="amountChildren"
           class="ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
-          type="number" name="amountChildren" />
+          type="text" name="amountChildren" />
       </label>
       <label class="mb-1 block text-neutral-500 focus-within:text-neutral-900" for="amountChildren">
         <span class="font-title mb-2 block">
@@ -46,7 +46,7 @@
         </span>
         <input id="amountChildren"
           class="ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
-          type="number" name="amountChildren" />
+          type="email" name="amountChildren" />
       </label>
 
       <div class="mt-3 flex items-center space-x-3">
@@ -54,7 +54,7 @@
           class="flex h-5 w-5 items-center justify-center rounded-md border border-neutral-300 focus-within:border-themeBrown ring-blue-200 focus-within:ring focus:outline-none"
           for="breakfast">
           <input class="peer sr-only" type="checkbox" name="breakfast" id="breakfast" @input="setBreakfast"
-            :value="reservationFormInput.breakfast" />
+            :value="addBreakfast" />
           <Check class="transition h-4 scale-0 dark:text-white text-themeBrown ease-out peer-checked:scale-100" />
         </label>
         <label class="select-none dark:text-white font-text" for="breakfast">
@@ -63,28 +63,25 @@
       </div>
 
     </div>
-    <div class="flex justify-end gap-3">
-      <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
-        @click="changeStepTo(1)">Previous</button>
-      <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
-        @click="changeStepTo(3)">Next</button>
-    </div>
-  </section>
+  </div>
+  <div class="flex justify-end gap-3 ">
+    <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
+      @click="changeStepTo(1)">Previous</button>
+    <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
+      @click="changeStepTo(3)">Next</button>
+  </div>
+
 </template>
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
 import { reactive } from "vue";
 import { Star, Check } from "lucide-vue-next";
 
 import useFormUpdate from '../../../composables/useFormUpdate'
-import { GET_ROOM_By_ID } from '../../../graphql/query.room'
 
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 
-
-const { reservationFormInput, selectedRoom, setBreakfast, changeStepTo } = useFormUpdate()
-console.log(selectedRoom)
+const { reservationFormInput, selectedRoom, addBreakfast, setBreakfast, changeStepTo } = useFormUpdate()
 
 const stepTwoErrors = reactive({
   firstName: '',
@@ -92,9 +89,5 @@ const stepTwoErrors = reactive({
   email: '',
   phone: '',
 })
-
-// const { result, loading, error } = useQuery(GET_ROOM_By_ID, {
-//   id: reservationFormInput.room,
-// })
 
 </script>
