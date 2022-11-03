@@ -6,10 +6,9 @@
                 Add 
             </router-link>
         </template>
-        <!-- <div class="grid animate-pulse gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5"> -->
-        <div class="grid animate-pulse gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5" v-if="loading">
+        <div class="grid animate-pulse gap-12 sm:grid-cols-2 md:grid-cols-3" v-if="loading">
             <div v-for="i of skeletons" :key="i">
-                <div class="@dark:bg-neutral-700 aspect-square rounded-md bg-neutral-300"></div>
+                <div class="@dark:bg-neutral-700 aspect-video rounded-md bg-neutral-300"></div>
                 <p class="@dark:bg-neutral-600 my-1 h-6 w-24 rounded bg-neutral-200"></p>
                 <p class="@dark:bg-neutral-600 my-2 h-6 w-12 rounded bg-neutral-100"></p>
             </div>

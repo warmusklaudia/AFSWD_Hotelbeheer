@@ -1,18 +1,21 @@
 import { reactive, readonly, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import useAuthentication from './useAuthentication'
+
+const { user } = useAuthentication()
 
 const currentStep = ref(1)
+const amountDays = ref(0)
+const addBreakfast = ref(false)
 
 const reservationFormInput = reactive({
-  userId: '',
+  userId: user.value!.uid,
   rooms: 0,
   amountAdults: 0,
   amountChildren: 0,
   price: 0,
   reservationStartDate: new Date().toISOString().slice(0, 10),
   reservationEndDate: '',
-  room: '',
-  breakfast: false,
 })
 
 const selectedRoom = reactive({
@@ -25,11 +28,6 @@ const selectedRoom = reactive({
 
 export default () => {
   const { push } = useRouter()
-
-  const setRoom = (room: string) => {
-    reservationFormInput.room = room
-    console.log(reservationFormInput)
-  }
 
   const setSelectedRoom = (room: any) => {
     selectedRoom.id = room.id
@@ -47,9 +45,9 @@ export default () => {
 
   const setEndDate = (e: Event) => {
     //setEnDate sets the end date to the start date + the amount of days the user has entered
-    const amountDays = +(e.target as HTMLInputElement).value
+    amountDays.value = +(e.target as HTMLInputElement).value
     const endDate = new Date(reservationFormInput.reservationStartDate)
-    endDate.setDate(endDate.getDate() + amountDays)
+    endDate.setDate(endDate.getDate() + amountDays.value)
     reservationFormInput.reservationEndDate = endDate
       .toISOString()
       .split('T')[0]
@@ -68,8 +66,8 @@ export default () => {
   }
 
   const setBreakfast = (e: Event) => {
-    reservationFormInput.breakfast = (e.target as HTMLInputElement).checked
-    console.log(reservationFormInput.breakfast)
+    addBreakfast.value = (e.target as HTMLInputElement).checked
+    console.log(addBreakfast)
   }
 
   const changeStepTo = (step: number) => {
@@ -81,9 +79,10 @@ export default () => {
     currentStep: readonly(currentStep),
     reservationFormInput: readonly(reservationFormInput),
     selectedRoom: readonly(selectedRoom),
+    amountDays: readonly(amountDays),
+    addBreakfast: readonly(addBreakfast),
 
     setEndDate,
-    setRoom,
     setSelectedRoom,
     setAmountAdults,
     setAmountChildren,
