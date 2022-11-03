@@ -94,7 +94,7 @@
       <p>Error happened.</p>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-      <div v-for="r of result.rooms" :key="r.id" @click="setRoom(r.id)"
+      <div v-for="r of result.rooms" :key="r.id" @click="setRoom(r.id), setSelectedRoom(r)"
         class="cursor-pointer rounded hover:bg-neutral-200 hover:shadow-lg"
         :class="r.id == reservationFormInput.room ? 'bg-neutral-200' : ''">
         <img v-if="r.category == 'luxe'" class="aspect-video w-full object-cover" :src="luxe"
@@ -130,7 +130,7 @@ import standard from '../../../assets/standard-suite.webp'
 const { result, loading, error } = useQuery(GET_ROOMS)
 const skeletons = ref(18)
 
-const { reservationFormInput, setEndDate, setRoom, setAmountAdults, setAmountChildren,changeStepTo } = useFormUpdate()
+const { reservationFormInput,selectedRoom, setEndDate, setRoom, setSelectedRoom, setAmountAdults, setAmountChildren, changeStepTo } = useFormUpdate()
 
 const stepOneErrors = reactive({
   amountDays: '',
@@ -155,7 +155,7 @@ const isStepOneValid = (): boolean => {
     stepOneErrors.amountPeople = ''
   }
 
-  if (reservationFormInput.room === '') {
+  if (selectedRoom.id === '') {
     stepOneErrors.room = 'Please select a room'
     hasSomeErrors = true
   } else {

@@ -19,7 +19,7 @@ const selectedRoom = reactive({
   id: '',
   name: '',
   description: '',
-  rating: '',
+  rating: 0,
   category: '',
 })
 
@@ -29,6 +29,15 @@ export default () => {
   const setRoom = (room: string) => {
     reservationFormInput.room = room
     console.log(reservationFormInput)
+  }
+
+  const setSelectedRoom = (room: any) => {
+    selectedRoom.id = room.id
+    selectedRoom.name = room.name
+    selectedRoom.description = room.description
+    selectedRoom.rating = room.rating
+    selectedRoom.category = room.category
+    console.log(selectedRoom)
   }
 
   const setReservationStartDate = (date: string) => {
@@ -71,9 +80,11 @@ export default () => {
   return {
     currentStep: readonly(currentStep),
     reservationFormInput: readonly(reservationFormInput),
+    selectedRoom: readonly(selectedRoom),
 
     setEndDate,
     setRoom,
+    setSelectedRoom,
     setAmountAdults,
     setAmountChildren,
     setBreakfast,

@@ -9,5 +9,4 @@
 <script setup lang="ts">
 import AppHeader from "../generic/AppHeader.vue";
 import AppFooter from "../generic/AppFooter.vue";
-import Home from "../../screens/Home.vue"
 </script>
