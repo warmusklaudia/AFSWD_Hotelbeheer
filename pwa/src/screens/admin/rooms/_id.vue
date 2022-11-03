@@ -18,10 +18,57 @@
               :src="luxe"
               :alt="`picture of a -suite`"
             />
-            <p class="leading-8 lg:max-w-sm">
+            <p class="leading-7 lg:max-w-sm">
               {{ result.room.description }}
             </p>
-            <p class="py-6">Price per night: <span>120$</span></p>
+            <p class="pt-2">
+              Category:
+              <span class="font-title pl-2 font-bold">{{
+                result.room.category
+              }}</span>
+            </p>
+            <p class="pt-2">
+              Location:
+              <span class="font-title pl-2 font-bold">{{
+                result.room.location
+              }}</span>
+            </p>
+            <div class="flex items-center">
+              <p class="pt-2">
+                Access code:
+                <span v-if="!showCode" class="font-title pl-1 font-bold"
+                  >*****</span
+                >
+                <span v-else class="font-title pl-2 font-bold">{{
+                  result.room.accessCode
+                }}</span>
+              </p>
+              <button
+                v-if="showCode"
+                @click="showCode = !showCode"
+                class="ml-2 hover:text-neutral-500"
+              >
+                <Eye />
+              </button>
+              <button
+                v-else
+                @click="showCode = !showCode"
+                class="ml-2 hover:text-neutral-500"
+              >
+                <EyeOff />
+              </button>
+            </div>
+            <div class="flex pt-2">
+              <p class="pr-2">Rating:</p>
+              <div class="text-transparent" v-for="n in result.room.rating">
+                <Star class="fill-themeBrown" />
+              </div>
+            </div>
+
+            <p class="pt-2 pb-4">
+              Price per night:
+              <span class="font-title pl-2 font-bold">120$</span>
+            </p>
           </div>
           <div class="lg:w-1/2">
             <h1 class="font-title pb-6 text-xl font-bold lg:text-2xl">
@@ -40,13 +87,13 @@ import RouteHolder from '../../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import ReservationHistoryTable from '../../../components/rooms/ReservationHistoryTable.vue'
-import { Search, Plus, Frown } from 'lucide-vue-next'
+import luxe from '../../../assets/luxe-suite.webp'
+import { Search, Plus, Frown, Eye, EyeOff, Star } from 'lucide-vue-next'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
 import { ROOM_BY_ID } from '../../../graphql/query.room'
-import luxe from '../../../assets/luxe-suite.webp'
 export default {
   components: {
     RouteHolder,
@@ -56,12 +103,16 @@ export default {
     Search,
     Plus,
     Frown,
+    Eye,
+    EyeOff,
+    Star,
   },
   setup() {
     const { params } = useRoute()
     const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
       id: params.id,
     })
+    let showCode = ref<boolean>(false)
 
     return {
       result,
@@ -69,6 +120,7 @@ export default {
       error,
       params,
       luxe,
+      showCode,
     }
   },
 }

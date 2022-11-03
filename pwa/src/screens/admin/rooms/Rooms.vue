@@ -32,13 +32,15 @@
               </select>
             </label>
           </div>
-          <router-link
-            to="/admin/rooms/add"
-            class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:place-self-end lg:w-2/3"
-          >
-            <Plus class="mr-2" size="20" />
-            ADD ROOM
-          </router-link>
+          <div>
+            <router-link
+              to="/admin/rooms/add"
+              class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:place-self-end lg:w-2/3"
+            >
+              <Plus class="mr-2" size="20" />
+              ADD ROOM
+            </router-link>
+          </div>
         </div>
         <div>
           <div
