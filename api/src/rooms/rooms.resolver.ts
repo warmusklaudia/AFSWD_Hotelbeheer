@@ -46,6 +46,14 @@ export class RoomsResolver {
     return this.roomsService.findOne(id);
   }
 
+  @Query(() => [Room], { name: 'roomsByNameCat' })
+  findByName(
+    @Args('searchRoomByName') name: string,
+    @Args('searchRoomByCat') category: string,
+  ): Promise<Room[]> {
+    return this.roomsService.findByString(name, category);
+  }
+
   @Mutation(() => Room)
   updateRoom(
     @Args('updateRoomInput') updateRoomInput: UpdateRoomInput,

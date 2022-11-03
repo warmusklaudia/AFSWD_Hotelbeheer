@@ -36,13 +36,11 @@ export class RoomsService {
     return this.roomsRepository.findOne(new ObjectId(id));
   }
 
-  findByString(searchString: string): Promise<Room[]> {
+  findByString(searchName: string, searchCategory: string): Promise<Room[]> {
     return this.roomsRepository.find({
-      where: [
-        //TODO
-        //@ts-ignore
-        { name: { $regex: searchString, $options: 'i' } },
-      ],
+      //@ts-ignore
+      name: { $regex: searchName, $options: 'i' },
+      category: { $regex: searchCategory, $options: 'i' },
     });
   }
 
