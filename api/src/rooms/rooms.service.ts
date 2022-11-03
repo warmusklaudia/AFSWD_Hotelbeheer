@@ -44,17 +44,22 @@ export class RoomsService {
     });
   }
 
-  update(updateRoomInput: UpdateRoomInput) {
-    const update = new Room();
-
-    update.id = new ObjectId(updateRoomInput.id);
+  async update(updateRoomInput: UpdateRoomInput) {
+    const update = await this.roomsRepository.findOne(
+      //@ts-ignore
+      new ObjectId(updateRoomInput.id),
+    );
     update.name = updateRoomInput.name;
     update.description = updateRoomInput.description;
     update.category = updateRoomInput.category;
     update.rating = updateRoomInput.rating;
     update.reservationId = updateRoomInput.reservationId;
+    update.location = updateRoomInput.location;
+    update.accessCode = updateRoomInput.accessCode;
 
-    return this.roomsRepository.save(update);
+    await this.roomsRepository.save(update);
+    //@ts-ignore
+    return this.roomsRepository.findOne(new ObjectId(updateRoomInput.id));
   }
 
   remove(id: string): Promise<DeleteResult> {

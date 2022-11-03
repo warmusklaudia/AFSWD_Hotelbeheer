@@ -3,42 +3,81 @@
     <section class="flex h-full w-full">
       <admin-navigation />
       <div class="w-5/6 p-6">
-        <admin-header :name="`Room ${params.id}`" />
+        <admin-header :name="`Room ${result?.room.name}`" />
+        <h2 class="font-title pl-6 font-bold">{{ result?.room.id }}</h2>
         <div class="p-6 lg:flex lg:justify-evenly lg:gap-6">
-          <div>
-            <div>
-              <label
-                for="roomAvailable"
-                class="flex cursor-pointer items-center"
-              >
-                <div class="relative">
-                  <input
-                    id="roomAvailable"
-                    type="checkbox"
-                    class="peer sr-only"
-                  />
-                  <div
-                    class="peer-checked:bg-themeBrown h-4 w-10 rounded-full bg-gray-400 shadow-inner"
-                  ></div>
-                  <div
-                    class="absolute -left-1 -top-1 h-6 w-6 rounded-full bg-white shadow transition peer-checked:translate-x-full"
-                  ></div>
-                </div>
-                <div class="ml-3">Available</div>
-              </label>
-            </div>
+          <div v-if="loading">
+            <p>Loading</p>
+          </div>
+          <div v-else-if="error">
+            <p>Error happened.</p>
+          </div>
+          <div v-else-if="result">
             <img
               class="lg:w-94 mb-6 mt-6 aspect-video rounded-md object-cover shadow-md"
               :src="luxe"
               :alt="`picture of a -suite`"
             />
-            <p class="leading-8 lg:max-w-sm">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores.
+            <p class="leading-7 lg:max-w-sm">
+              {{ result.room.description }}
             </p>
-            <p class="py-6">Price per night: <span>120$</span></p>
+            <p class="pt-2">
+              Category:
+              <span class="font-title pl-2 font-bold">{{
+                result.room.category
+              }}</span>
+            </p>
+            <p class="pt-2">
+              Location:
+              <span class="font-title pl-2 font-bold">{{
+                result.room.location
+              }}</span>
+            </p>
+            <div class="flex items-center">
+              <p class="pt-2">
+                Access code:
+                <span v-if="!showCode" class="font-title pl-1 font-bold"
+                  >*****</span
+                >
+                <span v-else class="font-title pl-2 font-bold">{{
+                  result.room.accessCode
+                }}</span>
+              </p>
+              <button
+                v-if="showCode"
+                @click="showCode = !showCode"
+                class="ml-2 hover:text-neutral-500"
+              >
+                <Eye />
+              </button>
+              <button
+                v-else
+                @click="showCode = !showCode"
+                class="ml-2 hover:text-neutral-500"
+              >
+                <EyeOff />
+              </button>
+            </div>
+            <div class="flex pt-2">
+              <p class="pr-2">Rating:</p>
+              <div class="text-transparent" v-for="n in result.room.rating">
+                <Star class="fill-themeBrown" />
+              </div>
+            </div>
+
+            <p class="pt-2 pb-4">
+              Price per night:
+              <span class="font-title pl-2 font-bold">120$</span>
+            </p>
+            <div class="pb-6">
+              <router-link
+                :to="`/admin/rooms/${result.room.id}/edit`"
+                class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex w-2/3 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:w-1/3 md:place-self-end lg:w-2/3"
+              >
+                <Edit class="mr-2" size="20" />
+                EDIT ROOM
+              </router-link>
+            </div>
           </div>
           <div class="lg:w-1/2">
             <h1 class="font-title pb-6 text-xl font-bold lg:text-2xl">
@@ -57,13 +96,13 @@ import RouteHolder from '../../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import ReservationHistoryTable from '../../../components/rooms/ReservationHistoryTable.vue'
-import { Search, Plus, Frown } from 'lucide-vue-next'
+import luxe from '../../../assets/luxe-suite.webp'
+import { Search, Plus, Frown, Eye, EyeOff, Star, Edit } from 'lucide-vue-next'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
 import { ROOM_BY_ID } from '../../../graphql/query.room'
-import luxe from '../../../assets/luxe-suite.webp'
 export default {
   components: {
     RouteHolder,
@@ -73,12 +112,17 @@ export default {
     Search,
     Plus,
     Frown,
+    Eye,
+    EyeOff,
+    Star,
+    Edit,
   },
   setup() {
     const { params } = useRoute()
     const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
       id: params.id,
     })
+    let showCode = ref<boolean>(false)
 
     return {
       result,
@@ -86,6 +130,7 @@ export default {
       error,
       params,
       luxe,
+      showCode,
     }
   },
 }

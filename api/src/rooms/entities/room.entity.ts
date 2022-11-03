@@ -12,7 +12,7 @@ import { ObjectId } from 'mongodb';
 @Entity()
 @ObjectType({ description: 'room' })
 export class Room {
-  @Field(() => ID, { description: 'id of the room' })
+  @Field(() => ID)
   @ObjectIdColumn({ name: '_id' })
   id: ObjectId;
 

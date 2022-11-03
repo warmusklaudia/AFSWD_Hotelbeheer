@@ -58,6 +58,7 @@ export class RoomsResolver {
   updateRoom(
     @Args('updateRoomInput') updateRoomInput: UpdateRoomInput,
   ): Promise<Room> {
+    //@ts-ignore
     return this.roomsService.update(updateRoomInput);
   }
 

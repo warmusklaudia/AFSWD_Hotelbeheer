@@ -19,6 +19,8 @@ export const ROOM_BY_ID = gql`
       description
       rating
       category
+      location
+      accessCode
     }
   }
 `
@@ -29,16 +31,6 @@ export const ROOM_BY_NAME_CAT = gql`
       searchRoomByName: $searchRoomByName
       searchRoomByCat: $searchRoomByCat
     ) {
-      id
-      name
-      category
-    }
-  }
-`
-
-export const ROOM_BY_CATEGORY = gql`
-  query roomsByCategory($searchRoomByCategory: String!) {
-    roomsByCategory(searchRoomByCategory: $searchRoomByCategory) {
       id
       name
       category
