@@ -4,10 +4,10 @@
       <admin-navigation />
       <div class="w-5/6 p-6">
         <admin-header name="Rooms" />
-        <div className="p-6 md:grid md:grid-cols-3">
-          <label for="rooms" class="relative block w-11/12 md:w-full">
+        <div className="p-6 md:grid md:grid-cols-3 md:items-start">
+          <label for="rooms" class="relative block">
             <Search
-              class="pointer-events-none absolute top-1/2 ml-2 -translate-y-1/2 transform text-neutral-600"
+              class="pointer-events-none absolute top-1/2 ml-2 -translate-y-1/2 transform text-neutral-400"
             />
             <input
               type="text"
@@ -18,24 +18,23 @@
               placeholder="Search"
             />
           </label>
-          <div class="pt-2 md:ml-3 md:flex md:items-center md:pt-0">
-            <label
-              for="roomsAvailable"
-              class="flex cursor-pointer items-center"
-            >
+          <div class="py-2 md:ml-3 md:flex md:items-center md:py-0">
+            <label for="category" class="flex items-center">
               <select
                 v-model="searchRoomCat"
+                id="category"
                 class="border-themeBrown focus:ring-themeBrown block w-full rounded-md border py-2 px-4 text-neutral-600 focus:outline-none focus:ring"
               >
                 <option value="" selected disabled>Pick category</option>
                 <option value="Luxe">Luxe</option>
                 <option value="Standard">Standard</option>
+                <option value="">All</option>
               </select>
             </label>
           </div>
           <router-link
             to="/admin/rooms/add"
-            class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:w-2/3 md:place-self-end"
+            class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:place-self-end lg:w-2/3"
           >
             <Plus class="mr-2" size="20" />
             ADD ROOM
