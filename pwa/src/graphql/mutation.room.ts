@@ -12,3 +12,17 @@ export const ADD_ROOM = gql`
     }
   }
 `
+
+export const UPDATE_ROOM = gql`
+  mutation updateRoom($updateRoomInput: UpdateRoomInput!) {
+    updateRoom(updateRoomInput: $updateRoomInput) {
+      id
+      name
+      description
+      rating
+      category
+      location
+      accessCode
+    }
+  }
+`

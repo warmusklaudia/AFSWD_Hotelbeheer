@@ -69,6 +69,15 @@
               Price per night:
               <span class="font-title pl-2 font-bold">120$</span>
             </p>
+            <div class="pb-6">
+              <router-link
+                :to="`/admin/rooms/${result.room.id}/edit`"
+                class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex w-2/3 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:w-1/3 md:place-self-end lg:w-2/3"
+              >
+                <Edit class="mr-2" size="20" />
+                EDIT ROOM
+              </router-link>
+            </div>
           </div>
           <div class="lg:w-1/2">
             <h1 class="font-title pb-6 text-xl font-bold lg:text-2xl">
@@ -88,7 +97,7 @@ import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import ReservationHistoryTable from '../../../components/rooms/ReservationHistoryTable.vue'
 import luxe from '../../../assets/luxe-suite.webp'
-import { Search, Plus, Frown, Eye, EyeOff, Star } from 'lucide-vue-next'
+import { Search, Plus, Frown, Eye, EyeOff, Star, Edit } from 'lucide-vue-next'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuery } from '@vue/apollo-composable'
@@ -106,6 +115,7 @@ export default {
     Eye,
     EyeOff,
     Star,
+    Edit,
   },
   setup() {
     const { params } = useRoute()

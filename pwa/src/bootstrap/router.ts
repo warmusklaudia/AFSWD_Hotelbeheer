@@ -84,6 +84,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../screens/admin/rooms/_id.vue'),
       },
       {
+        path: 'rooms/:id/edit',
+        component: () => import('../screens/admin/rooms/Update.vue'),
+      },
+      {
         path: 'rooms/add',
         component: () => import('../screens/admin/rooms/Add.vue'),
       },
