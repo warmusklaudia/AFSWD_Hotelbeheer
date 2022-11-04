@@ -3,7 +3,7 @@
         <template #header-actions>
             <router-link to="/reservations/add"
                 class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown">
-                Add 
+                Add
             </router-link>
         </template>
         <div class="grid animate-pulse gap-12 sm:grid-cols-2 md:grid-cols-3" v-if="loading">
@@ -16,9 +16,9 @@
         <div v-else-if="error">
             <p>Error happened.</p>
         </div>
-        <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5" v-else-if="result">
+        <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
             <RouterLink :to="`reservations/${r.id}`" v-for="r of result.reservations" :key="r.id">
-                <h2 class="font-theme text-2xl font-light">{{ r.name }}</h2>
+                <h2 class="font-theme text-lg font-light">{{ r.id }}</h2>
                 <p class="text-sm font-semibold tracking-wide text-neutral-500">
                     {{ r.category }}
                 </p>

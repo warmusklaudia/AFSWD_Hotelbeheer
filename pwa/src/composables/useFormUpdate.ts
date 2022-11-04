@@ -4,6 +4,7 @@ import useAuthentication from './useAuthentication'
 
 const { user } = useAuthentication()
 
+const reservationId = ref('')
 const currentStep = ref(1)
 const amountDays = ref(0)
 const addBreakfast = ref(false)
@@ -28,6 +29,24 @@ const selectedRoom = reactive({
 
 export default () => {
   const { push } = useRouter()
+
+  const setReservationId = (id: string) => {
+    reservationId.value = id
+  }
+
+  const resetReservationForm = () => {
+    reservationFormInput.rooms = 0
+    reservationFormInput.amountAdults = 0
+    reservationFormInput.amountChildren = 0
+    reservationFormInput.price = 0
+    reservationFormInput.reservationStartDate = new Date().toISOString().slice(0, 10)
+    reservationFormInput.reservationEndDate = ''
+
+    selectedRoom.id = ''
+
+    amountDays.value = 0
+    addBreakfast.value = false
+  }
 
   const setSelectedRoom = (room: any) => {
     selectedRoom.id = room.id
@@ -70,6 +89,10 @@ export default () => {
     console.log(addBreakfast)
   }
 
+  const setPrice = (price: number) =>{
+    reservationFormInput.price = price
+  }
+
   const changeStepTo = (step: number) => {
     console.log(reservationFormInput)
     push('/reservations/add/' + step)
@@ -81,12 +104,16 @@ export default () => {
     selectedRoom: readonly(selectedRoom),
     amountDays: readonly(amountDays),
     addBreakfast: readonly(addBreakfast),
+    reservationId: readonly(reservationId),
 
+    setReservationId,
+    resetReservationForm,
     setEndDate,
     setSelectedRoom,
     setAmountAdults,
     setAmountChildren,
     setBreakfast,
+    setPrice,
     changeStepTo,
   }
 }

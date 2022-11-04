@@ -20,6 +20,9 @@
                     </li>
                 </ul>
                 <p class="text-sm font-semibold tracking-wide text-neutral-500">{{ selectedRoom.description }}</p>
+                <p class="text-sm font-bold  text-neutral-700 mt-3 md:mt-6">Total price: €{{ reservationFormInput.price
+                }}
+                </p>
             </div>
         </div>
         <h2 class="font-title font-bold text-2xl md:text-3xl lg:text-4xl mb-6">Choose a payment method</h2>
@@ -73,37 +76,23 @@ import standard from '../../../assets/standard-suite.webp'
 import { ADD_RESERVATION } from "../../../graphql/mutation.reservation";
 
 const errorMessage = ref('')
-const { reservationFormInput, selectedRoom, changeStepTo } = useFormUpdate()
+const { reservationFormInput, selectedRoom, setReservationId, resetReservationForm, changeStepTo } = useFormUpdate()
 
 const { mutate: addReservation } = useMutation(ADD_RESERVATION, () => ({
     variables: {
-        createReservationInput: reservationFormInput,
+        CreateReservationInput: reservationFormInput,
     },
 }))
 
-const prices = [
-    {
-        name: 'luxe',
-        price: 500
-    },
-    {
-        name: 'standard',
-        price: 300
-    },
-    {
-        name: 'breakfast',
-        price: 120
-    }
-]
-
 const submitForm = async () => {
-    console.log('submitting form')
-    console.log(reservationFormInput)
+    const reservation = await addReservation().catch((err) => {
+        errorMessage.value = err.message
+    })
 
-    // const reservation = await addReservation().catch((err) => {
-    //     errorMessage.value = err.message
-    // })
-
-    // changeStepTo(4)
+    if (reservation) {
+        setReservationId(reservation.data.createReservation.id)
+        resetReservationForm()
+        changeStepTo(4)
+    }
 }
 </script>
