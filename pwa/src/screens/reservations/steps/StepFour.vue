@@ -25,19 +25,33 @@
                     <p class="text-sm font-semibold tracking-wide text-neutral-500">{{ selectedRoom.description }}</p>
                 </div>
             </div>
-            <div class="grid grid-cols-3">
+
+            <div v-if="loading" class="grid grid-cols-3">
+                <div v-for="i of skeletons" :key="i">
+                    <div class="@dark:bg-neutral-700 aspect-square rounded-md bg-neutral-300"></div>
+                    <p class="@dark:bg-neutral-600 my-1 h-6 w-24 rounded bg-neutral-200"></p>
+                    <p class="@dark:bg-neutral-600 my-2 h-6 w-12 rounded bg-neutral-100"></p>
+                </div>
+            </div>
+            <div v-else-if="error">
+                <p>Error happened.</p>
+            </div>
+            <div v-else-if="result" class="grid grid-cols-3">
                 <div>
                     <p class="font-title font-bold">Guest</p>
                     <p>{{ user?.displayName }}</p>
                 </div>
                 <div>
                     <p class="font-title font-bold">Check-in</p>
+                    <p>{{ new Date(result.reservation.reservationStartDate).toLocaleDateString() }}</p>
                 </div>
                 <div>
                     <p class="font-title font-bold">Check-out</p>
+                    <p>{{ new Date(result.reservation.reservationEndDate).toLocaleDateString() }}</p>
                 </div>
                 <div>
                     <p class="font-title font-bold">Reservation Nr.</p>
+                    <p>{{ result.reservation.id }}</p>
                 </div>
                 <div>
                     <p class="font-title font-bold">Email</p>
@@ -49,6 +63,7 @@
 </template>
 <script setup lang="ts">
 import { Star } from "lucide-vue-next";
+import { useQuery } from "@vue/apollo-composable";
 
 import useAuthentication from "../../../composables/useAuthentication";
 import useFormUpdate from "../../../composables/useFormUpdate";
@@ -56,6 +71,19 @@ import useFormUpdate from "../../../composables/useFormUpdate";
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 
+import { GET_RESERVATION_BY_ID } from "../../../graphql/query.reservation";
+import { ref } from "vue";
+
+const skeletons = ref(5)
+
 const { user } = useAuthentication()
-const { selectedRoom } = useFormUpdate()
+const { selectedRoom, reservationId } = useFormUpdate()
+
+const { result, loading, error } = useQuery(GET_RESERVATION_BY_ID, {
+    id: reservationId.value
+})
+
+console.log(reservationId.value)
+console.log(result)
+
 </script>
