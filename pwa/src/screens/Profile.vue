@@ -1,6 +1,9 @@
 <template>
     <RouteHolder title="Profile">
-        <button @click="handleLogOut">Log out</button>
+        <div>
+            <button @click="handleLogOut">Log out</button>
+        </div>
+
     </RouteHolder>
 </template>
 

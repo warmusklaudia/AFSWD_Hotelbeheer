@@ -47,10 +47,17 @@ export class ReservationsService {
     update.reservationStartDate = updateReservationInput.reservationStartDate;
     update.reservationEndDate = updateReservationInput.reservationEndDate;
 
-    return `This action updates a # reservation`;
+    return this.reservationsRepository.save(update);
   }
 
   async remove(id: string): Promise<DeleteResult> {
     return this.reservationsRepository.delete(id);
+  }
+
+  async incrementRooms(id: string, amount = 1): Promise<void> {
+    //@ts-ignore
+    const r: Reservation = await this.findOne(new ObjectId(id));
+    r.rooms = r.rooms + amount;
+    await this.reservationsRepository.save(r);
   }
 }

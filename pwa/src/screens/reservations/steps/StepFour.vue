@@ -63,7 +63,7 @@
 </template>
 <script setup lang="ts">
 import { Star } from "lucide-vue-next";
-import { useQuery } from "@vue/apollo-composable";
+import { useMutation, useQuery } from "@vue/apollo-composable";
 
 import useAuthentication from "../../../composables/useAuthentication";
 import useFormUpdate from "../../../composables/useFormUpdate";
@@ -73,6 +73,7 @@ import standard from '../../../assets/standard-suite.webp'
 
 import { GET_RESERVATION_BY_ID } from "../../../graphql/query.reservation";
 import { ref } from "vue";
+import { UPDATE_ROOM } from "../../../graphql/mutation.room";
 
 const skeletons = ref(5)
 
@@ -82,8 +83,5 @@ const { selectedRoom, reservationId } = useFormUpdate()
 const { result, loading, error } = useQuery(GET_RESERVATION_BY_ID, {
     id: reservationId.value
 })
-
-console.log(reservationId.value)
-console.log(result)
 
 </script>
