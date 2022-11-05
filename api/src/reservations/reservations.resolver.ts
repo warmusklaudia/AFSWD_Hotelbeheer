@@ -26,7 +26,7 @@ export class ReservationsResolver {
 
   @ResolveField()
   user(@Parent() r: Reservation): Promise<User> {
-    return this.usersService.findOne(r.userId);
+    return this.usersService.findOneByUid(r.userId);
   }
 
   @Mutation(() => Reservation)
