@@ -26,3 +26,13 @@ export const UPDATE_ROOM = gql`
     }
   }
 `
+
+export const DELETE_ROOM = gql`
+  mutation removeRoom($id: String!) {
+    removeRoom(id: $id) {
+      reservation {
+        id
+      }
+    }
+  }
+`

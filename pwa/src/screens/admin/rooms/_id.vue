@@ -69,14 +69,26 @@
               Price per night:
               <span class="font-title pl-2 font-bold">120$</span>
             </p>
-            <div class="pb-6">
+            <div class="pb-6 md:flex md:gap-2">
               <router-link
                 :to="`/admin/rooms/${result.room.id}/edit`"
-                class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex w-2/3 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:w-1/3 md:place-self-end lg:w-2/3"
+                class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown mb-2 flex w-2/3 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:mb-0 md:w-1/3 md:place-self-end lg:w-2/3"
               >
                 <Edit class="mr-2" size="20" />
                 EDIT ROOM
               </router-link>
+              <button
+                @click="deleteRoom"
+                class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex w-2/3 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring md:w-1/3 md:place-self-end lg:w-2/3"
+              >
+                <div v-if="!load" class="flex">
+                  <Trash2 class="mr-2" size="20" />
+                  DELETE ROOM
+                </div>
+                <div v-else>
+                  <Loader2 class="animate-spin" />
+                </div>
+              </button>
             </div>
           </div>
           <div class="lg:w-1/2">
@@ -97,12 +109,23 @@ import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import ReservationHistoryTable from '../../../components/rooms/ReservationHistoryTable.vue'
 import luxe from '../../../assets/luxe-suite.webp'
-import { Search, Plus, Frown, Eye, EyeOff, Star, Edit } from 'lucide-vue-next'
+import {
+  Search,
+  Plus,
+  Frown,
+  Eye,
+  EyeOff,
+  Star,
+  Edit,
+  Trash2,
+  Loader2,
+} from 'lucide-vue-next'
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { useQuery } from '@vue/apollo-composable'
+import { useRoute, useRouter } from 'vue-router'
+import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
-import { ROOM_BY_ID } from '../../../graphql/query.room'
+import { GET_ROOMS, ROOM_BY_ID } from '../../../graphql/query.room'
+import { DELETE_ROOM } from '../../../graphql/mutation.room'
 export default {
   components: {
     RouteHolder,
@@ -116,13 +139,43 @@ export default {
     EyeOff,
     Star,
     Edit,
+    Trash2,
+    Loader2,
   },
   setup() {
     const { params } = useRoute()
+    const { push } = useRouter()
+    const load = ref<boolean>(false)
     const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
       id: params.id,
     })
+
+    const { mutate: removeRoom } = useMutation(DELETE_ROOM, () => ({
+      variables: {
+        id: params.id,
+      },
+      // update: (cache, { data: { removeRoom } }) => {
+      //   let data = cache.readQuery<Room[]>({ query: GET_ROOMS })
+      //   console.log(data)
+      //   data = data ? [...data, removeRoom] : [removeRoom]
+      //   cache.writeQuery({ query: GET_ROOMS, data })
+      //   console.log(data)
+      // },
+    }))
+
     let showCode = ref<boolean>(false)
+
+    const deleteRoom = async () => {
+      //TODO - verder uitwerken
+      await removeRoom()
+        .catch((err) => {
+          console.log({ err })
+        })
+        .finally(() => {
+          load.value = false
+          push('/admin/rooms')
+        })
+    }
 
     return {
       result,
@@ -131,6 +184,9 @@ export default {
       params,
       luxe,
       showCode,
+      load,
+      removeRoom,
+      deleteRoom,
     }
   },
 }

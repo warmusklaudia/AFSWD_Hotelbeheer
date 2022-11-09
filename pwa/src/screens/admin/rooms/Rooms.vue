@@ -125,9 +125,6 @@ export default {
       searchRoomByCat: searchRoomCat,
     })
     const skeletons = ref<number>(6)
-    watch(searchRoomCat, () => {
-      console.log(searchRoomCat)
-    })
 
     return {
       result,
