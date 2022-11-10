@@ -5,7 +5,11 @@ export const GET_RESERVATIONS = gql`
     reservations {
         id
         rooms
+        amountAdults
+        amountChildren
         reservationStartDate
+        reservationEndDate
+        price
     }
   }`
 
