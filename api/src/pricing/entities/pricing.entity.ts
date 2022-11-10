@@ -17,10 +17,6 @@ export class Pricing {
 
   @Field()
   @Column()
-  reservationTime: string
-
-  @Field()
-  @Column()
   child: number
 
   @Field()
@@ -42,6 +38,30 @@ export class Pricing {
   @Field()
   @Column()
   breakfast: number
+
+  @Field()
+  @Column()
+  childWeekend: number
+
+  @Field()
+  @Column()
+  adultWeekend: number
+
+  @Field()
+  @Column()
+  nightWeekend: number
+
+  @Field()
+  @Column()
+  standardWeekend: number
+
+  @Field()
+  @Column()
+  luxeWeekend: number
+
+  @Field()
+  @Column()
+  breakfastWeekend: number
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

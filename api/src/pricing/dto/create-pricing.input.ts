@@ -3,9 +3,6 @@ import { InputType, Int, Field } from '@nestjs/graphql'
 @InputType()
 export class CreatePricingInput {
   @Field()
-  reservationTime: string
-
-  @Field()
   child: number
 
   @Field()
@@ -22,4 +19,22 @@ export class CreatePricingInput {
 
   @Field()
   breakfast: number
+
+  @Field()
+  childWeekend: number
+
+  @Field()
+  adultWeekend: number
+
+  @Field()
+  nightWeekend: number
+
+  @Field()
+  standardWeekend: number
+
+  @Field()
+  luxeWeekend: number
+
+  @Field()
+  breakfastWeekend: number
 }

@@ -16,13 +16,18 @@ export class PricingService {
   create(createPricingInput: CreatePricingInput): Promise<Pricing> {
     const p = new Pricing()
 
-    p.reservationTime = createPricingInput.reservationTime
     p.child = createPricingInput.child
     p.adult = createPricingInput.adult
     p.night = createPricingInput.night
     p.standard = createPricingInput.standard
     p.luxe = createPricingInput.luxe
     p.breakfast = createPricingInput.breakfast
+    p.childWeekend = createPricingInput.childWeekend
+    p.adultWeekend = createPricingInput.adultWeekend
+    p.nightWeekend = createPricingInput.nightWeekend
+    p.standardWeekend = createPricingInput.standardWeekend
+    p.luxeWeekend = createPricingInput.luxeWeekend
+    p.breakfastWeekend = createPricingInput.breakfastWeekend
 
     return this.pricingRepository.save(p)
   }
@@ -56,6 +61,12 @@ export class PricingService {
     update.standard = updatePricingInput.standard
     update.luxe = updatePricingInput.luxe
     update.breakfast = updatePricingInput.breakfast
+    update.childWeekend = updatePricingInput.childWeekend
+    update.adultWeekend = updatePricingInput.adultWeekend
+    update.nightWeekend = updatePricingInput.nightWeekend
+    update.standardWeekend = updatePricingInput.standardWeekend
+    update.luxeWeekend = updatePricingInput.luxeWeekend
+    update.breakfastWeekend = updatePricingInput.breakfastWeekend
     await this.pricingRepository.save(update)
     //@ts-ignore
     return this.pricingRepository.findOne(updatePricingInput.id)
