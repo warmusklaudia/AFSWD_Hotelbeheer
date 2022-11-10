@@ -17,11 +17,33 @@
             <p>Error happened.</p>
         </div>
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-            <RouterLink :to="`reservations/${r.id}`" v-for="r of result.reservations" :key="r.id">
-                <h2 class="font-theme text-lg font-light">{{ r.id }}</h2>
-                <p class="text-sm font-semibold tracking-wide text-neutral-500">
-                    {{ r.category }}
-                </p>
+            <RouterLink :to="`reservations/${r.id}`" v-for="r of result.reservations" :key="r.id"
+                class="max-h-56 p-4 shadow-md rounded flex flex-col justify-between">
+                <h2 class="font-title text-lg font-bold pb-3 border-b-2 border-black">Reservation</h2>
+                <div class="flex gap-3 items-center mb-3">
+                    <Calendar />
+                    <p class="text-sm font-semibold tracking-wide">
+                        {{ new Date(r.reservationStartDate).toLocaleDateString() }} - {{ new
+                                Date(r.reservationEndDate).toLocaleDateString()
+                        }}
+                    </p>
+                </div>
+                <div>
+                    <div class="flex gap-3 items-center">
+                        <Users />
+                        <p class="text-sm font-semibold tracking-wide">Adults: {{ r.amountAdults }}</p>
+                    </div>
+                    <div class="flex gap-3 items-center">
+                        <Users />
+                        <p class="text-sm font-semibold tracking-wide">Children: {{ r.amountChildren }}</p>
+                    </div>
+                </div>
+                <div class="flex gap-3 items-center mt-3">
+                    <Banknote />
+                    <p class="text-sm font-semibold tracking-wide">Price: €{{ r.price }}</p>
+                </div>
+
+
             </RouterLink>
         </div>
     </RouteHolder>
@@ -30,6 +52,7 @@
 <script setup lang="ts">
 import { Ref, ref } from "vue";
 import { useQuery } from '@vue/apollo-composable'
+import { Calendar, Banknote, Users } from "lucide-vue-next";
 
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import { GET_RESERVATIONS } from "../../graphql/query.reservation";
