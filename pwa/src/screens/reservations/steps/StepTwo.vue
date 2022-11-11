@@ -51,7 +51,7 @@
 
       <div class="mt-3 flex items-center space-x-3">
         <label
-          class="flex h-5 w-5 items-center justify-center rounded-md border border-neutral-300 focus-within:border-themeBrown ring-blue-200 focus-within:ring focus:outline-none"
+          class="flex h-5 w-5 items-center justify-center relative rounded-md border border-neutral-300 focus-within:border-themeBrown ring-blue-200 focus-within:ring focus:outline-none"
           for="breakfast">
           <input class="peer sr-only" type="checkbox" name="breakfast" id="breakfast" @input="setBreakfast"
             :checked="addBreakfast" />

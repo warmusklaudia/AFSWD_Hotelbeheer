@@ -31,16 +31,16 @@
                 <div>
                     <div class="flex gap-3 items-center">
                         <Users />
-                        <p class="text-sm font-semibold tracking-wide">Adults: {{ r.amountAdults }}</p>
+                        <p class="text-sm font-semibold tracking-wide">{{ r.amountAdults }} adults</p>
                     </div>
                     <div class="flex gap-3 items-center">
                         <Users />
-                        <p class="text-sm font-semibold tracking-wide">Children: {{ r.amountChildren }}</p>
+                        <p class="text-sm font-semibold tracking-wide">{{ r.amountChildren }} children</p>
                     </div>
                 </div>
                 <div class="flex gap-3 items-center mt-3">
                     <Banknote />
-                    <p class="text-sm font-semibold tracking-wide">Price: €{{ r.price }}</p>
+                    <p class="text-sm font-semibold tracking-wide">€ {{ r.price }}</p>
                 </div>
 
 

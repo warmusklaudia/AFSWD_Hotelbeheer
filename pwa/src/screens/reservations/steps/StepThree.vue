@@ -29,7 +29,7 @@
         <ul>
             <li class="flex items-center space-x-3">
                 <label
-                    class="flex h-5 w-5 items-center justify-center rounded-full border border-themeBrown ring-themeBrown focus-within:ring focus:outline-none">
+                    class="flex h-5 w-5 items-center relative justify-center rounded-full border border-themeBrown ring-themeBrown focus-within:ring focus:outline-none">
                     <input class="peer sr-only" type="radio" name="paymentOptions" id="cash" checked />
                     <span
                         class="transition w-2 h-2 bg-themeBrown rounded-full scale-0 ease-out peer-checked:scale-100"></span>
@@ -41,7 +41,7 @@
             </li>
             <li class="flex items-center space-x-3 mt-3">
                 <label
-                    class="flex h-5 w-5 items-center justify-center rounded-full border border-themeBrown ring-themeBrown focus-within:ring focus:outline-none">
+                    class="flex h-5 w-5 items-center relative justify-center rounded-full border border-themeBrown ring-themeBrown focus-within:ring focus:outline-none">
                     <input class="peer sr-only" type="radio" name="paymentOptions" id="credit" />
                     <span
                         class="w-2 h-2 bg-themeBrown rounded-full transition scale-0 ease-out peer-checked:scale-100"></span>
@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { useMutation } from "@vue/apollo-composable";
 import { Star } from "lucide-vue-next";
 
@@ -78,6 +78,11 @@ import { UPDATE_ROOM } from "../../../graphql/mutation.room";
 
 const errorMessage = ref('')
 const { reservationFormInput, selectedRoom, reservationId, setReservationId, resetReservationForm, changeStepTo } = useFormUpdate()
+const ReservationErrors = reactive({
+    amountDays: '',
+    amountPeople: '',
+    room: '',
+})
 
 const { mutate: addReservation } = useMutation(ADD_RESERVATION, () => ({
     variables: {
@@ -91,7 +96,37 @@ const { mutate: updateRoom } = useMutation(UPDATE_ROOM, () => ({
     },
 }))
 
+const IsReservationValid = (): boolean => {
+    let hasSomeErrors = false
+
+    if (reservationFormInput.reservationEndDate === '') {
+        ReservationErrors.amountDays = 'Please enter the amount of days'
+        hasSomeErrors = true
+    } else {
+        ReservationErrors.amountDays = ''
+    }
+
+    if (reservationFormInput.amountAdults === 0 && reservationFormInput.amountChildren === 0) {
+        ReservationErrors.amountPeople = 'Please enter an amount of people'
+        hasSomeErrors = true
+    } else {
+        ReservationErrors.amountPeople = ''
+    }
+
+    if (selectedRoom.id === '') {
+        ReservationErrors.room = 'Please select a room'
+        hasSomeErrors = true
+    } else {
+        ReservationErrors.room = ''
+    }
+
+    if (hasSomeErrors) return true
+    return false
+}
+
 const submitForm = async () => {
+    if (IsReservationValid()) return
+
     const reservation = await addReservation().catch((err) => {
         errorMessage.value = err.message
     })

@@ -2,7 +2,7 @@
     <section>
         <h2 class="font-title font-bold text-2xl md:text-3xl lg:text-4xl mb-6 text-center">Your booking is confirmed
         </h2>
-        <div class="grid grid-cols-[1fr_2fr]">
+        <div class="grid md:grid-cols-[1fr_2fr] gap-6">
             <div>
                 <img v-if="selectedRoom.category == 'luxe'"
                     class="mb-6 aspect-square w-full object-cover rounded-xl shadow-md max-w-64" :src="luxe"
@@ -36,10 +36,10 @@
             <div v-else-if="error">
                 <p>Error happened.</p>
             </div>
-            <div v-else-if="result" class="grid grid-cols-3">
+            <div v-else-if="result" class="grid md:grid-cols-3">
                 <div>
                     <p class="font-title font-bold">Guest</p>
-                    <p>{{ user?.displayName }}</p>
+                    <p class="max-w-[14rem] break-words">{{ user?.displayName }}</p>
                 </div>
                 <div>
                     <p class="font-title font-bold">Check-in</p>
@@ -55,7 +55,7 @@
                 </div>
                 <div>
                     <p class="font-title font-bold">Email</p>
-                    <p>{{ user?.email }}</p>
+                    <p class="max-w-[14rem] break-words">{{ user?.email }}</p>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
 </template>
 <script setup lang="ts">
 import { Star } from "lucide-vue-next";
-import { useMutation, useQuery } from "@vue/apollo-composable";
+import { useQuery } from "@vue/apollo-composable";
 
 import useAuthentication from "../../../composables/useAuthentication";
 import useFormUpdate from "../../../composables/useFormUpdate";
@@ -73,7 +73,6 @@ import standard from '../../../assets/standard-suite.webp'
 
 import { GET_RESERVATION_BY_ID } from "../../../graphql/query.reservation";
 import { ref } from "vue";
-import { UPDATE_ROOM } from "../../../graphql/mutation.room";
 
 const skeletons = ref(5)
 
