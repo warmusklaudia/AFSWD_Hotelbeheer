@@ -13,55 +13,15 @@ import {
 export class Pricing {
   @Field(() => ID)
   @ObjectIdColumn({ name: '_id' })
-  id: ObjectId
+  rateId: ObjectId
 
   @Field()
   @Column()
-  child: number
+  rateName: string
 
   @Field()
   @Column()
-  adult: number
-
-  @Field()
-  @Column()
-  night: number
-
-  @Field()
-  @Column()
-  standard: number
-
-  @Field()
-  @Column()
-  luxe: number
-
-  @Field()
-  @Column()
-  breakfast: number
-
-  @Field()
-  @Column()
-  childWeekend: number
-
-  @Field()
-  @Column()
-  adultWeekend: number
-
-  @Field()
-  @Column()
-  nightWeekend: number
-
-  @Field()
-  @Column()
-  standardWeekend: number
-
-  @Field()
-  @Column()
-  luxeWeekend: number
-
-  @Field()
-  @Column()
-  breakfastWeekend: number
+  price: number
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

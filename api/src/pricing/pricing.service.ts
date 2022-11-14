@@ -16,18 +16,8 @@ export class PricingService {
   create(createPricingInput: CreatePricingInput): Promise<Pricing> {
     const p = new Pricing()
 
-    p.child = createPricingInput.child
-    p.adult = createPricingInput.adult
-    p.night = createPricingInput.night
-    p.standard = createPricingInput.standard
-    p.luxe = createPricingInput.luxe
-    p.breakfast = createPricingInput.breakfast
-    p.childWeekend = createPricingInput.childWeekend
-    p.adultWeekend = createPricingInput.adultWeekend
-    p.nightWeekend = createPricingInput.nightWeekend
-    p.standardWeekend = createPricingInput.standardWeekend
-    p.luxeWeekend = createPricingInput.luxeWeekend
-    p.breakfastWeekend = createPricingInput.breakfastWeekend
+    p.rateName = createPricingInput.rateName
+    p.price = createPricingInput.price
 
     return this.pricingRepository.save(p)
   }
@@ -41,34 +31,15 @@ export class PricingService {
     return this.pricingRepository.findOne(new ObjectId(id))
   }
 
-  findByReservationTime(searchReservationTime: string): Promise<Pricing> {
-    return this.pricingRepository.findOneBy({
-      //@ts-ignore
-      where: {
-        reservationTime: searchReservationTime,
-      },
-    })
-  }
-
   async update(updatePricingInput: UpdatePricingInput) {
     const update = await this.pricingRepository.findOne(
       //@ts-ignore
-      new ObjectId(updatePricingInput.id),
+      new ObjectId(updatePricingInput.rateId),
     )
-    update.child = updatePricingInput.child
-    update.adult = updatePricingInput.adult
-    update.night = updatePricingInput.night
-    update.standard = updatePricingInput.standard
-    update.luxe = updatePricingInput.luxe
-    update.breakfast = updatePricingInput.breakfast
-    update.childWeekend = updatePricingInput.childWeekend
-    update.adultWeekend = updatePricingInput.adultWeekend
-    update.nightWeekend = updatePricingInput.nightWeekend
-    update.standardWeekend = updatePricingInput.standardWeekend
-    update.luxeWeekend = updatePricingInput.luxeWeekend
-    update.breakfastWeekend = updatePricingInput.breakfastWeekend
+    update.rateName = updatePricingInput.rateName
+    update.price = updatePricingInput.price
     await this.pricingRepository.save(update)
     //@ts-ignore
-    return this.pricingRepository.findOne(updatePricingInput.id)
+    return this.pricingRepository.findOne(updatePricingInput.rateId)
   }
 }

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { PricingService } from './pricing.service'
 import { Pricing } from './entities/pricing.entity'
 import { CreatePricingInput } from './dto/create-pricing.input'
@@ -23,13 +23,6 @@ export class PricingResolver {
   @Query(() => Pricing, { name: 'price' })
   findOne(@Args('id', { type: () => String }) id: string): Promise<Pricing> {
     return this.pricingService.findOne(id)
-  }
-
-  @Query(() => Pricing, { name: 'priceByReservationTime' })
-  findOneByReservationTime(
-    @Args('reservationTime', { type: () => String }) reservationTime: string,
-  ): Promise<Pricing> {
-    return this.pricingService.findByReservationTime(reservationTime)
   }
 
   @Mutation(() => Pricing)
