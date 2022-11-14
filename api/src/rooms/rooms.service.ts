@@ -38,6 +38,7 @@ export class RoomsService {
     return this.roomsRepository.findOne(new ObjectId(id));
   }
 
+<<<<<<< HEAD
   findByString(searchName: string, searchCategory: string): Promise<Room[]> {
     return this.roomsRepository.find({
       //@ts-ignore
@@ -51,6 +52,12 @@ export class RoomsService {
       //@ts-ignore
       new ObjectId(updateRoomInput.id),
     );
+=======
+  async update(updateRoomInput: UpdateRoomInput) {
+    //@ts-ignore
+    const update = await this.roomsRepository.findOne(updateRoomInput.id);
+
+>>>>>>> reservations
     update.name = updateRoomInput.name;
     update.description = updateRoomInput.description;
     update.category = updateRoomInput.category;
@@ -58,6 +65,10 @@ export class RoomsService {
     update.reservationId = updateRoomInput.reservationId;
     update.location = updateRoomInput.location;
     update.accessCode = updateRoomInput.accessCode;
+
+    if (updateRoomInput.reservationId) {
+      this.reservationsService.incrementRooms(updateRoomInput.reservationId);
+    }
 
     if (updateRoomInput.reservationId) {
       this.reservationsService.incrementRooms(updateRoomInput.reservationId);
