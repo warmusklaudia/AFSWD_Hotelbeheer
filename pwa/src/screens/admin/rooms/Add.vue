@@ -266,6 +266,13 @@ export default {
       variables: {
         createRoomInput: roomInput,
       },
+      // update: (cache, { data: { addRoom } }) => {
+      //   let data = cache.readQuery<Room[]>({ query: GET_ROOMS })
+      //   console.log(data)
+      //   data = data ? [...data, addRoom] : [addRoom]
+      //   cache.writeQuery({ query: GET_ROOMS, data })
+      //   console.log(data)
+      // },
     }))
 
     const isFormInvalid = (): boolean => {
