@@ -9,6 +9,7 @@ import router from './bootstrap/router'
 
 const app: VueApp = createApp(App)
 const { restoreUser } = useAuthentication()
+
 ;(async () => {
   await restoreUser()
 

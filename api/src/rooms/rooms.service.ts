@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectId } from 'mongodb';
+import { ReservationsService } from 'src/reservations/reservations.service';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
@@ -11,6 +12,7 @@ export class RoomsService {
   constructor(
     @InjectRepository(Room)
     private readonly roomsRepository: Repository<Room>,
+    private readonly reservationsService: ReservationsService,
   ) {}
 
   create(createRoomInput: CreateRoomInput): Promise<Room> {
@@ -36,6 +38,7 @@ export class RoomsService {
     return this.roomsRepository.findOne(new ObjectId(id));
   }
 
+<<<<<<< HEAD
   findByString(searchName: string, searchCategory: string): Promise<Room[]> {
     return this.roomsRepository.find({
       //@ts-ignore
@@ -49,6 +52,12 @@ export class RoomsService {
       //@ts-ignore
       new ObjectId(updateRoomInput.id),
     );
+=======
+  async update(updateRoomInput: UpdateRoomInput) {
+    //@ts-ignore
+    const update = await this.roomsRepository.findOne(updateRoomInput.id);
+
+>>>>>>> reservations
     update.name = updateRoomInput.name;
     update.description = updateRoomInput.description;
     update.category = updateRoomInput.category;
@@ -57,9 +66,15 @@ export class RoomsService {
     update.location = updateRoomInput.location;
     update.accessCode = updateRoomInput.accessCode;
 
-    await this.roomsRepository.save(update);
-    //@ts-ignore
-    return this.roomsRepository.findOne(new ObjectId(updateRoomInput.id));
+    if (updateRoomInput.reservationId) {
+      this.reservationsService.incrementRooms(updateRoomInput.reservationId);
+    }
+
+    if (updateRoomInput.reservationId) {
+      this.reservationsService.incrementRooms(updateRoomInput.reservationId);
+    }
+
+    return this.roomsRepository.save(update);
   }
 
   remove(id: string): Promise<DeleteResult> {
