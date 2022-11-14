@@ -17,10 +17,10 @@ export class UsersService {
     const u = new User();
 
     u.uid = createUserInput.uid;
-    // u.preferredLanguage = createUserInput.preferredLanguage;
-    // u.amountCredits = createUserInput.amountCredits;
-    // u.reservations = createUserInput.reservations;
-    // u.breakfastCode = createUserInput.breakfastCode;
+    u.preferredLanguage = createUserInput.preferredLanguage;
+    u.amountCredits = createUserInput.amountCredits;
+    u.reservations = createUserInput.reservations;
+    u.breakfastCode = createUserInput.breakfastCode;
     return this.userRepository.save(u);
   }
 
