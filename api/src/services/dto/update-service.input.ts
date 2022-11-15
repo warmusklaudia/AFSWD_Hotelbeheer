@@ -1,8 +1,8 @@
 import { CreateServiceInput } from './create-service.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { InputType, Field, ID, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateServiceInput extends PartialType(CreateServiceInput) {
-  @Field(() => Int)
+  @Field(() => ID)
   id: number;
 }

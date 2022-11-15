@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectId } from 'mongodb';
+import { Service } from 'src/services/entities/service.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -48,5 +49,16 @@ export class UsersService {
 
   remove(id: string): Promise<DeleteResult> {
     return this.userRepository.delete(id);
+  }
+
+  async addToRequestedServices(id: string, services: Service[]) {
+    //@ts-ignore
+    const u: User = await this.findOne(new ObjectId(id));
+
+    u.requestedServices = u.requestedServices
+      ? [...services, ...u.requestedServices] // merge the current services with the new ones
+      : [...services];
+
+    return this.userRepository.save(u);
   }
 }
