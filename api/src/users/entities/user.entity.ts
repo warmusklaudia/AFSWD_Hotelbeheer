@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
+import { Service } from 'src/services/entities/service.entity';
 import {
   Column,
   CreateDateColumn,
@@ -34,6 +35,10 @@ export class User {
   @Field({ nullable: true })
   @Column({ nullable: true })
   breakfastCode?: string;
+
+  @Field(() => [Service], { nullable: 'itemsAndList' })
+  @Column({ nullable: true })
+  requestedServices?: Service[];
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
