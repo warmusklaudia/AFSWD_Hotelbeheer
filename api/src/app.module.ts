@@ -5,9 +5,10 @@ import { UsersModule } from './users/users.module';
 import { BootstrapModule } from './bootstrap/bootstrap.module';
 import { DatabaseSeedModule } from "./seed/seed.module";
 import { PricingModule } from './pricing/pricing.module';
+import { ServicesModule } from './services/services.module';
 
 @Module({
-  imports: [BootstrapModule, RoomsModule, ReservationsModule, UsersModule, DatabaseSeedModule, PricingModule],
+  imports: [BootstrapModule, RoomsModule, ReservationsModule, UsersModule, DatabaseSeedModule, PricingModule, ServicesModule],
   controllers: [],
   providers: [],
 })
