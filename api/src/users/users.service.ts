@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ObjectId } from 'mongodb';
-import { DeleteResult, Repository } from 'typeorm';
-import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
-import { User } from './entities/user.entity';
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { ObjectId } from 'mongodb'
+import { DeleteResult, Repository } from 'typeorm'
+import { CreateUserInput } from './dto/create-user.input'
+import { UpdateUserInput } from './dto/update-user.input'
+import { User } from './entities/user.entity'
 
 @Injectable()
 export class UsersService {
@@ -14,39 +14,39 @@ export class UsersService {
   ) {}
 
   create(createUserInput: CreateUserInput): Promise<User> {
-    const u = new User();
+    const u = new User()
 
-    u.uid = createUserInput.uid;
-    u.preferredLanguage = createUserInput.preferredLanguage;
-    u.amountCredits = createUserInput.amountCredits;
-    u.reservations = createUserInput.reservations;
-    u.breakfastCode = createUserInput.breakfastCode;
-    return this.userRepository.save(u);
+    u.uid = createUserInput.uid
+    u.preferredLanguage = createUserInput.preferredLanguage
+    u.amountCredits = createUserInput.amountCredits
+    u.reservations = createUserInput.reservations
+    u.breakfastCode = createUserInput.breakfastCode
+    return this.userRepository.save(u)
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  findAll() {
+    return this.userRepository.find()
   }
 
   findOne(id: string): Promise<User> {
     //@ts-ignore
-    return this.userRepository.findOne(new ObjectId(id));
+    return this.userRepository.findOne(new ObjectId(id))
   }
 
   findOneByUid(uid: string): Promise<User> {
-    return this.userRepository.findOneBy({ uid });
+    return this.userRepository.findOneBy({ uid })
   }
 
   update(updateUserInput: UpdateUserInput) {
-    const update = new User();
+    const update = new User()
 
-    update.id = new ObjectId(updateUserInput.id);
+    update.id = new ObjectId(updateUserInput.id)
     //update.preferredLanguage = updateUserInput.preferredLanguage;
 
-    return this.userRepository.save(update);
+    return this.userRepository.save(update)
   }
 
   remove(id: string): Promise<DeleteResult> {
-    return this.userRepository.delete(id);
+    return this.userRepository.delete(id)
   }
 }
