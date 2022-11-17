@@ -1,4 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectId } from 'mongodb';
+import { Service } from 'src/services/entities/service.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,26 +8,27 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ObjectId } from 'mongodb';
 
 @Entity()
 @ObjectType()
-export class Service {
-  @Field(() => ID, { description: 'id of the service' })
+export class RequestedService {
+  @Field(() => ID, { description: 'id of the requestedService' })
   @ObjectIdColumn()
   id: ObjectId;
 
-  @Field() // GraphQL
-  @Column() //typeORM
-  name: string;
+  @Field(() => Service)
+  service: Service;
+
+  @Column()
+  serviceId: string;
+
+  @Field({ nullable: true }) // GraphQL
+  @Column({ nullable: true }) //typeORM
+  message: string;
 
   @Field() // GraphQL
   @Column() //typeORM
-  description: string;
-
-  @Field() // GraphQL
-  @Column() //typeORM
-  price: number;
+  requestedDate: Date;
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

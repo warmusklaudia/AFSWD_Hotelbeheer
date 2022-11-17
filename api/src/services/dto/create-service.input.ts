@@ -6,8 +6,8 @@ export class CreateServiceInput {
   name: string;
 
   @Field()
-  message: string;
+  description: string;
 
   @Field()
-  requestedDate: Date;
+  price: number;
 }

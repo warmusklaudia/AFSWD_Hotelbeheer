@@ -17,8 +17,8 @@ export class ServicesService {
     const s = new Service();
 
     s.name = createServiceInput.name;
-    s.message = createServiceInput.message;
-    s.requestedDate = createServiceInput.requestedDate;
+    s.description = createServiceInput.description;
+    s.price = createServiceInput.price;
 
     return this.servicesRepository.save(s);
   }
@@ -37,8 +37,8 @@ export class ServicesService {
     const update = await this.servicesRepository.findOne(updateServiceInput.id);
 
     update.name = updateServiceInput.name;
-    update.message = updateServiceInput.message;
-    update.requestedDate = updateServiceInput.requestedDate;
+    update.description = updateServiceInput.description;
+    update.price = updateServiceInput.price;
 
     return this.servicesRepository.save(update);
   }
