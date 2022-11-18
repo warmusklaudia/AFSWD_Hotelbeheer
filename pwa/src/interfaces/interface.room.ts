@@ -1,6 +1,6 @@
 import { Reservation } from './interface.reservation'
 
-export interface Room {
+export default interface Room {
   id: string
   name: string
   description: string

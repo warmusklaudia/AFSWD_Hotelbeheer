@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
 import { Service } from 'src/services/entities/service.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -21,6 +22,12 @@ export class RequestedService {
 
   @Column()
   serviceId: string;
+
+  @Field(() => User)
+  user: User;
+
+  @Column()
+  userId: string;
 
   @Field({ nullable: true }) // GraphQL
   @Column({ nullable: true }) //typeORM

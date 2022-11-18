@@ -18,14 +18,14 @@
             </div>
             <div v-else-if="result">
                 <ul class="flex flex-col gap-3">
-                    <li>
-                        <h2 class="font-title font-bold mb-2">Title</h2>
-                        <div class="grid md:grid-cols-[auto_1fr] gap-3">
+                    <li v-for="s of result.services">
+                        <h2 class="font-title font-bold text-2xl mb-3">{{ s.name }}</h2>
+                        <div class="grid md:grid-cols-[auto_1fr] gap-6">
                             <img class="@dark:bg-neutral-700 aspect-square block object-cover max-h-48 rounded-md bg-neutral-300"
                                 src="https://images.pexels.com/photos/5371575/pexels-photo-5371575.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-                            <div>
-                                <p class="">description</p>
-                                <p class="">price</p>
+                            <div class="grid grid-rows-[1fr_auto] gap-3">
+                                <p class="font-theme">{{ s.description }}</p>
+                                <p class="text-lg">Price: € {{ s.price }}</p>
                             </div>
                         </div>
                     </li>
@@ -44,10 +44,11 @@
                                         ? 'border-red-500 text-red-600 ring ring-red-600'
                                         : 'ring - themeBrown'
                                 " class="mr-3 mt-3 rounded-md border font-theme font-light border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
-                                    name="serviceId" id="serviceId" @change="" :disabled="loading">
+                                    name="serviceId" id="serviceId" @change="handleServiceChange" v-model="service"
+                                    :disabled="loading">
                                     <option :value="{}" selected disabled>Pick a service</option>
-                                    <option v-for="l of result.locations" :key="l.id" :value="l">
-                                        {{ l.name }}
+                                    <option v-for="s of result.services" :key="s.id" :value="s">
+                                        {{ s.name }}
                                     </option>
                                 </select>
                             </div>
@@ -63,17 +64,17 @@
                             <span class="font-title font-bold mb-2 block">Date</span>
 
                             <input id="date" :class="
-                                serviceErrors.date
+                                serviceErrors.requestedDate
                                     ? 'border-red-500 text-red-600 ring ring-red-600'
                                     : 'ring-themeBrown'
                             " class="w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
-                                type="date" name="date" v-model="serviceInput.date"
+                                type="date" name="date" v-model="serviceInput.requestedDate"
                                 :min="new Date().toISOString().slice(0, 10)" />
                         </label>
-                        <div v-if="serviceErrors.date != ''"
+                        <div v-if="serviceErrors.requestedDate != ''"
                             class="text-red-600 bg-red-100 border-1 border-red-600 rounded-sm text-sm p-1 mt-2 flex items-center gap-2">
                             <AlertTriangle />
-                            <p>{{ serviceErrors.date }}</p>
+                            <p>{{ serviceErrors.requestedDate }}</p>
                         </div>
                     </div>
                     <div>
@@ -96,59 +97,80 @@
 </template>
 
 <script setup lang="ts">
-import { useQuery } from "@vue/apollo-composable";
+import { useMutation, useQuery } from "@vue/apollo-composable";
 import { reactive, ref } from "vue";
 import { AlertTriangle } from "lucide-vue-next"
 import { useRouter } from "vue-router";
 
 import RouteHolder from '../../components/holders/RouteHolder.vue'
-
-import { GET_RESERVATIONS } from "../../graphql/query.reservation";
+import Service from '../../interfaces/interface.service'
+import { GET_SERVICES } from "../../graphql/query.service";
+import { ADD_REQUESTED_SERVICE } from "../../graphql/mutation.requestedService";
+import useAuthentication from "../../composables/useAuthentication";
 
 const { push } = useRouter()
-const { result, loading, error } = useQuery(GET_RESERVATIONS)
+const { user } = useAuthentication()
+const errorMessage = ref('')
+const { result, loading, error } = useQuery(GET_SERVICES)
 
 const skeletons = ref(3)
+const service = ref({} as Service)
 
 const serviceErrors = reactive({
     serviceId: '',
-    date: ''
+    requestedDate: ''
 })
 
 const serviceInput = reactive({
-    serviceId: '',
-    date: '',
+    serviceId: service.value.id,
+    userId: user.value!.uid,
+    requestedDate: '',
     message: '',
 })
+
+const handleServiceChange = () => {
+    if (!service.value) return
+
+    console.log(service.value)
+    serviceInput.serviceId = service.value.id
+}
 
 const IsFormValid = (): boolean => {
     let hasSomeErrors = false
 
-    if (serviceInput.serviceId === '') {
+    if (!serviceInput.serviceId) {
         serviceErrors.serviceId = 'Please choose a service'
         hasSomeErrors = true
     } else {
-        serviceErrors.date = ''
+        serviceErrors.serviceId = ''
     }
 
-    if (serviceInput.date === '') {
-        serviceErrors.date = 'Please enter a date'
+    if (serviceInput.requestedDate === '') {
+        serviceErrors.requestedDate = 'Please enter a date'
         hasSomeErrors = true
     } else {
-        serviceErrors.date = ''
+        serviceErrors.requestedDate = ''
     }
 
     if (hasSomeErrors) return true
     return false
 }
 
+const { mutate: addRequestedService } = useMutation(ADD_REQUESTED_SERVICE, () => ({
+    variables: {
+        createRequestedServiceInput: serviceInput,
+    },
+}))
+
 const submitForm = async () => {
     if (IsFormValid()) return
 
-    console.log('click')
-    // const service = await addReservation().catch((err) => {
-    //     errorMessage.value = err.message
-    // })
-    push('/services')
+    const service = await addRequestedService().catch((err) => {
+        errorMessage.value = err.message
+    })
+
+    if (service) {
+        push('/services')
+    }
 }
 </script>

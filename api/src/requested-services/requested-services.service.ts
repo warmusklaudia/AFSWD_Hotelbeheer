@@ -17,7 +17,8 @@ export class RequestedServicesService {
   ): Promise<RequestedService> {
     const rs = new RequestedService();
 
-    rs.service = createRequestedServiceInput.service;
+    rs.serviceId = createRequestedServiceInput.serviceId;
+    rs.userId = createRequestedServiceInput.userId;
     rs.message = createRequestedServiceInput.message;
     rs.requestedDate = createRequestedServiceInput.requestedDate;
 
@@ -33,13 +34,24 @@ export class RequestedServicesService {
     return this.requestedServiceRepository.findOne(new ObjectId(id));
   }
 
+  findByUserId(userId: string): Promise<RequestedService[]> {
+    //@ts-ignore
+    return this.requestedServiceRepository.find({ userId });
+  }
+
+  findByServiceId(serviceId: string): Promise<RequestedService[]> {
+    //@ts-ignore
+    return this.requestedServiceRepository.find({ serviceId });
+  }
+
   async update(updateRequestedServiceInput: UpdateRequestedServiceInput) {
     const update = await this.requestedServiceRepository.findOne(
       //@ts-ignore
       updateRequestedServiceInput.id,
     );
 
-    update.service = updateRequestedServiceInput.service;
+    update.serviceId = updateRequestedServiceInput.serviceId;
+    update.userId = updateRequestedServiceInput.userId;
     update.message = updateRequestedServiceInput.message;
     update.requestedDate = updateRequestedServiceInput.requestedDate;
 
