@@ -17,18 +17,16 @@
             <p>Error happened.</p>
         </div>
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-            <RouterLink :to="`reservations/${r.id}`" v-for="r of result.reservations" :key="r.id"
+            <div v-for="rs of result.requestedServices" :key="rs.id"
                 class="max-h-56 p-4 shadow-md rounded flex flex-col justify-between">
-                <h2 class="font-title text-lg font-bold pb-3 border-b-2 border-black">Service</h2>
-                <div class="flex gap-3 items-center mb-3">
+                <h2 class="font-title text-lg font-bold pb-3 border-b-2 border-black">{{ rs.service.name }}</h2>
+                <div class="flex gap-3 items-center">
                     <Calendar />
                     <p class="text-sm font-semibold tracking-wide">
-                        {{ new Date(r.reservationStartDate).toLocaleDateString() }} - {{ new
-                                Date(r.reservationEndDate).toLocaleDateString()
-                        }}
+                        {{ new Date(rs.requestedDate).toLocaleDateString() }}
                     </p>
                 </div>
-                <div>
+                <!-- <div>
                     <div class="flex gap-3 items-center">
                         <Users />
                         <p class="text-sm font-semibold tracking-wide">{{ r.amountAdults }} adults</p>
@@ -37,12 +35,12 @@
                         <Users />
                         <p class="text-sm font-semibold tracking-wide">{{ r.amountChildren }} children</p>
                     </div>
-                </div>
-                <div class="flex gap-3 items-center mt-3">
+                </div> -->
+                <div class="flex gap-3 items-center mb-3">
                     <Banknote />
-                    <p class="text-sm font-semibold tracking-wide">€ {{ r.price }}</p>
+                    <p class="text-sm font-semibold tracking-wide">€ {{ rs.service.price }}</p>
                 </div>
-            </RouterLink>
+            </div>
         </div>
     </RouteHolder>
 </template>
@@ -50,9 +48,21 @@
 <script setup lang="ts">
 import { useQuery } from "@vue/apollo-composable";
 import { ref } from "vue";
-import RouteHolder from '../../components/holders/RouteHolder.vue'
-import { GET_RESERVATIONS } from "../../graphql/query.reservation";
+import { Banknote, Calendar } from "lucide-vue-next";
 
-const { result, loading, error } = useQuery(GET_RESERVATIONS)
-const skeletons = ref(18)
+import RouteHolder from '../../components/holders/RouteHolder.vue'
+import { GET_REQUESTED_SERVICES, GET_REQUESTED_SERVICES_BY_USER_ID } from "../../graphql/query.requestedService";
+
+import useAuthentication from "../../composables/useAuthentication";
+
+const { result, loading, error } = useQuery(GET_REQUESTED_SERVICES);
+
+// const { user } = useAuthentication()
+// const { result, loading, error } = useQuery(GET_REQUESTED_SERVICES_BY_USER_ID, {
+//     variable: {
+//         uid: user.value?.uid!
+//     }
+// });
+
+const skeletons = ref(6)
 </script>
