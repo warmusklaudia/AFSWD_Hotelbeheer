@@ -6,8 +6,10 @@ import {
   RouteRecordRaw,
 } from 'vue-router'
 import useAuthentication from '../composables/useAuthentication'
+import useCustomUser from '../composables/useCustomUser'
 
 const { user } = useAuthentication()
+const { customUser, loadCustomUser } = useCustomUser()
 
 const routes: RouteRecordRaw[] = [
   {
@@ -42,19 +44,23 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '1',
-            component: () => import('../screens/reservations/steps/StepOne.vue'),
+            component: () =>
+              import('../screens/reservations/steps/StepOne.vue'),
           },
           {
             path: '2',
-            component: () => import('../screens/reservations/steps/StepTwo.vue'),
+            component: () =>
+              import('../screens/reservations/steps/StepTwo.vue'),
           },
           {
             path: '3',
-            component: () => import('../screens/reservations/steps/StepThree.vue'),
+            component: () =>
+              import('../screens/reservations/steps/StepThree.vue'),
           },
           {
             path: '4',
-            component: () => import('../screens/reservations/steps/StepFour.vue'),
+            component: () =>
+              import('../screens/reservations/steps/StepFour.vue'),
           },
         ],
       },
@@ -93,6 +99,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/admin',
+    meta: { needsAuthentication: true, needsToBeAdmin: true },
     redirect: '/admin/home',
     children: [
       {
@@ -145,10 +152,21 @@ const router: Router = createRouter({
 })
 
 router.beforeEach(
-  (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    console.log('log user.value?.uid: ', user.value?.uid)
+    console.log('log customUser: ', customUser)
+    console.log(
+      'log customUser.value?.role.name: ',
+      customUser.value?.role.name,
+    )
     if (to.meta.needsAuthentication && !user.value) return 'auth/login'
 
     if (to.meta.cantAuthentication && user.value) return '/'
+
+    if (to.meta.needsToBeAdmin && customUser.value?.role.name !== 'admin')
+      return '/'
+    if (to.meta.needsToBeAdmin && customUser.value?.role.name === 'admin')
+      return 'admin'
   },
 )
 

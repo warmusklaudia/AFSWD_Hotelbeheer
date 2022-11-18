@@ -15,6 +15,7 @@ export const RolesGuard = (roles: string[]) => {
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const ctx = GqlExecutionContext.create(context)
       const user = ctx.getContext().req.user
+      console.log(user)
       const { role } = await this.usersService.findOneByUid(user.uid)
 
       return roles.includes(role.name)

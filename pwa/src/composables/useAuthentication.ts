@@ -6,7 +6,8 @@ import {
   User,
   UserCredential,
 } from 'firebase/auth'
-import { ref, Ref } from 'vue'
+import { ref, Ref, resolveComponent } from 'vue'
+import useCustomUser from './useCustomUser'
 import useFirebase from './useFirebase'
 
 const user: Ref<User | null> = ref(null)
@@ -49,6 +50,7 @@ export default () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((u: UserCredential) => {
           setUser(u.user)
+
           resolve(user)
         })
         .catch((error) => {
@@ -83,16 +85,26 @@ export default () => {
     })
   }
 
-  const restoreUser = (): Promise<void> => {
+  // const restoreCustomUser = async () => {
+  //   const { customUser, loadCustomUser } = useCustomUser()
+  //   if (user.value) {
+  //     await loadCustomUser(user.value.uid)
+  //   }
+  // }
+
+  const restoreUser = async (): Promise<void> => {
+    const { loadCustomUser } = useCustomUser()
     return new Promise((resolve, reject) => {
-      auth.onAuthStateChanged((u: User | null) => {
+      auth.onAuthStateChanged(async (u: User | null) => {
         if (u) {
           setUser(u)
           resolve()
         }
         resolve()
       })
-    })
+    }) /*.then(async () => {
+      await loadCustomUser(user.value!.uid)
+    })*/
   }
 
   return {
@@ -103,5 +115,6 @@ export default () => {
     logout,
     forgotPassword,
     restoreUser,
+    // restoreCustomUser,
   }
 }
