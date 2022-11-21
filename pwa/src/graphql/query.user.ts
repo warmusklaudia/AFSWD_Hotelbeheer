@@ -13,3 +13,15 @@ export const GET_USER_BY_UID = gql`
     }
   }
 `
+
+export const GET_CURRENT_USER = gql`
+  query findByCurrentUserUid {
+    findByCurrentUserUid {
+      id
+      uid
+      role {
+        name
+      }
+    }
+  }
+`

@@ -9,7 +9,7 @@ import useAuthentication from '../composables/useAuthentication'
 import useCustomUser from '../composables/useCustomUser'
 
 const { user } = useAuthentication()
-const { customUser, loadCustomUser } = useCustomUser()
+const { customUser } = useCustomUser()
 
 const routes: RouteRecordRaw[] = [
   {
@@ -99,8 +99,8 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/admin',
-    meta: { needsAuthentication: true, needsToBeAdmin: true },
     redirect: '/admin/home',
+    meta: { needsToBeAdmin: true },
     children: [
       {
         path: 'home',
@@ -152,7 +152,7 @@ const router: Router = createRouter({
 })
 
 router.beforeEach(
-  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+  (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     console.log('log user.value?.uid: ', user.value?.uid)
     console.log('log customUser: ', customUser)
     console.log(
@@ -165,8 +165,9 @@ router.beforeEach(
 
     if (to.meta.needsToBeAdmin && customUser.value?.role.name !== 'admin')
       return '/'
+
     if (to.meta.needsToBeAdmin && customUser.value?.role.name === 'admin')
-      return 'admin'
+      return
   },
 )
 

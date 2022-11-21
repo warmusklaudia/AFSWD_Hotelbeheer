@@ -1,6 +1,10 @@
-import { provideApolloClient, useLazyQuery } from '@vue/apollo-composable'
+import {
+  provideApolloClient,
+  useLazyQuery,
+  useQuery,
+} from '@vue/apollo-composable'
 import { ref, Ref, watch } from 'vue'
-import { GET_USER_BY_UID } from '../graphql/query.user'
+import { GET_CURRENT_USER } from '../graphql/query.user'
 import { User } from '../interfaces/interface.user'
 import useAuthentication from './useAuthentication'
 import useGraphQL from './useGraphQL'
@@ -13,15 +17,19 @@ export default () => {
   const { user } = useAuthentication()
 
   provideApolloClient(apolloClient)
-  const { result, load, document } = useLazyQuery(GET_USER_BY_UID)
+  const { result, load, document } = useLazyQuery(GET_CURRENT_USER)
 
-  const loadCustomUser = async (uid: string) => {
-    load(document.value, { uid })
+  const loadCustomUser = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      watch(result, ({ findByCurrentUserUid }) => {
+        if (findByCurrentUserUid) {
+          setCustomUser(findByCurrentUserUid)
+          resolve()
+        }
+      })
+      load(document.value)
+    })
   }
-
-  watch(result, ({ findByUid }) => {
-    if (findByUid) setCustomUser(findByUid)
-  })
 
   return {
     customUser: customUser,

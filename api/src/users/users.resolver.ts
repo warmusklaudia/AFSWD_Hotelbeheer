@@ -10,6 +10,7 @@ import {
 import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
 import { RolesGuard } from 'src/auth/guard/role.guard'
 import { UseGuards } from '@nestjs/common'
+import { CurrentUser } from 'src/auth/decorators/user.decorator'
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -36,6 +37,12 @@ export class UsersResolver {
   @Query(() => User)
   findByUid(@Args('uid', { type: () => String }) uid: string) {
     return this.usersService.findOneByUid(uid)
+  }
+
+  @UseGuards(FirebaseGuard)
+  @Query(() => User)
+  findByCurrentUserUid(@CurrentUser() user) {
+    return this.usersService.findOneByUid(user.uid)
   }
 
   @Mutation(() => User)

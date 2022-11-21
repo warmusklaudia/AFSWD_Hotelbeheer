@@ -12,12 +12,10 @@ const app: VueApp = createApp(App)
 const { restoreUser, user } = useAuthentication()
 const { customUser, loadCustomUser } = useCustomUser()
 
-;(async () => {
-  await Promise.all([restoreUser() /*, loadCustomUser(user.value!.uid*/])
+;(async function () {
+  await restoreUser()
 
-  // await restoreUser().then(async () => {
-  //   if (user.value) await loadCustomUser(user.value!.uid)
-  // })
+  if (user.value?.uid) await loadCustomUser()
 
   app.use(router)
 

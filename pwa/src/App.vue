@@ -16,6 +16,4 @@ const { apolloClient } = useGraphql()
 const { loadCustomUser } = useCustomUser()
 
 provide(DefaultApolloClient, apolloClient)
-
-if (user.value) loadCustomUser(user.value.uid)
 </script>
