@@ -1,7 +1,7 @@
 <template>
     <RouteHolder title="Profile">
         <div>
-            <button @click="handleLogOut">Log out</button>
+            <button @click="handleLogOut">{{ $t('account.log.out') }}</button>
         </div>
 
     </RouteHolder>
