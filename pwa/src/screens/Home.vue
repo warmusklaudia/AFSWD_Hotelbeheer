@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-[url(pwa/public/background-home.jpeg)] bg-cover md:bg-center">
+  <main class="bg-[url(/background-home.jpeg)] bg-cover md:bg-center">
     <RouteHolder title="" />
     <div class="flex h-full items-center justify-end p-10">
       <div class="absolute mt-1 lg:mt-2">
