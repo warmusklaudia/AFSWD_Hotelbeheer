@@ -42,8 +42,6 @@
                     <Banknote />
                     <p class="text-sm font-semibold tracking-wide">€ {{ r.price }}</p>
                 </div>
-
-
             </RouterLink>
         </div>
     </RouteHolder>
