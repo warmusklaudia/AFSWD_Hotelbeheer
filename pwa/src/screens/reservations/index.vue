@@ -17,7 +17,7 @@
             <p>Error happened.</p>
         </div>
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-            <RouterLink :to="`reservations/${r.id}`" v-for="r of result.reservations" :key="r.id"
+            <RouterLink :to="`reservations/${r.id}`" v-for="r of result.findReservationsByUserId" :key="r.id"
                 class="max-h-56 p-4 shadow-md rounded flex flex-col justify-between">
                 <h2 class="font-title text-lg font-bold pb-3 border-b-2 border-black">Reservation</h2>
                 <div class="flex gap-3 items-center mb-3">
@@ -53,9 +53,15 @@ import { useQuery } from '@vue/apollo-composable'
 import { Calendar, Banknote, Users } from "lucide-vue-next";
 
 import RouteHolder from '../../components/holders/RouteHolder.vue'
-import { GET_RESERVATIONS } from "../../graphql/query.reservation";
+import useAuthentication from "../../composables/useAuthentication";
+import { GET_RESERVATIONS_BY_USER_ID } from "../../graphql/query.reservation";
 
-const { result, loading, error } = useQuery(GET_RESERVATIONS)
+const { user } = useAuthentication()
+
+const { result, loading, error } = useQuery(GET_RESERVATIONS_BY_USER_ID, () => ({
+    uid: user.value?.uid!
+}))
+
 const skeletons: Ref<number> = ref(18)
 
 </script>

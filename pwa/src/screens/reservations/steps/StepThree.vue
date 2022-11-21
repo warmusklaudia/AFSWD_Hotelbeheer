@@ -74,7 +74,7 @@ import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 
 import { ADD_RESERVATION } from "../../../graphql/mutation.reservation";
-import { UPDATE_ROOM } from "../../../graphql/mutation.room";
+import { UDATE_ROOM_RESERVATION } from "../../../graphql/mutation.room";
 
 const errorMessage = ref('')
 const { reservationFormInput, selectedRoom, reservationId, setReservationId, resetReservationForm, changeStepTo } = useFormUpdate()
@@ -90,9 +90,10 @@ const { mutate: addReservation } = useMutation(ADD_RESERVATION, () => ({
     },
 }))
 
-const { mutate: updateRoom } = useMutation(UPDATE_ROOM, () => ({
+const { mutate: updateRoom } = useMutation(UDATE_ROOM_RESERVATION, () => ({
     variables: {
-        UpdateRoomInput: { id: selectedRoom.id, reservationId: reservationId.value },
+        id: selectedRoom.id,
+        reservationId: reservationId.value
     },
 }))
 

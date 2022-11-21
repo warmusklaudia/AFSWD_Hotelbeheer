@@ -69,7 +69,7 @@ export class RequestedServicesResolver {
   }
 
   @Query(() => [RequestedService])
-  findByUserId(
+  findRequestedServicesByUserId(
     @Args('uid', { type: () => String }) uid: string,
   ): Promise<RequestedService[]> {
     return this.requestedServicesService.findByUserId(uid);

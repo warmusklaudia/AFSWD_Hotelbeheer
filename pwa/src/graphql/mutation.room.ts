@@ -20,3 +20,11 @@ export const UPDATE_ROOM = gql`
     }
   }
 `
+
+export const UDATE_ROOM_RESERVATION = gql`
+  mutation updateRoomReservation($id: String!, $reservationId: String!) {
+    addReservationToRoom(id: $id, reservationId: $reservationId) {
+      id
+    }
+  }
+`

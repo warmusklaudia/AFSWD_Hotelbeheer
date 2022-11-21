@@ -26,7 +26,7 @@ export class ReservationsResolver {
 
   @ResolveField()
   user(@Parent() r: Reservation): Promise<User> {
-    return this.usersService.findOneByUid(r.userId);
+    return this.usersService.findOneByUid(r.userId)
   }
 
   @Mutation(() => Reservation)
@@ -34,20 +34,27 @@ export class ReservationsResolver {
     @Args('createReservationInput')
     createReservationInput: CreateReservationInput,
   ): Promise<Reservation> {
-    const res = await this.reservationsService.create(createReservationInput);
-    return res;
+    const res = await this.reservationsService.create(createReservationInput)
+    return res
   }
 
   @Query(() => [Reservation], { name: 'reservations' })
   findAll(): Promise<Reservation[]> {
-    return this.reservationsService.findAll();
+    return this.reservationsService.findAll()
   }
 
   @Query(() => Reservation, { name: 'reservation' })
   findOne(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Reservation> {
-    return this.reservationsService.findOne(id);
+    return this.reservationsService.findOne(id)
+  }
+
+  @Query(() => [Reservation])
+  findReservationsByUserId(
+    @Args('uid', { type: () => String }) uid: string,
+  ): Promise<Reservation[]> {
+    return this.reservationsService.findByUserId(uid)
   }
 
   @Mutation(() => Reservation)
@@ -55,25 +62,25 @@ export class ReservationsResolver {
     @Args('updateReservationInput')
     updateReservationInput: UpdateReservationInput,
   ) {
-    return this.reservationsService.update(updateReservationInput);
+    return this.reservationsService.update(updateReservationInput)
   }
 
   @Mutation(() => Reservation)
   async removeReservation(
     @Args('id', { type: () => String }) id: string,
   ): Promise<ClientMessage> {
-    const deleted = await this.reservationsService.remove(id);
+    const deleted = await this.reservationsService.remove(id)
     if (deleted.affected <= 1)
       return {
         type: MessageTypes.success,
         message: 'Reservation deleted',
         statusCode: 200,
-      };
+      }
 
     return {
       type: MessageTypes.error,
       message: 'Delete action went wrong.',
       statusCode: 400,
-    };
+    }
   }
 }

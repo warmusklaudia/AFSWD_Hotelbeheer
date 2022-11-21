@@ -30,7 +30,7 @@ export const GET_REQUESTED_SERVICE = gql`
 
 export const GET_REQUESTED_SERVICES_BY_USER_ID = gql`
   query GetRequestedServicesByUserId($uid: String!) {
-    findByUserId(uid: $uid) {
+    findRequestedServicesByUserId(uid: $uid) {
       id
       service {
         id
