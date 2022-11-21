@@ -1,6 +1,5 @@
 <template>
     <RouteHolder title="Add service">
-
         <div class="grid md:grid-cols-2 gap-12">
             <div v-if="loading" class="grid animate-pulse gap-6">
                 <div v-for="i of skeletons" :key="i" class="flex gap-3">

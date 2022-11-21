@@ -1,6 +1,5 @@
 <template>
-  <main class="bg-[url(./background-home.jpeg)] bg-cover md:bg-center">
-    <RouteHolder title="" />
+  <RouteHolder title="" class="bg-[url(./background-home.jpeg)] bg-cover md:bg-center">
     <div class="flex h-full items-center justify-end p-10">
       <div class="absolute mt-1 lg:mt-2">
         <h1
@@ -17,7 +16,7 @@
         </h1>
       </div>
     </div>
-  </main>
+  </RouteHolder>
 </template>
 
 <script setup lang="ts">
