@@ -48,3 +48,17 @@ export const ROOM_BY_NAME_CAT = gql`
     }
   }
 `
+
+export const ROOM_INSERT_DATA = gql`
+  query insertData {
+    rooms {
+      id
+      name
+      description
+      rating
+      category
+      location
+      accessCode
+    }
+  }
+`

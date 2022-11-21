@@ -153,12 +153,6 @@ const router: Router = createRouter({
 
 router.beforeEach(
   (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    console.log('log user.value?.uid: ', user.value?.uid)
-    console.log('log customUser: ', customUser)
-    console.log(
-      'log customUser.value?.role.name: ',
-      customUser.value?.role.name,
-    )
     if (to.meta.needsAuthentication && !user.value) return 'auth/login'
 
     if (to.meta.cantAuthentication && user.value) return '/'

@@ -101,7 +101,7 @@ import RouteHolder from '../../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import { Search, Plus, Frown } from 'lucide-vue-next'
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import { GET_ROOMS, ROOM_BY_NAME_CAT } from '../../../graphql/query.room'
 import { Room } from '../../../interfaces/interface.room'
@@ -120,11 +120,15 @@ export default {
   setup() {
     const searchRoomName = ref<string>('')
     const searchRoomCat = ref<string>('')
-    const { result, loading, error } = useQuery(ROOM_BY_NAME_CAT, {
+    const { result, loading, error, refetch } = useQuery(ROOM_BY_NAME_CAT, {
       searchRoomByName: searchRoomName,
       searchRoomByCat: searchRoomCat,
     })
     const skeletons = ref<number>(6)
+
+    // watch(?, () => {
+    //   refetch()
+    // })
 
     return {
       result,

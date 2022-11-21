@@ -95,7 +95,7 @@
             <h1 class="font-title pb-6 text-xl font-bold lg:text-2xl">
               Reservation history
             </h1>
-            <reservation-history-table :observations="[1, 2, 3]" />
+            <reservation-history-table :reservations="[1, 2, 3]" />
           </div>
         </div>
       </div>
@@ -124,7 +124,7 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
-import { GET_ROOMS, ROOM_BY_ID } from '../../../graphql/query.room'
+import { ROOM_BY_ID } from '../../../graphql/query.room'
 import { DELETE_ROOM } from '../../../graphql/mutation.room'
 export default {
   components: {
@@ -154,25 +154,19 @@ export default {
       variables: {
         id: params.id,
       },
-      // update: (cache, { data: { removeRoom } }) => {
-      //   let data = cache.readQuery<Room[]>({ query: GET_ROOMS })
-      //   console.log(data)
-      //   data = data ? [...data, removeRoom] : [removeRoom]
-      //   cache.writeQuery({ query: GET_ROOMS, data })
-      //   console.log(data)
-      // },
     }))
 
     let showCode = ref<boolean>(false)
 
     const deleteRoom = async () => {
-      //TODO - verder uitwerken
+      const updateQuery = ref<boolean>(false)
       await removeRoom()
         .catch((err) => {
           console.log({ err })
         })
         .finally(() => {
           load.value = false
+          updateQuery.value = true
           push('/admin/rooms')
         })
     }

@@ -14,9 +14,25 @@ export const ADD_ROOM = gql`
 `
 
 export const UPDATE_ROOM = gql`
-  mutation updateRoom($UpdateRoomInput: UpdateRoomInput!) {
-    updateRoom(updateRoomInput: $UpdateRoomInput) {
+  mutation updateRoom($updateRoomInput: UpdateRoomInput!) {
+    updateRoom(updateRoomInput: $updateRoomInput) {
       id
+      name
+      description
+      rating
+      category
+      location
+      accessCode
+    }
+  }
+`
+
+export const DELETE_ROOM = gql`
+  mutation removeRoom($id: String!) {
+    removeRoom(id: $id) {
+      reservation {
+        id
+      }
     }
   }
 `

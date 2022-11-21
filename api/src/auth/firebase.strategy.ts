@@ -32,9 +32,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(
 
   async validate(jwtToken: string): Promise<auth.UserRecord> {
     const payload = await this.authorize(jwtToken)
-    console.log(payload)
     const user = await this.firebase.getAuth().getUser(payload.uid)
-    console.log(user)
 
     if (user.disabled) {
       throw new ForbiddenException()
@@ -44,11 +42,6 @@ export class FirebaseAuthStrategy extends PassportStrategy(
 
   private async authorize(jwtToken: string): Promise<DecodedIdToken> {
     try {
-      console.log(
-        await this.firebase
-          .getAuth()
-          .verifyIdToken(jwtToken, this.checkRevoked),
-      )
       return await this.firebase
         .getAuth()
         .verifyIdToken(jwtToken, this.checkRevoked)

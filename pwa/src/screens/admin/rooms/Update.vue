@@ -10,6 +10,7 @@
               v-if="errorMessage"
               class="mb-3 flex items-center justify-between rounded-md bg-red-100 px-3 py-1"
             >
+              <AlertTriangle class="text-red-600" />
               <p class="text-sm text-red-600">{{ errorMessage }}</p>
 
               <button
@@ -220,7 +221,7 @@ import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import { UPDATE_ROOM } from '../../../graphql/mutation.room'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
-import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
+import { Search, Plus, Frown, X, Loader2, AlertTriangle } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
@@ -236,6 +237,7 @@ export default {
     Frown,
     X,
     Loader2,
+    AlertTriangle,
   },
   setup() {
     const skeletons = ref<number>(6)

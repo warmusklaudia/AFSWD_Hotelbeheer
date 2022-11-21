@@ -183,9 +183,9 @@
             </div>
             <button
               class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
-              :disabled="loading"
+              :disabled="load"
             >
-              <div class="flex" v-if="!loading">
+              <div class="flex" v-if="!load">
                 <Plus class="mr-2" size="20" />
                 ADD ROOM
               </div>
@@ -225,9 +225,9 @@ import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
-import { useMutation } from '@vue/apollo-composable'
+import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
-import { GET_ROOMS } from '../../../graphql/query.room'
+import { GET_ROOMS, ROOM_INSERT_DATA } from '../../../graphql/query.room'
 export default {
   components: {
     RouteHolder,
@@ -241,7 +241,7 @@ export default {
   },
   setup() {
     const skeletons = ref<number>(6)
-    const loading = ref<boolean>(false)
+    const load = ref<boolean>(false)
     const errorMessage = ref<string>('')
     const successMessage = ref<string>('')
 
@@ -261,7 +261,7 @@ export default {
       location: '',
       accessCode: '',
     })
-
+    const { result, loading, error } = useQuery(ROOM_INSERT_DATA)
     const { mutate: addRoom } = useMutation(ADD_ROOM, () => ({
       variables: {
         createRoomInput: roomInput,
@@ -321,7 +321,7 @@ export default {
 
     const submitForm = async () => {
       if (isFormInvalid()) return
-      loading.value = true
+      load.value = true
       await addRoom()
         .catch((err) => {
           console.log({ err })
@@ -329,7 +329,7 @@ export default {
           errorMessage.value = err.message
         })
         .finally(() => {
-          loading.value = false
+          load.value = false
           successMessage.value = 'Room successfully added'
           roomInput.name = ''
           roomInput.description = ''
@@ -341,12 +341,15 @@ export default {
     }
 
     return {
+      result,
+      loading,
+      error,
       roomInput,
       roomErrors,
       skeletons,
       errorMessage,
       successMessage,
-      loading,
+      load,
       luxe,
       standard,
       submitForm,
