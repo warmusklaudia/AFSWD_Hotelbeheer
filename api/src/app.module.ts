@@ -7,9 +7,20 @@ import { DatabaseSeedModule } from "./seed/seed.module";
 import { PricingModule } from './pricing/pricing.module';
 import { ServicesModule } from './services/services.module';
 import { RequestedServicesModule } from './requested-services/requested-services.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
-  imports: [BootstrapModule, RoomsModule, ReservationsModule, UsersModule, DatabaseSeedModule, PricingModule, ServicesModule, RequestedServicesModule],
+  imports: [
+    BootstrapModule,
+    RoomsModule,
+    ReservationsModule, 
+    UsersModule, 
+    DatabaseSeedModule, 
+    PricingModule, 
+    ServicesModule, 
+    RequestedServicesModule,
+    NotificationsModule,
+  ],
   controllers: [],
   providers: [],
 })

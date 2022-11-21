@@ -19,6 +19,7 @@ import { Service } from 'src/services/entities/service.entity';
 import { ServicesService } from 'src/services/services.service';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { NotificationsGateway } from 'src/notifications/notifications.gateway';
 
 @Resolver(() => RequestedService)
 export class RequestedServicesResolver {
@@ -26,6 +27,7 @@ export class RequestedServicesResolver {
     private readonly requestedServicesService: RequestedServicesService,
     private readonly servicesService: ServicesService,
     private readonly usersService: UsersService,
+    private readonly notificationsGateway: NotificationsGateway,
   ) {}
 
   @ResolveField()
@@ -39,11 +41,19 @@ export class RequestedServicesResolver {
   }
 
   @Mutation(() => RequestedService)
-  createRequestedService(
+  async createRequestedService(
     @Args('createRequestedServiceInput')
     createRequestedServiceInput: CreateRequestedServiceInput,
   ): Promise<RequestedService> {
-    return this.requestedServicesService.create(createRequestedServiceInput);
+    const rs = await this.requestedServicesService.create(
+      createRequestedServiceInput,
+    );
+
+    if (rs)
+      this.notificationsGateway.server
+        .emit('hotel:requestedServices', rs);
+
+    return rs;
   }
 
   @Query(() => [RequestedService], { name: 'requestedServices' })

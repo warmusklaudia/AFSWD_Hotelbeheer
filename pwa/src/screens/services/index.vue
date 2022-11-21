@@ -17,7 +17,7 @@
             <p>Error happened.</p>
         </div>
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-            <div v-for="rs of result.requestedServices" :key="rs.id"
+            <div v-for="rs of result.findByUserId" :key="rs.id"
                 class="max-h-56 p-4 shadow-md rounded flex flex-col justify-between">
                 <h2 class="font-title text-lg font-bold pb-3 border-b-2 border-black">{{ rs.service.name }}</h2>
                 <div class="flex gap-3 items-center">
@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { useQuery } from "@vue/apollo-composable";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { Banknote, Calendar } from "lucide-vue-next";
 
 import RouteHolder from '../../components/holders/RouteHolder.vue'
@@ -55,14 +55,17 @@ import { GET_REQUESTED_SERVICES, GET_REQUESTED_SERVICES_BY_USER_ID } from "../..
 
 import useAuthentication from "../../composables/useAuthentication";
 
-const { result, loading, error } = useQuery(GET_REQUESTED_SERVICES);
+const { user } = useAuthentication()
 
-// const { user } = useAuthentication()
-// const { result, loading, error } = useQuery(GET_REQUESTED_SERVICES_BY_USER_ID, {
-//     variable: {
-//         uid: user.value?.uid!
-//     }
-// });
+console.log(user.value?.uid)
+
+const { result, loading, error } = useQuery(GET_REQUESTED_SERVICES_BY_USER_ID, () => ({
+    uid: user.value?.uid!
+}));
+
+watch(result, (val) => {
+    console.log(val)
+})
 
 const skeletons = ref(6)
 </script>
