@@ -7,44 +7,49 @@ import {
   Entity,
   ObjectIdColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from 'typeorm'
+import { Role } from './role.entity'
 
 @Entity()
 @ObjectType({ description: 'user' })
 export class User {
   @Field(() => ID, { description: 'id of the user' })
   @ObjectIdColumn()
-  id: ObjectId;
+  id: ObjectId
 
   @Field()
   @Column()
-  uid: string;
+  uid: string
 
   @Field({ defaultValue: 0 })
   @Column()
-  amountCredits: number;
+  amountCredits: number
 
   @Field({ defaultValue: 0 })
   @Column()
-  reservations: number;
+  reservations: number
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  preferredLanguage?: string;
+  preferredLanguage?: string
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  breakfastCode?: string;
+  breakfastCode?: string
 
   @Field(() => [Service], { nullable: 'itemsAndList' })
   @Column({ nullable: true })
   requestedServices?: Service[];
 
+  @Field(() => Role, { nullable: true })
+  @Column({ default: { name: 'user' } })
+  role?: Role
+
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
-  createdAt?: Date;
+  createdAt?: Date
 
   @Field({ nullable: true })
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
-  updatedAt?: Date;
+  updatedAt?: Date
 }

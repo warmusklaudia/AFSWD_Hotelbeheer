@@ -8,6 +8,8 @@ export const GET_ROOMS = gql`
       description
       rating
       category
+      location
+      accessCode
     }
   }
 `
@@ -45,6 +47,20 @@ export const ROOM_BY_NAME_CAT = gql`
       id
       name
       category
+    }
+  }
+`
+
+export const ROOM_INSERT_DATA = gql`
+  query insertData {
+    rooms {
+      id
+      name
+      description
+      rating
+      category
+      location
+      accessCode
     }
   }
 `

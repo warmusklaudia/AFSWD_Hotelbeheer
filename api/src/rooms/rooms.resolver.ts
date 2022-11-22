@@ -16,6 +16,9 @@ import {
 } from 'src/bootstrap/entities/ClientMessage'
 import { Reservation } from 'src/reservations/entities/reservation.entity'
 import { ReservationsService } from 'src/reservations/reservations.service'
+import { RolesGuard } from 'src/auth/guard/role.guard'
+import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
+import { UseGuards } from '@nestjs/common'
 
 @Resolver(() => Room)
 export class RoomsResolver {
@@ -29,6 +32,7 @@ export class RoomsResolver {
     return this.reservationsService.findOne(r.reservationId)
   }
 
+  @UseGuards(FirebaseGuard, RolesGuard(['admin']))
   @Mutation(() => Room)
   createRoom(
     @Args('createRoomInput') createRoomInput: CreateRoomInput,
@@ -54,6 +58,7 @@ export class RoomsResolver {
     return this.roomsService.findByString(name, category)
   }
 
+  @UseGuards(FirebaseGuard, RolesGuard(['admin']))
   @Mutation(() => Room)
   updateRoom(
     @Args('updateRoomInput') updateRoomInput: UpdateRoomInput,
@@ -71,7 +76,8 @@ export class RoomsResolver {
     return this.roomsService.addReservationToRoom(id, reservationId)
   }
 
-  @Mutation(() => Room)
+  @UseGuards(FirebaseGuard, RolesGuard(['admin']))
+  @Mutation(() => ClientMessage)
   async removeRoom(
     @Args('id', { type: () => String }) id: string,
   ): Promise<ClientMessage> {
@@ -81,6 +87,7 @@ export class RoomsResolver {
         type: MessageTypes.success,
         message: 'Room deleted',
         statusCode: 200,
+        id: id,
       }
 
     return {

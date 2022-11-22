@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-themeWhite h-full">
+  <div class="bg-themeWhite h-full">
     <section class="flex h-full w-full">
       <admin-navigation />
       <div
@@ -107,12 +107,30 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
 import { BellRing } from 'lucide-vue-next'
+import useAuthentication from '../../composables/useAuthentication'
+
+export default {
+  components: {
+    RouteHolder,
+    AdminNavigation,
+    AdminHeader,
+    BellRing,
+  },
+  setup() {
+    const { user } = useAuthentication()
+    const getToken = async () => {
+      console.log(await user.value?.getIdToken())
+    }
+    getToken()
+    return {}
+  },
+}
 </script>

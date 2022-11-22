@@ -5,17 +5,19 @@ import {
   Args,
   ResolveField,
   Parent,
-} from '@nestjs/graphql';
-import { ReservationsService } from './reservations.service';
-import { Reservation } from './entities/reservation.entity';
-import { CreateReservationInput } from './dto/create-reservation.input';
-import { UpdateReservationInput } from './dto/update-reservation.input';
+} from '@nestjs/graphql'
+import { ReservationsService } from './reservations.service'
+import { Reservation } from './entities/reservation.entity'
+import { CreateReservationInput } from './dto/create-reservation.input'
+import { UpdateReservationInput } from './dto/update-reservation.input'
 import {
   ClientMessage,
   MessageTypes,
-} from 'src/bootstrap/entities/ClientMessage';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
+} from 'src/bootstrap/entities/ClientMessage'
+import { User } from 'src/users/entities/user.entity'
+import { UsersService } from 'src/users/users.service'
+import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
+import { UseGuards } from '@nestjs/common'
 
 @Resolver(() => Reservation)
 export class ReservationsResolver {
@@ -29,6 +31,7 @@ export class ReservationsResolver {
     return this.usersService.findOneByUid(r.userId)
   }
 
+  @UseGuards(FirebaseGuard)
   @Mutation(() => Reservation)
   async createReservation(
     @Args('createReservationInput')
@@ -48,6 +51,7 @@ export class ReservationsResolver {
     @Args('id', { type: () => String }) id: string,
   ): Promise<Reservation> {
     return this.reservationsService.findOne(id)
+<<<<<<< HEAD
   }
 
   @Query(() => [Reservation])
@@ -55,8 +59,11 @@ export class ReservationsResolver {
     @Args('uid', { type: () => String }) uid: string,
   ): Promise<Reservation[]> {
     return this.reservationsService.findByUserId(uid)
+=======
+>>>>>>> auth
   }
 
+  @UseGuards(FirebaseGuard)
   @Mutation(() => Reservation)
   updateReservation(
     @Args('updateReservationInput')
@@ -65,6 +72,7 @@ export class ReservationsResolver {
     return this.reservationsService.update(updateReservationInput)
   }
 
+  @UseGuards(FirebaseGuard)
   @Mutation(() => Reservation)
   async removeReservation(
     @Args('id', { type: () => String }) id: string,

@@ -6,7 +6,7 @@
     <section>
       <div class="-mr-8 flex justify-end">
         <div
-          @click="showNav = false"
+          @click="toggleNav()"
           class="bg-themeGreen flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md"
         >
           <ChevronsLeft />
@@ -118,7 +118,7 @@
     v-else
     class="bg-themeOffWhite flex min-h-screen w-11 flex-col justify-between p-4 shadow-lg"
   >
-    <div @click="showNav = true" class="-mr-8 flex justify-end">
+    <div @click="toggleNav()" class="-mr-8 flex justify-end">
       <div
         class="bg-themeGreen flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md"
       >
@@ -141,7 +141,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-vue-next'
-import { ref, Ref } from 'vue'
+import { ref, Ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import useAuthentication from '../../composables/useAuthentication'
 export default {
@@ -160,7 +160,15 @@ export default {
 
   setup() {
     const { logout } = useAuthentication()
-    let showNav: Ref<boolean> = ref(true)
+    const showNav = ref<boolean>(
+      localStorage.adminNav ? localStorage.adminNav : true,
+    )
+
+    const toggleNav = async () => {
+      showNav.value = !showNav.value
+      localStorage.adminNav = !localStorage.adminNav
+    }
+
     const { replace } = useRouter()
     const handleLogOut = () => {
       logout().then(() => {
@@ -171,6 +179,7 @@ export default {
     return {
       showNav,
       handleLogOut,
+      toggleNav,
     }
   },
 }

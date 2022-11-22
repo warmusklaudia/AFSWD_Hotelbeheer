@@ -8,6 +8,7 @@ import { PricingModule } from './pricing/pricing.module';
 import { ServicesModule } from './services/services.module';
 import { RequestedServicesModule } from './requested-services/requested-services.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -19,6 +20,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     ServicesModule,
     RequestedServicesModule,
     NotificationsModule,
+    AuthModule,
+    PricingModule,
   ],
   controllers: [],
   providers: [],

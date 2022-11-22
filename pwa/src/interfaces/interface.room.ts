@@ -1,7 +1,7 @@
 import { Reservation } from './interface.reservation'
 
 export default interface Room {
-  id: string
+  id?: string
   name: string
   description: string
   reservation?: Reservation

@@ -6,12 +6,16 @@ import 'uno.css'
 
 import useAuthentication from './composables/useAuthentication'
 import router from './bootstrap/router'
+import useCustomUser from './composables/useCustomUser'
 
 const app: VueApp = createApp(App)
-const { restoreUser } = useAuthentication()
+const { restoreUser, user } = useAuthentication()
+const { customUser, loadCustomUser } = useCustomUser()
 
-;(async () => {
+;(async function () {
   await restoreUser()
+
+  if (user.value?.uid) await loadCustomUser()
 
   app.use(router)
 

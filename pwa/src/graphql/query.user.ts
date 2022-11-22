@@ -5,8 +5,23 @@ export const GET_USER_BY_UID = gql`
     findByUid(uid: $uid) {
       id
       uid
+      role {
+        name
+      }
       createdAt
       updatedAt
+    }
+  }
+`
+
+export const GET_CURRENT_USER = gql`
+  query findByCurrentUserUid {
+    findByCurrentUserUid {
+      id
+      uid
+      role {
+        name
+      }
     }
   }
 `

@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-themeWhite flex h-full">
+  <div class="bg-themeWhite flex h-full">
     <section class="flex h-full w-full">
       <admin-navigation />
       <div class="w-5/6 p-6">
@@ -95,12 +95,12 @@
             <h1 class="font-title pb-6 text-xl font-bold lg:text-2xl">
               Reservation history
             </h1>
-            <reservation-history-table :observations="[1, 2, 3]" />
+            <reservation-history-table :reservations="[1, 2, 3]" />
           </div>
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
@@ -124,8 +124,14 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
-import { GET_ROOMS, ROOM_BY_ID } from '../../../graphql/query.room'
+import {
+  GET_ROOMS,
+  ROOM_BY_ID,
+  ROOM_BY_NAME_CAT,
+  ROOM_INSERT_DATA,
+} from '../../../graphql/query.room'
 import { DELETE_ROOM } from '../../../graphql/mutation.room'
+import { makeReference, Reference } from '@apollo/client/cache'
 export default {
   components: {
     RouteHolder,
@@ -150,31 +156,46 @@ export default {
       id: params.id,
     })
 
+    const {
+      result: result2,
+      loading: loading2,
+      error: error2,
+    } = useQuery<{ rooms: Room[] }>(ROOM_BY_NAME_CAT, {
+      searchRoomByName: '',
+      searchRoomByCat: '',
+    })
     const { mutate: removeRoom } = useMutation(DELETE_ROOM, () => ({
       variables: {
         id: params.id,
       },
-      // update: (cache, { data: { removeRoom } }) => {
-      //   let data = cache.readQuery<Room[]>({ query: GET_ROOMS })
-      //   console.log(data)
-      //   data = data ? [...data, removeRoom] : [removeRoom]
-      //   cache.writeQuery({ query: GET_ROOMS, data })
-      //   console.log(data)
-      // },
+      update(cache) {
+        let data: any = cache.readQuery({
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
+        })
+        cache.writeQuery({
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
+          data: {
+            roomsByNameCat: data.roomsByNameCat.filter(
+              (roomsByNameCat: Room) => roomsByNameCat.id !== params.id,
+            ),
+          },
+        })
+      },
     }))
 
     let showCode = ref<boolean>(false)
 
     const deleteRoom = async () => {
-      //TODO - verder uitwerken
       await removeRoom()
         .catch((err) => {
           console.log({ err })
         })
         .finally(() => {
           load.value = false
-          push('/admin/rooms')
         })
+      push('/admin/rooms')
     }
 
     return {
