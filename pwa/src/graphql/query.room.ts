@@ -8,6 +8,8 @@ export const GET_ROOMS = gql`
       description
       rating
       category
+      location
+      accessCode
     }
   }
 `

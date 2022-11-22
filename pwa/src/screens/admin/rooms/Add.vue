@@ -228,6 +228,8 @@ import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
 import { GET_ROOMS, ROOM_INSERT_DATA } from '../../../graphql/query.room'
+import gql from 'graphql-tag'
+import { useRouter } from 'vue-router'
 export default {
   components: {
     RouteHolder,
@@ -254,25 +256,32 @@ export default {
     })
 
     const roomInput = reactive({
-      name: '',
-      description: '',
+      name: 'hrtgef',
+      description: 'gtrefzd',
       rating: 1,
-      category: '',
-      location: '',
-      accessCode: '',
+      category: 'Luxe',
+      location: 'htgrfe',
+      accessCode: 'gtrfez',
     })
-    const { result, loading, error } = useQuery(ROOM_INSERT_DATA)
-    const { mutate: addRoom } = useMutation(ADD_ROOM, () => ({
+    const { push } = useRouter()
+    const { result, loading, error } = useQuery(GET_ROOMS)
+    const { mutate: createRoom } = useMutation(ADD_ROOM, () => ({
       variables: {
         createRoomInput: roomInput,
       },
-      // update: (cache, { data: { addRoom } }) => {
-      //   let data = cache.readQuery<Room[]>({ query: GET_ROOMS })
-      //   console.log(data)
-      //   data = data ? [...data, addRoom] : [addRoom]
-      //   cache.writeQuery({ query: GET_ROOMS, data })
-      //   console.log(data)
-      // },
+      update(cache, { data: { createRoom } }) {
+        let data: any = cache.readQuery({ query: GET_ROOMS })
+        cache.writeQuery({
+          query: GET_ROOMS,
+          data: {
+            rooms: [...data.rooms, createRoom],
+          },
+        })
+
+        console.log(createRoom)
+        console.log(data)
+        console.log(cache)
+      },
     }))
 
     const isFormInvalid = (): boolean => {
@@ -322,7 +331,7 @@ export default {
     const submitForm = async () => {
       if (isFormInvalid()) return
       load.value = true
-      await addRoom()
+      await createRoom()
         .catch((err) => {
           console.log({ err })
 
@@ -338,6 +347,7 @@ export default {
           roomInput.location = ''
           roomInput.accessCode = ''
         })
+      push('/admin/rooms')
     }
 
     return {

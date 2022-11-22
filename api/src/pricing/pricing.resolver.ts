@@ -3,11 +3,15 @@ import { PricingService } from './pricing.service'
 import { Pricing } from './entities/pricing.entity'
 import { CreatePricingInput } from './dto/create-pricing.input'
 import { UpdatePricingInput } from './dto/update-pricing.input'
+import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
+import { RolesGuard } from 'src/auth/guard/role.guard'
+import { UseGuards } from '@nestjs/common'
 
 @Resolver(() => Pricing)
 export class PricingResolver {
   constructor(private readonly pricingService: PricingService) {}
 
+  @UseGuards(FirebaseGuard, RolesGuard(['admin']))
   @Mutation(() => Pricing)
   createPricing(
     @Args('createPricingInput') createPricingInput: CreatePricingInput,
@@ -25,6 +29,7 @@ export class PricingResolver {
     return this.pricingService.findOne(id)
   }
 
+  @UseGuards(FirebaseGuard, RolesGuard(['admin']))
   @Mutation(() => Pricing)
   updatePricing(
     @Args('updatePricingInput') updatePricingInput: UpdatePricingInput,

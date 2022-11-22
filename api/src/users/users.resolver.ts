@@ -29,11 +29,13 @@ export class UsersResolver {
     return this.usersService.findAll()
   }
 
+  @UseGuards(FirebaseGuard)
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => String }) id: string): Promise<User> {
     return this.usersService.findOne(id)
   }
 
+  @UseGuards(FirebaseGuard)
   @Query(() => User)
   findByUid(@Args('uid', { type: () => String }) uid: string) {
     return this.usersService.findOneByUid(uid)
@@ -45,11 +47,13 @@ export class UsersResolver {
     return this.usersService.findOneByUid(user.uid)
   }
 
+  @UseGuards(FirebaseGuard)
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.update(updateUserInput)
   }
 
+  @UseGuards(FirebaseGuard)
   @Mutation(() => User)
   async removeUser(
     @Args('id', { type: () => String }) id: string,

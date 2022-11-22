@@ -124,8 +124,13 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
-import { ROOM_BY_ID } from '../../../graphql/query.room'
+import {
+  GET_ROOMS,
+  ROOM_BY_ID,
+  ROOM_INSERT_DATA,
+} from '../../../graphql/query.room'
 import { DELETE_ROOM } from '../../../graphql/mutation.room'
+import { makeReference, Reference } from '@apollo/client/cache'
 export default {
   components: {
     RouteHolder,
@@ -150,25 +155,33 @@ export default {
       id: params.id,
     })
 
+    const {
+      result: result2,
+      loading: loading2,
+      error: error2,
+    } = useQuery<{ rooms: Room[] }>(GET_ROOMS)
     const { mutate: removeRoom } = useMutation(DELETE_ROOM, () => ({
       variables: {
         id: params.id,
+      },
+      update(cache) {
+        const normalizedId = cache.identify({ id: params.id })
+        cache.evict({ id: normalizedId })
+        cache.gc()
       },
     }))
 
     let showCode = ref<boolean>(false)
 
     const deleteRoom = async () => {
-      const updateQuery = ref<boolean>(false)
       await removeRoom()
         .catch((err) => {
           console.log({ err })
         })
         .finally(() => {
           load.value = false
-          updateQuery.value = true
-          push('/admin/rooms')
         })
+      push('/admin/rooms')
     }
 
     return {

@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export const ADD_ROOM = gql`
   mutation createRoom($createRoomInput: CreateRoomInput!) {
     createRoom(createRoomInput: $createRoomInput) {
+      id
       name
       description
       rating
@@ -30,9 +31,7 @@ export const UPDATE_ROOM = gql`
 export const DELETE_ROOM = gql`
   mutation removeRoom($id: String!) {
     removeRoom(id: $id) {
-      reservation {
-        id
-      }
+      id
     }
   }
 `

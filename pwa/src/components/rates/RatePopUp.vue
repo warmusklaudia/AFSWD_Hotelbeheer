@@ -114,11 +114,6 @@ export default {
       variables: {
         updatePricingInput: priceInput,
       },
-      //   update: (cache, { data: { updatePrice } }) => {
-      //     let data = cache.readQuery<Rate[]>({ query: GET_PRICES })
-      //     data = data ? [...data, updatePrice] : [updatePrice]
-      //     cache.writeQuery({ query: GET_PRICES, data })
-      //   },
     }))
 
     const priceErrors = reactive({
