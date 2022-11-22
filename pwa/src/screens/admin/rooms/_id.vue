@@ -169,24 +169,19 @@ export default {
         id: params.id,
       },
       update(cache) {
-        cache.modify({
-          fields: {
-            rooms(existingRooms = []) {
-              const newRoomRef = makeReference(
-                //@ts-ignore
-                cache.identify({
-                  id: params.id,
-                }),
-              )
-              return existingRooms.filter(
-                (roomRef: Reference) => roomRef !== newRoomRef,
-              )
-            },
+        let data: any = cache.readQuery({
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
+        })
+        cache.writeQuery({
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
+          data: {
+            roomsByNameCat: data.roomsByNameCat.filter(
+              (roomsByNameCat: any) => roomsByNameCat.id !== params.id,
+            ),
           },
         })
-        // const normalizedId = cache.identify({ id: params.id })
-        // cache.evict({ id: normalizedId })
-        // cache.gc()
       },
     }))
 
