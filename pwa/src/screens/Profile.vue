@@ -6,23 +6,35 @@
                         $t('account.log.out')
                 }}</button>
         </template>
-        <div class="flex flex-col gap-3">
-            <div>
+        <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-3">
                 <h3 class="font-title font-bold text-2xl">
                     Rooms
                 </h3>
-                <ul class="flex gap-3">
-                    <li>QR code</li>
-                    <li>QR code</li>
-                    <li>QR code</li>
-                </ul>
+                <div class=" overflow-x-auto max-w-[80vw]">
+                    <ul class="flex gap-10">
+                        <li class="flex flex-col items-center">
+                            <qrcode-vue :value="value" :size="size" level="H" />
+                            <h4 class="font-title font-bold text-lg">room</h4>
+                        </li>
+                        <li class="flex flex-col items-center">
+                            <qrcode-vue :value="value" :size="size" level="H" />
+                            <h4 class="font-title font-bold text-lg">room</h4>
+                        </li>
+                        <li class="flex flex-col items-center">
+                            <qrcode-vue :value="value" :size="size" level="H" />
+                            <h4 class="font-title font-bold text-lg">room</h4>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
-            <div>
+            <div class="flex flex-col gap-3">
                 <h3 class="font-title font-bold text-2xl">
                     Breakfast
                 </h3>
                 <div>
-                    <p>QR code</p>
+                    <qrcode-vue :value="value" :size="size" level="H" />
                 </div>
             </div>
             <div>
@@ -47,11 +59,16 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import QrcodeVue from 'qrcode.vue'
+
 import RouteHolder from '../components/holders/RouteHolder.vue'
 import useAuthentication from "../composables/useAuthentication";
 
 const { logout } = useAuthentication()
 const { replace } = useRouter()
+
+const value = 'https://example.com'
+const size = 200
 
 const handleLogOut = () => {
     logout().then(() => {
