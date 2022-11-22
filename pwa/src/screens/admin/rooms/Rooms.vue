@@ -120,7 +120,7 @@ export default {
   setup() {
     const searchRoomName = ref<string>('')
     const searchRoomCat = ref<string>('')
-    const { result, loading, error, refetch } = useQuery(ROOM_BY_NAME_CAT, {
+    const { result, loading, error } = useQuery(ROOM_BY_NAME_CAT, {
       searchRoomByName: searchRoomName,
       searchRoomByCat: searchRoomCat,
     })

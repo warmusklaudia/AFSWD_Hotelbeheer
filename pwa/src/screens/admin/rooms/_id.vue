@@ -127,6 +127,7 @@ import { Room } from '../../../interfaces/interface.room'
 import {
   GET_ROOMS,
   ROOM_BY_ID,
+  ROOM_BY_NAME_CAT,
   ROOM_INSERT_DATA,
 } from '../../../graphql/query.room'
 import { DELETE_ROOM } from '../../../graphql/mutation.room'
@@ -159,15 +160,33 @@ export default {
       result: result2,
       loading: loading2,
       error: error2,
-    } = useQuery<{ rooms: Room[] }>(GET_ROOMS)
+    } = useQuery<{ rooms: Room[] }>(ROOM_BY_NAME_CAT, {
+      searchRoomByName: '',
+      searchRoomByCat: '',
+    })
     const { mutate: removeRoom } = useMutation(DELETE_ROOM, () => ({
       variables: {
         id: params.id,
       },
       update(cache) {
-        const normalizedId = cache.identify({ id: params.id })
-        cache.evict({ id: normalizedId })
-        cache.gc()
+        cache.modify({
+          fields: {
+            rooms(existingRooms = []) {
+              const newRoomRef = makeReference(
+                //@ts-ignore
+                cache.identify({
+                  id: params.id,
+                }),
+              )
+              return existingRooms.filter(
+                (roomRef: Reference) => roomRef !== newRoomRef,
+              )
+            },
+          },
+        })
+        // const normalizedId = cache.identify({ id: params.id })
+        // cache.evict({ id: normalizedId })
+        // cache.gc()
       },
     }))
 

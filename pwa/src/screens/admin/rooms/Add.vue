@@ -227,7 +227,11 @@ import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { Room } from '../../../interfaces/interface.room'
-import { GET_ROOMS, ROOM_INSERT_DATA } from '../../../graphql/query.room'
+import {
+  GET_ROOMS,
+  ROOM_BY_NAME_CAT,
+  ROOM_INSERT_DATA,
+} from '../../../graphql/query.room'
 import gql from 'graphql-tag'
 import { useRouter } from 'vue-router'
 export default {
@@ -264,17 +268,24 @@ export default {
       accessCode: 'gtrfez',
     })
     const { push } = useRouter()
-    const { result, loading, error } = useQuery(GET_ROOMS)
+    const { result, loading, error } = useQuery(ROOM_BY_NAME_CAT, {
+      searchRoomByName: '',
+      searchRoomByCat: '',
+    })
     const { mutate: createRoom } = useMutation(ADD_ROOM, () => ({
       variables: {
         createRoomInput: roomInput,
       },
       update(cache, { data: { createRoom } }) {
-        let data: any = cache.readQuery({ query: GET_ROOMS })
+        let data: any = cache.readQuery({
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
+        })
         cache.writeQuery({
-          query: GET_ROOMS,
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
           data: {
-            rooms: [...data.rooms, createRoom],
+            roomsByNameCat: [...data.roomsByNameCat, createRoom],
           },
         })
 
