@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-themeWhite flex h-full">
+  <div class="bg-themeWhite flex h-full">
     <section class="flex h-full w-full">
       <admin-navigation />
       <div class="w-5/6 p-6">
@@ -213,7 +213,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
@@ -288,10 +288,6 @@ export default {
             roomsByNameCat: [...data.roomsByNameCat, createRoom],
           },
         })
-
-        console.log(createRoom)
-        console.log(data)
-        console.log(cache)
       },
     }))
 
@@ -358,7 +354,6 @@ export default {
           roomInput.location = ''
           roomInput.accessCode = ''
         })
-      push('/admin/rooms')
     }
 
     return {

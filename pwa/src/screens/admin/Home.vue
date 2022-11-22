@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-themeWhite h-full">
+  <div class="bg-themeWhite h-full">
     <section class="flex h-full w-full">
       <admin-navigation />
       <div
@@ -107,7 +107,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
