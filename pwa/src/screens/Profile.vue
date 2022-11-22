@@ -1,9 +1,47 @@
 <template>
     <RouteHolder title="Profile">
-        <div>
-            <button @click="handleLogOut">{{ $t('account.log.out') }}</button>
+        <template #header-actions>
+            <button @click="handleLogOut"
+                class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown">{{
+                        $t('account.log.out')
+                }}</button>
+        </template>
+        <div class="flex flex-col gap-3">
+            <div>
+                <h3 class="font-title font-bold text-2xl">
+                    Rooms
+                </h3>
+                <ul class="flex gap-3">
+                    <li>QR code</li>
+                    <li>QR code</li>
+                    <li>QR code</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-title font-bold text-2xl">
+                    Breakfast
+                </h3>
+                <div>
+                    <p>QR code</p>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-title font-bold text-2xl">Credits</h3>
+                <div class="grid grid-cols-[auto_auto_1fr]">
+                    <label class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
+                        :class="true ? 'focus-within:text-red-600' : ''" for="amountAdults">
+                        <span class="font-title mb-2 block" :class="true ? 'text-red-600' : ''">
+                            Add amount
+                        </span>
+                        <input id="amountAdults"
+                            class="ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                            :class="true ? 'border-red-500 text-red-600 ring-red-400' : ''" type="number"
+                            name="amountAdults" @input="" min="0" :value="1" step="5" />
+                    </label>
+                    <button>test</button>
+                </div>
+            </div>
         </div>
-
     </RouteHolder>
 </template>
 
