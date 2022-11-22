@@ -36,11 +36,10 @@ export const UDATE_ROOM_RESERVATION = gql`
   }
 `
 
-
 export const DELETE_ROOM = gql`
   mutation removeRoom($id: String!) {
     removeRoom(id: $id) {
       id
-`
     }
   }
+`

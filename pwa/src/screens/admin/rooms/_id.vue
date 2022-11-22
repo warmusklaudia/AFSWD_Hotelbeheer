@@ -123,7 +123,7 @@ import {
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQuery } from '@vue/apollo-composable'
-import { Room } from '../../../interfaces/interface.room'
+import Room from '../../../interfaces/interface.room'
 import {
   GET_ROOMS,
   ROOM_BY_ID,

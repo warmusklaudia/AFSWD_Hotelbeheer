@@ -224,7 +224,7 @@ import standard from '../../../assets/standard-suite.webp'
 import { Search, Plus, Frown, X, Loader2, AlertTriangle } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
-import { Room } from '../../../interfaces/interface.room'
+import Room from '../../../interfaces/interface.room'
 import { GET_ROOMS, ROOM_BY_ID } from '../../../graphql/query.room'
 import { useRoute } from 'vue-router'
 export default {

@@ -51,7 +51,6 @@ export class ReservationsResolver {
     @Args('id', { type: () => String }) id: string,
   ): Promise<Reservation> {
     return this.reservationsService.findOne(id)
-<<<<<<< HEAD
   }
 
   @Query(() => [Reservation])
@@ -59,8 +58,6 @@ export class ReservationsResolver {
     @Args('uid', { type: () => String }) uid: string,
   ): Promise<Reservation[]> {
     return this.reservationsService.findByUserId(uid)
-=======
->>>>>>> auth
   }
 
   @UseGuards(FirebaseGuard)

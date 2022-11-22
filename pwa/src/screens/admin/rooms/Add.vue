@@ -226,7 +226,7 @@ import standard from '../../../assets/standard-suite.webp'
 import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
-import { Room } from '../../../interfaces/interface.room'
+import Room from '../../../interfaces/interface.room'
 import {
   GET_ROOMS,
   ROOM_BY_NAME_CAT,
@@ -235,6 +235,7 @@ import {
 import gql from 'graphql-tag'
 import { useRouter } from 'vue-router'
 export default {
+  name: 'AddRoom',
   components: {
     RouteHolder,
     AdminNavigation,
