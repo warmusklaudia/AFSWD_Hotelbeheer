@@ -54,7 +54,7 @@
                         class="bg-transparent rounded-sm py-6 outline-none focus-visible:ring-2 cursor-pointer ring-themeBrown"
                         @change="setLocale">
                         <option v-for="locale of AVAILABLE_LOCALES" :value="locale"
-                            :selected="locale === DEFAULT_LOCALE">
+                            :selected="locale === i18n.global.locale">
                             {{ locale }}
                         </option>
                     </select>
@@ -70,9 +70,9 @@ import { Home, Bed, Clipboard, Scroll, ConciergeBell } from 'lucide-vue-next'
 
 import useI18n from "../../composables/useI18n";
 import useAuthentication from '../../composables/useAuthentication'
-import { AVAILABLE_LOCALES, DEFAULT_LOCALE } from '../../composables/useI18n'
 
-const { loadLocale } = useI18n()
+
+const { loadLocale, AVAILABLE_LOCALES, i18n } = useI18n()
 
 const setLocale = (event: Event) => {
     const target = event?.target as HTMLSelectElement
