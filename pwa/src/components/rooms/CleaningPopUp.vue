@@ -126,7 +126,7 @@ import { useQuery } from '@vue/apollo-composable'
 import { Check, X } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 import { ROOM_BY_ID } from '../../graphql/query.room'
-import { Room } from '../../interfaces/interface.room'
+import Room from '../../interfaces/interface.room'
 
 export default {
   props: {

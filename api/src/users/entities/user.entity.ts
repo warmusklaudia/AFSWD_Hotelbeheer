@@ -1,6 +1,6 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { ObjectId } from 'mongodb';
-import { Service } from 'src/services/entities/service.entity';
+import { ObjectType, Field, ID } from '@nestjs/graphql'
+import { ObjectId } from 'mongodb'
+import { Service } from 'src/services/entities/service.entity'
 import {
   Column,
   CreateDateColumn,
@@ -21,6 +21,14 @@ export class User {
   @Column()
   uid: string
 
+  @Field()
+  @Column()
+  firstName: string
+
+  @Field()
+  @Column()
+  lastName: string
+
   @Field({ defaultValue: 0 })
   @Column()
   amountCredits: number
@@ -39,7 +47,7 @@ export class User {
 
   @Field(() => [Service], { nullable: 'itemsAndList' })
   @Column({ nullable: true })
-  requestedServices?: Service[];
+  requestedServices?: Service[]
 
   @Field(() => Role, { nullable: true })
   @Column({ default: { name: 'user' } })
