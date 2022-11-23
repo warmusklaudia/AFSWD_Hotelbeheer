@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { Command } from "nestjs-command";
-import { DatabaseSeedService } from "./seed.service";
+import { Injectable } from '@nestjs/common'
+import { Command } from 'nestjs-command'
+import { DatabaseSeedService } from './seed.service'
 
 @Injectable()
 export class DatabaseSeedCommand {
@@ -12,10 +12,13 @@ export class DatabaseSeedCommand {
     describe: 'seed the database',
   })
   async seed() {
-    console.log('🌱 Start seeding');
-    const r = await this.seedService.addRooms();
-    console.log(r);
-    console.log('🌱 Seeding done 🏁');
+    console.log('🌱 Start seeding')
+    await Promise.all([
+      this.seedService.addRooms(),
+      this.seedService.addServices(),
+      this.seedService.addPrices(),
+    ])
+    console.log('🌱 Seeding done 🏁')
   }
 
   //npx nestjs-command seed:reset
@@ -24,8 +27,12 @@ export class DatabaseSeedCommand {
     describe: 'delete all data from the database',
   })
   async delete() {
-    console.log('🌱 Start deleting');
-    await this.seedService.deleteAllRooms();
-    console.log('🌱 Deleting done 🏁');
+    console.log('🌱 Start deleting')
+    await Promise.all([
+      this.seedService.deleteAllRooms(),
+      this.seedService.deleteAllServices(),
+      this.seedService.deletePrices(),
+    ])
+    console.log('🌱 Deleting done 🏁')
   }
 }
