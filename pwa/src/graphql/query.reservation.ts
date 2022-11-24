@@ -4,7 +4,7 @@ export const GET_RESERVATIONS = gql`
   query GetReservations {
     reservations {
       id
-      rooms
+      amountRooms
       amountAdults
       amountChildren
       reservationStartDate
@@ -29,6 +29,8 @@ export const GET_RESERVATIONS_BY_USER_ID = gql`
   query GetReservationsByUserId($uid: String!) {
     findReservationsByUserId(uid: $uid) {
       id
+      amountAdults
+      amountChildren
       reservationStartDate
       reservationEndDate
       price

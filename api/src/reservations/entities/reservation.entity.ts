@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
+import { Room } from "src/rooms/entities/room.entity";
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -14,43 +15,47 @@ import {
 export class Reservation {
   @Field(() => ID, { description: 'id of the reservation' })
   @ObjectIdColumn()
-  id: ObjectId;
+  id: ObjectId
 
   @Column()
-  userId: string;
+  userId: string
 
   @Field(() => User)
-  user: User;
+  user: User
+
+  @Field(() => [Room], { nullable: 'itemsAndList' }) // Can return []
+  @Column({ nullable: true })
+  rooms?: Room[]
 
   @Field({ defaultValue: 0 })
   @Column()
-  rooms: number;
+  amountRooms: number
 
   @Field()
   @Column()
-  amountAdults: number;
+  amountAdults: number
 
   @Field()
   @Column()
-  amountChildren: number;
+  amountChildren: number
 
   @Field()
   @Column()
-  price: number;
+  price: number
 
   @Field()
   @Column()
-  reservationStartDate: Date;
+  reservationStartDate: Date
 
   @Field()
   @Column()
-  reservationEndDate: Date;
+  reservationEndDate: Date
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
-  createdAt?: Date;
+  createdAt?: Date
 
   @Field({ nullable: true })
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
-  updatedAt?: Date;
+  updatedAt?: Date
 }

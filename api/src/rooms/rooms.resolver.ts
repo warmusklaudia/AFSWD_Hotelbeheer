@@ -41,6 +41,11 @@ export class RoomsResolver {
     return this.roomsService.findAll()
   }
 
+  @Query(() => [Room], { name: 'roomsWithoutReservation' })
+  findRoomsWithoutReservation(): Promise<Room[]> {
+    return this.roomsService.findRoomsWithoutReservation()
+  }
+
   @Query(() => Room, { name: 'room' })
   findOne(@Args('id', { type: () => String }) id: string): Promise<Room> {
     return this.roomsService.findOne(id)
@@ -58,8 +63,14 @@ export class RoomsResolver {
   updateRoom(
     @Args('updateRoomInput') updateRoomInput: UpdateRoomInput,
   ): Promise<Room> {
-    //@ts-ignore
     return this.roomsService.update(updateRoomInput)
+  }
+
+  @Mutation(() => Room, { name: 'removeReservationFromRoom' })
+  async removeReservationFromRoom(
+    @Args('id', { type: () => String }) id: string,
+  ) {
+    return this.roomsService.removeReservationFromRoom(id)
   }
 
   @Mutation(() => Room)
@@ -67,7 +78,6 @@ export class RoomsResolver {
     @Args('id') id: string,
     @Args('reservationId') reservationId: string,
   ): Promise<Room> {
-    //@ts-ignore
     return this.roomsService.addReservationToRoom(id, reservationId)
   }
 

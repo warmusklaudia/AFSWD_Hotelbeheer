@@ -16,7 +16,7 @@ export class ReservationsService {
     const r = new Reservation()
 
     r.userId = createReservationInput.userId
-    r.rooms = createReservationInput.rooms
+    r.amountRooms = createReservationInput.amountRooms
     r.amountAdults = createReservationInput.amountAdults
     r.amountChildren = createReservationInput.amountChildren
     r.price = createReservationInput.price
@@ -45,7 +45,7 @@ export class ReservationsService {
 
     update.id = new ObjectId(updateReservationInput.id)
     update.userId = updateReservationInput.userId
-    update.rooms = updateReservationInput.rooms
+    update.amountRooms = updateReservationInput.amountRooms
     update.amountAdults = updateReservationInput.amountAdults
     update.amountChildren = updateReservationInput.amountChildren
     update.price = updateReservationInput.price
@@ -62,7 +62,7 @@ export class ReservationsService {
   async incrementRooms(id: string, amount = 1): Promise<void> {
     //@ts-ignore
     const r: Reservation = await this.findOne(new ObjectId(id))
-    r.rooms = r.rooms + amount
+    r.amountRooms = r.amountRooms + amount
     await this.reservationsRepository.save(r)
   }
 }

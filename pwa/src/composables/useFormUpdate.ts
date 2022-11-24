@@ -11,7 +11,7 @@ const addBreakfast = ref(false)
 
 const reservationFormInput = reactive({
   userId: user.value!.uid,
-  rooms: 0,
+  amountRooms: 0,
   amountAdults: 0,
   amountChildren: 0,
   price: 0,
@@ -35,7 +35,7 @@ export default () => {
   }
 
   const resetReservationForm = () => {
-    reservationFormInput.rooms = 0
+    reservationFormInput.amountRooms = 0
     reservationFormInput.amountAdults = 0
     reservationFormInput.amountChildren = 0
     reservationFormInput.price = 0

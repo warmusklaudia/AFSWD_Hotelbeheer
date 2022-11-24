@@ -11,6 +11,7 @@ export const GET_ROOMS = gql`
     }
   }
 `
+
 export const ROOM_BY_ID = gql`
   query getRoom($id: String!) {
     room(id: $id) {
@@ -44,6 +45,18 @@ export const ROOM_BY_NAME_CAT = gql`
     ) {
       id
       name
+      category
+    }
+  }
+`
+
+export const GET_ROOMS_WITHOUT_RESERVATION = gql`
+  query GetRoomsWithoutReservation {
+    roomsWithoutReservation {
+      id
+      name
+      description
+      rating
       category
     }
   }

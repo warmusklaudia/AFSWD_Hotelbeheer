@@ -33,6 +33,13 @@ export class RoomsService {
     return this.roomsRepository.find()
   }
 
+  findRoomsWithoutReservation(): Promise<Room[]> {
+    return this.roomsRepository.find({
+      //@ts-ignore
+      reservationId: null,
+    })
+  }
+
   findOne(id: string): Promise<Room> {
     //@ts-ignore
     return this.roomsRepository.findOne(new ObjectId(id))
@@ -59,6 +66,15 @@ export class RoomsService {
     update.accessCode = updateRoomInput.accessCode
 
     return this.roomsRepository.save(update)
+  }
+
+  async removeReservationFromRoom(id: string): Promise<Room> {
+    //@ts-ignore
+    const r: Room = await this.findOne(new ObjectId(id))
+    r.reservationId = null
+
+    return this.roomsRepository.save(r)
+
   }
 
   async addReservationToRoom(id: string, reservationId: string): Promise<Room> {
