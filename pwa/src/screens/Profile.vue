@@ -11,19 +11,13 @@
                 <h3 class="font-title font-bold text-2xl">
                     Rooms
                 </h3>
-                <div class=" overflow-x-auto max-w-[80vw]">
-                    <ul class="flex gap-10">
-                        <li class="flex flex-col items-center">
-                            <qrcode-vue :value="value" :size="size" level="H" />
-                            <h4 class="font-title font-bold text-lg">room</h4>
-                        </li>
-                        <li class="flex flex-col items-center">
-                            <qrcode-vue :value="value" :size="size" level="H" />
-                            <h4 class="font-title font-bold text-lg">room</h4>
-                        </li>
-                        <li class="flex flex-col items-center">
-                            <qrcode-vue :value="value" :size="size" level="H" />
-                            <h4 class="font-title font-bold text-lg">room</h4>
+                <div v-if="loading"></div>
+                <div v-else-if="error"></div>
+                <div v-else-if="result" class="flex gap-10 overflow-x-auto max-w-[80vw]">
+                    <ul :key="r.id" v-for="r in result.findReservationsByUserId" class="flex gap-10">
+                        <li :key="room.id" v-for="room in r.rooms" class="flex flex-col items-center gap-3">
+                            <qrcode-vue :value="room.accessCode" :size="size" level="H" />
+                            <h4 class="font-title font-bold text-lg">{{ room.name }}</h4>
                         </li>
                     </ul>
                 </div>
@@ -63,12 +57,18 @@ import QrcodeVue from 'qrcode.vue'
 
 import RouteHolder from '../components/holders/RouteHolder.vue'
 import useAuthentication from "../composables/useAuthentication";
+import { useQuery } from "@vue/apollo-composable";
+import { GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID } from "../graphql/query.reservation";
 
-const { logout } = useAuthentication()
+const { logout, user } = useAuthentication()
 const { replace } = useRouter()
 
+const { result, loading, error } = useQuery(GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID, () => ({
+    uid: user.value?.uid!
+}))
+
 const value = 'https://example.com'
-const size = 200
+const size = 150
 
 const handleLogOut = () => {
     logout().then(() => {

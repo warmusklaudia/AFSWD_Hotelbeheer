@@ -37,3 +37,16 @@ export const GET_RESERVATIONS_BY_USER_ID = gql`
     }
   }
 `
+
+export const GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID = gql`
+  query GetReservationsWithRoomsByUserId($uid: String!) {
+    findReservationsByUserId(uid: $uid) {
+      id
+      rooms {
+        id
+        name
+        accessCode
+      }
+    }
+  }
+`
