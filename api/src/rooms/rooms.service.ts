@@ -74,7 +74,6 @@ export class RoomsService {
     r.reservationId = null
 
     return this.roomsRepository.save(r)
-
   }
 
   async addReservationToRoom(id: string, reservationId: string): Promise<Room> {
@@ -82,7 +81,7 @@ export class RoomsService {
     const r: Room = await this.findOne(new ObjectId(id))
     r.reservationId = reservationId
 
-    this.reservationsService.incrementRooms(r.reservationId)
+    this.reservationsService.incrementRooms(r.reservationId, [r])
 
     return this.roomsRepository.save(r)
   }

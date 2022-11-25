@@ -1,5 +1,6 @@
 import { reactive, readonly, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import Room from "../interfaces/interface.room"
 import useAuthentication from './useAuthentication'
 
 const { user } = useAuthentication()
@@ -19,12 +20,14 @@ const reservationFormInput = reactive({
   reservationEndDate: '',
 })
 
-const selectedRoom = reactive({
+const selectedRoom: Room = reactive({
   id: '',
   name: '',
   description: '',
   rating: 0,
   category: '',
+  location: '',
+  accessCode: '',
 })
 
 export default () => {
@@ -39,7 +42,9 @@ export default () => {
     reservationFormInput.amountAdults = 0
     reservationFormInput.amountChildren = 0
     reservationFormInput.price = 0
-    reservationFormInput.reservationStartDate = new Date().toISOString().slice(0, 10)
+    reservationFormInput.reservationStartDate = new Date()
+      .toISOString()
+      .slice(0, 10)
     reservationFormInput.reservationEndDate = ''
 
     selectedRoom.id = ''
@@ -48,12 +53,14 @@ export default () => {
     addBreakfast.value = false
   }
 
-  const setSelectedRoom = (room: any) => {
+  const setSelectedRoom = (room: Room) => {
     selectedRoom.id = room.id
     selectedRoom.name = room.name
     selectedRoom.description = room.description
     selectedRoom.rating = room.rating
     selectedRoom.category = room.category
+    selectedRoom.location = room.location
+    selectedRoom.accessCode = room.accessCode
     console.log(selectedRoom)
   }
 
@@ -89,7 +96,7 @@ export default () => {
     console.log(addBreakfast)
   }
 
-  const setPrice = (price: number) =>{
+  const setPrice = (price: number) => {
     reservationFormInput.price = price
   }
 

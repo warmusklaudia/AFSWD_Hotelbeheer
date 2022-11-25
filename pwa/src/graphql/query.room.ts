@@ -58,6 +58,8 @@ export const GET_ROOMS_WITHOUT_RESERVATION = gql`
       description
       rating
       category
+      location
+      accessCode
     }
   }
 `

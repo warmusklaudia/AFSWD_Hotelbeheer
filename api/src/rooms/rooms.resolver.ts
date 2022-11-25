@@ -14,20 +14,12 @@ import {
   ClientMessage,
   MessageTypes,
 } from 'src/bootstrap/entities/ClientMessage'
-import { Reservation } from 'src/reservations/entities/reservation.entity'
-import { ReservationsService } from 'src/reservations/reservations.service'
 
 @Resolver(() => Room)
 export class RoomsResolver {
   constructor(
     private readonly roomsService: RoomsService,
-    private readonly reservationsService: ReservationsService,
   ) {}
-
-  @ResolveField()
-  reservation(@Parent() r: Room): Promise<Reservation> {
-    return this.reservationsService.findOne(r.reservationId)
-  }
 
   @Mutation(() => Room)
   createRoom(
