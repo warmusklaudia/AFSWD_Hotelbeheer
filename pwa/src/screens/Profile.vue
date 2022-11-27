@@ -33,7 +33,7 @@
             </div>
             <div>
                 <h3 class="font-title font-bold text-2xl">Credits</h3>
-                <div class="grid grid-cols-[auto_auto_1fr]">
+                <div class="flex flex-col gap-3 max-w-xs">
                     <label class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
                         :class="true ? 'focus-within:text-red-600' : ''" for="amountAdults">
                         <span class="font-title mb-2 block" :class="true ? 'text-red-600' : ''">
@@ -42,9 +42,12 @@
                         <input id="amountAdults"
                             class="ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
                             :class="true ? 'border-red-500 text-red-600 ring-red-400' : ''" type="number"
-                            name="amountAdults" @input="" min="0" :value="1" step="5" />
+                            name="amountAdults" v-model="amountCredits" min="0" step="5" />
                     </label>
-                    <button>test</button>
+                    <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
+                        @click="addCredits">
+                        Add credits
+                    </button>
                 </div>
             </div>
         </div>
@@ -57,8 +60,11 @@ import QrcodeVue from 'qrcode.vue'
 
 import RouteHolder from '../components/holders/RouteHolder.vue'
 import useAuthentication from "../composables/useAuthentication";
-import { useQuery } from "@vue/apollo-composable";
+import { useMutation, useQuery } from "@vue/apollo-composable";
 import { GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID } from "../graphql/query.reservation";
+import { ref } from "vue";
+import { ADD_CREDITS_TO_USER } from "../graphql/mutation.user";
+import useCustomUser from "../composables/useCustomUser";
 
 const { logout, user } = useAuthentication()
 const { replace } = useRouter()
@@ -67,8 +73,24 @@ const { result, loading, error } = useQuery(GET_RESERVATIONS_WITH_ROOMS_BY_USER_
     uid: user.value?.uid!
 }))
 
+// const { mutate: updateRoom } = useMutation(ADD_CREDITS_TO_USER, () => ({
+//     variables: {
+//         id: user.id, //id of uid gebruiken? 
+//         amount: amountCredits.value
+//     },
+// }))
+const { customUser } = useCustomUser()
+console.log(customUser)
+
 const value = 'https://example.com'
 const size = 150
+
+const amountCredits = ref(0)
+
+const addCredits = () => {
+    if (amountCredits.value == 0) return
+    console.log('add credits')
+}
 
 const handleLogOut = () => {
     logout().then(() => {

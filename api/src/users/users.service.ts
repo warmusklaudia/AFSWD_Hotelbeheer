@@ -15,50 +15,61 @@ export class UsersService {
   ) {}
 
   create(createUserInput: CreateUserInput): Promise<User> {
-    const u = new User();
+    const u = new User()
 
-    u.uid = createUserInput.uid;
-    u.preferredLanguage = createUserInput.preferredLanguage;
-    u.amountCredits = createUserInput.amountCredits;
-    u.reservations = createUserInput.reservations;
-    u.breakfastCode = createUserInput.breakfastCode;
-    return this.userRepository.save(u);
+    u.uid = createUserInput.uid
+    u.preferredLanguage = createUserInput.preferredLanguage
+    u.amountCredits = createUserInput.amountCredits
+    u.reservations = createUserInput.reservations
+    u.breakfastCode = createUserInput.breakfastCode
+    return this.userRepository.save(u)
   }
 
   findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find()
   }
 
   findOne(id: string): Promise<User> {
     //@ts-ignore
-    return this.userRepository.findOne(new ObjectId(id));
+    return this.userRepository.findOne(new ObjectId(id))
   }
 
   findOneByUid(uid: string): Promise<User> {
-    return this.userRepository.findOneBy({ uid });
+    return this.userRepository.findOneBy({ uid })
   }
 
   update(updateUserInput: UpdateUserInput) {
-    const update = new User();
+    const update = new User()
 
-    update.id = new ObjectId(updateUserInput.id);
+    update.id = new ObjectId(updateUserInput.id)
     //update.preferredLanguage = updateUserInput.preferredLanguage;
 
-    return this.userRepository.save(update);
+    return this.userRepository.save(update)
   }
 
   remove(id: string): Promise<DeleteResult> {
-    return this.userRepository.delete(id);
+    return this.userRepository.delete(id)
   }
 
   async addToRequestedServices(id: string, services: Service[]) {
     //@ts-ignore
-    const u: User = await this.findOne(new ObjectId(id));
+    const u: User = await this.findOne(new ObjectId(id))
 
     u.requestedServices = u.requestedServices
       ? [...services, ...u.requestedServices] // merge the current services with the new ones
-      : [...services];
+      : [...services]
 
-    return this.userRepository.save(u);
+    return this.userRepository.save(u)
+  }
+
+  async addCreditsToUser(id: string, amount: number) {
+    //@ts-ignore
+    const u: User = await this.findOne(new ObjectId(id))
+
+    console.log(u)
+
+    u.amountCredits += amount
+
+    return this.userRepository.save(u)
   }
 }

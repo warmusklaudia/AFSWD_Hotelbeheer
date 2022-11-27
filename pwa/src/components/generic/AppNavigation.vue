@@ -48,7 +48,7 @@
         </li>
         <li class="hidden sm:block">
             <ul class="flex items-center">
-                <li v-if="user" class="px-3">$10.00</li>
+                <li v-if="user" class="px-3">$ {{ customUser?.amountCredits == null ? 10.00 : customUser?.amountCredits.toFixed(2) }}</li>
                 <li class="px-3 ">
                     <select name="" id=""
                         class="bg-transparent rounded-sm py-6 outline-none focus-visible:ring-2 cursor-pointer ring-themeBrown"
@@ -70,6 +70,7 @@ import { Home, Bed, Clipboard, Scroll, ConciergeBell } from 'lucide-vue-next'
 
 import useI18n from "../../composables/useI18n";
 import useAuthentication from '../../composables/useAuthentication'
+import useCustomUser from "../../composables/useCustomUser";
 
 
 const { loadLocale, AVAILABLE_LOCALES, i18n } = useI18n()
@@ -80,5 +81,8 @@ const setLocale = (event: Event) => {
 }
 
 const { user } = useAuthentication()
+const { customUser } = useCustomUser()
+
+console.log(customUser)
 
 </script>
