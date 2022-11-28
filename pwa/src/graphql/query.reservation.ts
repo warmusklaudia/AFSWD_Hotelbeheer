@@ -47,6 +47,7 @@ export const GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID = gql`
         name
         accessCode
       }
+      breakfastAccess
     }
   }
 `

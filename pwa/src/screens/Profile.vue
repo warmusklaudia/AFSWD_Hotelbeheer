@@ -14,7 +14,6 @@
                 <div v-if="loading"></div>
                 <div v-else-if="error"></div>
                 <div v-else-if="result" class="flex gap-10 overflow-x-auto max-w-[80vw]">
-                    <template></template>
                     <ul class="flex gap-10">
                         <template :key="r.id" v-for="r in result.findReservationsByUserId">
                             <li :key="room.id" v-for="room in r.rooms" class="flex flex-col items-center gap-3">
@@ -31,8 +30,18 @@
                 <h3 class="font-title font-bold text-2xl">
                     Breakfast
                 </h3>
-                <div>
-                    <qrcode-vue :value="value" :size="size" level="H" />
+                <div v-if="loading"></div>
+                <div v-else-if="error"></div>
+                <div v-else-if="result" class="flex gap-10 overflow-x-auto max-w-[80vw]">
+                    <ul class="flex gap-10">
+                        <template v-for="rs in result.findReservationsByUserId">
+                            <li v-if="rs.breakfastAccess == true" :key="rs.id"
+                                class="flex flex-col items-center gap-3">
+                                <qrcode-vue :value="rs.id" :size="size" level="H" />
+                            </li>
+                        </template>
+
+                    </ul>
                 </div>
             </div>
             <div>
