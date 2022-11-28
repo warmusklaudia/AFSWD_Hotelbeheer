@@ -5,6 +5,7 @@ export const GET_USER_BY_UID = gql`
     findByUid(uid: $uid) {
       id
       uid
+      amountCredits
       role {
         name
       }

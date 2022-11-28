@@ -1,0 +1,11 @@
+{
+  "en": {
+    "navigation.home": "Home",
+    "navigation.rooms": "Rooms",
+    "navigation.services": "Services",
+    "navigation.reservations": "Reservations",
+    "navigation.user": "User",
+    "footer.disclaimer": "Disclaimer",
+    "account.log.out": "Log out"
+  }
+}

@@ -21,6 +21,18 @@ export class DatabaseSeedCommand {
     console.log('🌱 Seeding done 🏁')
   }
 
+  //npx nestjs-command seed:database:services
+  @Command({
+    command: 'seed:database:services',
+    describe: 'seed the database',
+  })
+  async seedServices() {
+    console.log('🌱 Start seeding')
+    const r = await this.seedService.addServices()
+    console.log(r)
+    console.log('🌱 Seeding done 🏁')
+  }
+
   //npx nestjs-command seed:reset
   @Command({
     command: 'seed:reset',

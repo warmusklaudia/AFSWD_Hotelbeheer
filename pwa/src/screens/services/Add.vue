@@ -16,11 +16,11 @@
                 <p>Error happened.</p>
             </div>
             <div v-else-if="result">
-                <ul class="flex flex-col gap-3">
+                <ul class="flex flex-col gap-3 md:overflow-y-auto md:max-h-[70vh]">
                     <li v-for="s of result.services">
                         <h2 class="font-title font-bold text-2xl mb-3">{{ s.name }}</h2>
                         <div class="grid md:grid-cols-[auto_1fr] gap-6">
-                            <img class="@dark:bg-neutral-700 aspect-square block object-cover max-h-48 rounded-md bg-neutral-300"
+                            <img class="@dark:bg-neutral-700 aspect-square block object-cover max-h-40 rounded-md bg-neutral-300"
                                 src="https://images.pexels.com/photos/5371575/pexels-photo-5371575.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
                             <div class="grid grid-rows-[1fr_auto] gap-3">
                                 <p class="font-theme">{{ s.description }}</p>
@@ -31,7 +31,7 @@
                 </ul>
             </div>
 
-            <form @submit.prevent="">
+            <form @submit.prevent="" class="order-first	md:order-last">
                 <div class="flex flex-col gap-3">
                     <div>
                         <label :class="serviceErrors.serviceId ? 'text-red-600' : ''"

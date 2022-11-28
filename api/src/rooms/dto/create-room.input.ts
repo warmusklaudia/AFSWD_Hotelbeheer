@@ -5,8 +5,8 @@ export class CreateRoomInput {
   @Field() // GraphQL
   name: string;
 
-  @Field({ nullable: true }) // GraphQL
-  description?: string;
+  @Field() // GraphQL
+  description: string;
 
   @Field({ nullable: true }) // GraphQL
   reservationId: string;

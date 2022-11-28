@@ -2,3 +2,5 @@
 **/.env
 **/dist/
 **/hotelbeheer-4e5e7-firebase-admin*.json
+**/hotel-translations.json
+**/token.json

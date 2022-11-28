@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid sm:grid-cols-[auto_1fr] md:gap-12">
+    <div class="grid sm:grid-cols-[auto_1fr] sm:gap-12">
       <img v-if="selectedRoom.category == 'luxe'"
         class="mb-6 aspect-square w-full object-cover rounded-xl shadow-md max-w-64" :src="luxe"
         :alt="`picture of a ${selectedRoom.category}-suite`" />

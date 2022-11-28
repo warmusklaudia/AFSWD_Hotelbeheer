@@ -24,15 +24,8 @@ import { UseGuards } from '@nestjs/common'
 export class RoomsResolver {
   constructor(
     private readonly roomsService: RoomsService,
-    private readonly reservationsService: ReservationsService,
   ) {}
 
-  @ResolveField()
-  reservation(@Parent() r: Room): Promise<Reservation> {
-    return this.reservationsService.findOne(r.reservationId)
-  }
-
-  @UseGuards(FirebaseGuard, RolesGuard(['admin']))
   @Mutation(() => Room)
   createRoom(
     @Args('createRoomInput') createRoomInput: CreateRoomInput,
@@ -43,6 +36,11 @@ export class RoomsResolver {
   @Query(() => [Room], { name: 'rooms' })
   findAll(): Promise<Room[]> {
     return this.roomsService.findAll()
+  }
+
+  @Query(() => [Room], { name: 'roomsWithoutReservation' })
+  findRoomsWithoutReservation(): Promise<Room[]> {
+    return this.roomsService.findRoomsWithoutReservation()
   }
 
   @Query(() => Room, { name: 'room' })
@@ -63,8 +61,14 @@ export class RoomsResolver {
   updateRoom(
     @Args('updateRoomInput') updateRoomInput: UpdateRoomInput,
   ): Promise<Room> {
-    //@ts-ignore
     return this.roomsService.update(updateRoomInput)
+  }
+
+  @Mutation(() => Room, { name: 'removeReservationFromRoom' })
+  async removeReservationFromRoom(
+    @Args('id', { type: () => String }) id: string,
+  ) {
+    return this.roomsService.removeReservationFromRoom(id)
   }
 
   @Mutation(() => Room)
@@ -72,7 +76,6 @@ export class RoomsResolver {
     @Args('id') id: string,
     @Args('reservationId') reservationId: string,
   ): Promise<Room> {
-    //@ts-ignore
     return this.roomsService.addReservationToRoom(id, reservationId)
   }
 
