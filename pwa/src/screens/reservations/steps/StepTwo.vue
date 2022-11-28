@@ -54,7 +54,7 @@
           class="flex h-5 w-5 items-center justify-center relative rounded-md border border-neutral-300 focus-within:border-themeBrown ring-blue-200 focus-within:ring focus:outline-none"
           for="breakfast">
           <input class="peer sr-only" type="checkbox" name="breakfast" id="breakfast" @input="setBreakfast"
-            :checked="addBreakfast" />
+            :checked="reservationFormInput.breakfastAccess" />
           <Check class="transition h-4 scale-0 dark:text-white text-themeBrown ease-out peer-checked:scale-100" />
         </label>
         <label class="select-none dark:text-white font-text" for="breakfast">
@@ -81,7 +81,7 @@ import useFormUpdate from '../../../composables/useFormUpdate'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 
-const { reservationFormInput, selectedRoom, addBreakfast, amountDays, setBreakfast, setPrice, changeStepTo } = useFormUpdate()
+const { reservationFormInput, selectedRoom, amountDays, setBreakfast, setPrice, changeStepTo } = useFormUpdate()
 
 const stepTwoErrors = reactive({
   firstName: '',
@@ -95,7 +95,7 @@ const nextStep = () => {
   const adultPrice = reservationFormInput.amountAdults * 150
   const daysPrice = amountDays.value * 50
   const categoryPrice = selectedRoom.category === 'luxe' ? 500 : 300
-  const breakfastPrice = addBreakfast.value ? 120 : 0
+  const breakfastPrice = reservationFormInput.breakfastAccess ? 120 : 0
 
   const totalPrice = categoryPrice + childPrice + adultPrice + breakfastPrice + daysPrice
   setPrice(totalPrice)

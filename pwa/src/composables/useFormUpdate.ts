@@ -1,6 +1,6 @@
 import { reactive, readonly, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import Room from "../interfaces/interface.room"
+import Room from '../interfaces/interface.room'
 import useAuthentication from './useAuthentication'
 
 const { user } = useAuthentication()
@@ -8,16 +8,15 @@ const { user } = useAuthentication()
 const reservationId = ref('')
 const currentStep = ref(1)
 const amountDays = ref(0)
-const addBreakfast = ref(false)
 
 const reservationFormInput = reactive({
   userId: user.value!.uid,
-  amountRooms: 0,
   amountAdults: 0,
   amountChildren: 0,
   price: 0,
   reservationStartDate: new Date().toISOString().slice(0, 10),
   reservationEndDate: '',
+  breakfastAccess: false,
 })
 
 const selectedRoom: Room = reactive({
@@ -38,7 +37,6 @@ export default () => {
   }
 
   const resetReservationForm = () => {
-    reservationFormInput.amountRooms = 0
     reservationFormInput.amountAdults = 0
     reservationFormInput.amountChildren = 0
     reservationFormInput.price = 0
@@ -46,11 +44,11 @@ export default () => {
       .toISOString()
       .slice(0, 10)
     reservationFormInput.reservationEndDate = ''
+    reservationFormInput.breakfastAccess = false
 
     selectedRoom.id = ''
 
     amountDays.value = 0
-    addBreakfast.value = false
   }
 
   const setSelectedRoom = (room: Room) => {
@@ -90,7 +88,9 @@ export default () => {
   }
 
   const setBreakfast = (e: Event) => {
-    addBreakfast.value = (e.target as HTMLInputElement).checked
+    reservationFormInput.breakfastAccess = (
+      e.target as HTMLInputElement
+    ).checked
   }
 
   const setPrice = (price: number) => {
@@ -106,7 +106,6 @@ export default () => {
     reservationFormInput: readonly(reservationFormInput),
     selectedRoom: readonly(selectedRoom),
     amountDays: readonly(amountDays),
-    addBreakfast: readonly(addBreakfast),
     reservationId: readonly(reservationId),
 
     setReservationId,

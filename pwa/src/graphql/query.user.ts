@@ -20,7 +20,6 @@ export const GET_CURRENT_USER = gql`
       id
       uid
       amountCredits
-      breakfastCode
       role {
         name
       }

@@ -18,10 +18,6 @@ export class UsersService {
     const u = new User()
 
     u.uid = createUserInput.uid
-    u.preferredLanguage = createUserInput.preferredLanguage
-    u.amountCredits = createUserInput.amountCredits
-    u.reservations = createUserInput.reservations
-    u.breakfastCode = createUserInput.breakfastCode
     return this.userRepository.save(u)
   }
 
@@ -67,15 +63,6 @@ export class UsersService {
     const u: User = await this.findOne(new ObjectId(id))
 
     u.amountCredits ? (u.amountCredits += amount) : (u.amountCredits = amount)
-
-    return this.userRepository.save(u)
-  }
-
-  async addBreakfastCodeToUser(id: string, code: string) {
-    //@ts-ignore
-    const u: User = await this.findOne(new ObjectId(id))
-
-    u.breakfastCode = code
 
     return this.userRepository.save(u)
   }
