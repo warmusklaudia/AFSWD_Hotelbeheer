@@ -6,7 +6,7 @@ import {
   User,
   UserCredential,
 } from 'firebase/auth'
-import { ref, Ref, resolveComponent } from 'vue'
+import { ref, Ref } from 'vue'
 import useCustomUser from './useCustomUser'
 import useFirebase from './useFirebase'
 
@@ -85,15 +85,16 @@ export default () => {
     })
   }
 
-  const restoreUser = async (): Promise<void> => {
-    const { loadCustomUser } = useCustomUser()
+
+  const restoreUser = (): Promise<void> => {
     return new Promise((resolve, reject) => {
-      auth.onAuthStateChanged(async (u: User | null) => {
+      auth.onAuthStateChanged((u: User | null) => {
         if (u) {
           setUser(u)
           resolve()
+        } else {
+          resolve()
         }
-        resolve()
       })
     })
   }

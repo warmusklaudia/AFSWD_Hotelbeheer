@@ -61,12 +61,10 @@ export default () => {
     selectedRoom.category = room.category
     selectedRoom.location = room.location
     selectedRoom.accessCode = room.accessCode
-    console.log(selectedRoom)
   }
 
   const setReservationStartDate = (date: string) => {
     reservationFormInput.reservationStartDate = date
-    console.log(reservationFormInput)
   }
 
   const setEndDate = (e: Event) => {
@@ -93,7 +91,6 @@ export default () => {
 
   const setBreakfast = (e: Event) => {
     addBreakfast.value = (e.target as HTMLInputElement).checked
-    console.log(addBreakfast)
   }
 
   const setPrice = (price: number) => {
@@ -101,7 +98,6 @@ export default () => {
   }
 
   const changeStepTo = (step: number) => {
-    console.log(reservationFormInput)
     push('/reservations/add/' + step)
   }
 

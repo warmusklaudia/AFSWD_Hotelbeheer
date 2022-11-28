@@ -16,11 +16,10 @@ const { i18n, loadLocale } = useI18n()
 
 loadLocale()
 app.use(i18n)
-
-;(async () => {
+;(async function () {
   await restoreUser()
 
-  if (user.value?.uid) await loadCustomUser()
+  if (user.value) await loadCustomUser()
 
   app.use(router)
 
