@@ -16,7 +16,7 @@
             <X />
           </button>
           <h2 class="font-title self-center text-2xl font-bold">
-            Room <span class="text-xl">{{ id }}</span>
+            Room <span>{{ result?.room.name }}</span>
           </h2>
         </div>
         <ul class="ml-10 flex flex-col gap-2">
@@ -139,14 +139,11 @@ export default {
       required: true,
     },
   },
-  setup() {
-    const { params } = useRoute()
-    // const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
-    //   id: params.id,
-    // })
-    return {
-      params,
-    }
+  setup(props) {
+    const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
+      id: props.id,
+    })
+    return { result, loading, error }
   },
   components: { Check, X },
 }
