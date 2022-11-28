@@ -1,0 +1,11 @@
+{
+  "nl": {
+    "navigation.home": "Home",
+    "navigation.rooms": "Kamers",
+    "navigation.services": "Services",
+    "navigation.reservations": "Reservaties",
+    "navigation.user": "Gebruiker",
+    "footer.disclaimer": "Disclaimer",
+    "account.log.out": "Afmelden"
+  }
+}

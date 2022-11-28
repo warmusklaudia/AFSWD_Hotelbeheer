@@ -53,6 +53,11 @@ export class UsersResolver {
     return this.usersService.update(updateUserInput)
   }
 
+  @Mutation(() => User, { name: 'addCreditsToUser' })
+  addCreditsToUser(@Args('id') id: string, @Args('amount') amount: number) {
+    return this.usersService.addCreditsToUser(id, amount)
+  }
+
   @UseGuards(FirebaseGuard)
   @Mutation(() => User)
   async removeUser(

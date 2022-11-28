@@ -25,7 +25,7 @@ export class UsersService {
     return this.userRepository.save(u)
   }
 
-  findAll() {
+  findAll(): Promise<User[]> {
     return this.userRepository.find()
   }
 
@@ -58,6 +58,17 @@ export class UsersService {
     u.requestedServices = u.requestedServices
       ? [...services, ...u.requestedServices] // merge the current services with the new ones
       : [...services]
+
+    return this.userRepository.save(u)
+  }
+
+  async addCreditsToUser(id: string, amount: number) {
+    //@ts-ignore
+    const u: User = await this.findOne(new ObjectId(id))
+
+    console.log(u)
+
+    u.amountCredits += amount
 
     return this.userRepository.save(u)
   }

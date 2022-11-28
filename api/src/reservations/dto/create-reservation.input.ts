@@ -6,7 +6,7 @@ export class CreateReservationInput {
   userId: string;
 
   @Field({ defaultValue: 0 })
-  rooms: number;
+  amountRooms: number;
 
   @Field()
   amountAdults: number;

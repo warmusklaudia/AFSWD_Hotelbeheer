@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ObjectId } from 'mongodb';
-import { DeleteResult, Repository } from 'typeorm';
-import { CreateReservationInput } from './dto/create-reservation.input';
-import { UpdateReservationInput } from './dto/update-reservation.input';
-import { Reservation } from './entities/reservation.entity';
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { ObjectId } from 'mongodb'
+import { Room } from 'src/rooms/entities/room.entity'
+import { DeleteResult, Repository } from 'typeorm'
+import { CreateReservationInput } from './dto/create-reservation.input'
+import { UpdateReservationInput } from './dto/update-reservation.input'
+import { Reservation } from './entities/reservation.entity'
 
 @Injectable()
 export class ReservationsService {
@@ -16,7 +17,7 @@ export class ReservationsService {
     const r = new Reservation()
 
     r.userId = createReservationInput.userId
-    r.rooms = createReservationInput.rooms
+    r.amountRooms = createReservationInput.amountRooms
     r.amountAdults = createReservationInput.amountAdults
     r.amountChildren = createReservationInput.amountChildren
     r.price = createReservationInput.price
@@ -45,7 +46,7 @@ export class ReservationsService {
 
     update.id = new ObjectId(updateReservationInput.id)
     update.userId = updateReservationInput.userId
-    update.rooms = updateReservationInput.rooms
+    update.amountRooms = updateReservationInput.amountRooms
     update.amountAdults = updateReservationInput.amountAdults
     update.amountChildren = updateReservationInput.amountChildren
     update.price = updateReservationInput.price
@@ -59,10 +60,13 @@ export class ReservationsService {
     return this.reservationsRepository.delete(id)
   }
 
-  async incrementRooms(id: string, amount = 1): Promise<void> {
+  async incrementRooms(id: string, rooms: Room[]): Promise<void> {
     //@ts-ignore
     const r: Reservation = await this.findOne(new ObjectId(id))
-    r.rooms = r.rooms + amount
+
+    r.rooms = r.rooms ? [...rooms, ...r.rooms] : [...rooms]
+    r.amountRooms = r.amountRooms + rooms.length
+
     await this.reservationsRepository.save(r)
   }
 }

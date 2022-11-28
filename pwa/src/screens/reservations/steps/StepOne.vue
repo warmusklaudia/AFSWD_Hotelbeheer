@@ -94,7 +94,7 @@
       <p>Error happened.</p>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-      <div v-for="r of result.rooms" :key="r.id" @click="setSelectedRoom(r)"
+      <div v-for="r of result.roomsWithoutReservation" :key="r.id" @click="setSelectedRoom(r)"
         class="cursor-pointer rounded hover:bg-neutral-200 hover:shadow-lg"
         :class="r.id == selectedRoom.id ? 'bg-neutral-200' : ''">
         <img v-if="r.category == 'luxe'" class="aspect-video w-full object-cover" :src="luxe"
@@ -110,8 +110,9 @@
         </div>
       </div>
     </div>
+    <!-- <div v-if="result.value.length == 0">No rooms available</div> -->
   </div>
-  
+
   <div class="flex justify-end">
     <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
       @click="nextStep">Next</button>
@@ -122,14 +123,16 @@ import { useQuery } from '@vue/apollo-composable'
 import { reactive, ref } from 'vue'
 import { AlertTriangle } from "lucide-vue-next"
 
-import { GET_ROOMS } from '../../../graphql/query.room'
+import { GET_ROOMS_WITHOUT_RESERVATION } from '../../../graphql/query.room'
 import useFormUpdate from '../../../composables/useFormUpdate'
 
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 
-const { result, loading, error } = useQuery(GET_ROOMS)
+const { result, loading, error } = useQuery(GET_ROOMS_WITHOUT_RESERVATION)
 const skeletons = ref(18)
+
+console.log(result)
 
 const { reservationFormInput, selectedRoom, amountDays, setEndDate, setSelectedRoom, setAmountAdults, setAmountChildren, changeStepTo } = useFormUpdate()
 
