@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-themeWhite flex h-full">
+  <div class="bg-themeWhite flex h-full">
     <section class="flex h-full w-full">
       <admin-navigation />
       <div class="w-5/6 p-6">
@@ -10,6 +10,7 @@
               v-if="errorMessage"
               class="mb-3 flex items-center justify-between rounded-md bg-red-100 px-3 py-1"
             >
+              <AlertTriangle class="text-red-600" />
               <p class="text-sm text-red-600">{{ errorMessage }}</p>
 
               <button
@@ -210,7 +211,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
@@ -220,10 +221,10 @@ import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import { UPDATE_ROOM } from '../../../graphql/mutation.room'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
-import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
+import { Search, Plus, Frown, X, Loader2, AlertTriangle } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
-import { Room } from '../../../interfaces/interface.room'
+import Room from '../../../interfaces/interface.room'
 import { GET_ROOMS, ROOM_BY_ID } from '../../../graphql/query.room'
 import { useRoute } from 'vue-router'
 export default {
@@ -236,6 +237,7 @@ export default {
     Frown,
     X,
     Loader2,
+    AlertTriangle,
   },
   setup() {
     const skeletons = ref<number>(6)

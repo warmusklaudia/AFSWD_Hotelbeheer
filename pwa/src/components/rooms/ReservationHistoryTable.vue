@@ -8,9 +8,9 @@
       <th class="p-3">Number of people</th>
     </tr>
 
-    <tbody v-if="observations.length > 0">
+    <tbody v-if="reservations.length > 0">
       <tr
-        v-for="(o, i) of observations"
+        v-for="(o, i) of reservations"
         :class="i % 2 === 0 ? 'bg-themeOffWhite' : 'bg-white'"
         class="overflow-hidden rounded-md"
       >
@@ -27,7 +27,7 @@
 <script lang="ts">
 export default {
   props: {
-    observations: {
+    reservations: {
       type: Array,
       required: true,
     },

@@ -65,6 +65,9 @@ export class RoomsService {
     update.location = updateRoomInput.location
     update.accessCode = updateRoomInput.accessCode
 
+    if (updateRoomInput.reservationId) {
+      this.reservationsService.incrementRooms(updateRoomInput.reservationId)
+    }
     return this.roomsRepository.save(update)
   }
 

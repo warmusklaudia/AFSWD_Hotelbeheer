@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-themeWhite flex h-full">
+  <div class="bg-themeWhite flex h-full">
     <section class="flex h-full w-full">
       <admin-navigation />
       <div class="w-5/6 p-6">
@@ -183,9 +183,9 @@
             </div>
             <button
               class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
-              :disabled="loading"
+              :disabled="load"
             >
-              <div class="flex" v-if="!loading">
+              <div class="flex" v-if="!load">
                 <Plus class="mr-2" size="20" />
                 ADD ROOM
               </div>
@@ -213,7 +213,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
@@ -225,10 +225,17 @@ import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
-import { useMutation } from '@vue/apollo-composable'
-import { Room } from '../../../interfaces/interface.room'
-import { GET_ROOMS } from '../../../graphql/query.room'
+import { useMutation, useQuery } from '@vue/apollo-composable'
+import Room from '../../../interfaces/interface.room'
+import {
+  GET_ROOMS,
+  ROOM_BY_NAME_CAT,
+  ROOM_INSERT_DATA,
+} from '../../../graphql/query.room'
+import gql from 'graphql-tag'
+import { useRouter } from 'vue-router'
 export default {
+  name: 'AddRoom',
   components: {
     RouteHolder,
     AdminNavigation,
@@ -241,7 +248,7 @@ export default {
   },
   setup() {
     const skeletons = ref<number>(6)
-    const loading = ref<boolean>(false)
+    const load = ref<boolean>(false)
     const errorMessage = ref<string>('')
     const successMessage = ref<string>('')
 
@@ -254,25 +261,35 @@ export default {
     })
 
     const roomInput = reactive({
-      name: '',
-      description: '',
+      name: 'hrtgef',
+      description: 'gtrefzd',
       rating: 1,
-      category: '',
-      location: '',
-      accessCode: '',
+      category: 'Luxe',
+      location: 'htgrfe',
+      accessCode: 'gtrfez',
     })
-
-    const { mutate: addRoom } = useMutation(ADD_ROOM, () => ({
+    const { push } = useRouter()
+    const { result, loading, error } = useQuery(ROOM_BY_NAME_CAT, {
+      searchRoomByName: '',
+      searchRoomByCat: '',
+    })
+    const { mutate: createRoom } = useMutation(ADD_ROOM, () => ({
       variables: {
         createRoomInput: roomInput,
       },
-      // update: (cache, { data: { addRoom } }) => {
-      //   let data = cache.readQuery<Room[]>({ query: GET_ROOMS })
-      //   console.log(data)
-      //   data = data ? [...data, addRoom] : [addRoom]
-      //   cache.writeQuery({ query: GET_ROOMS, data })
-      //   console.log(data)
-      // },
+      update(cache, { data: { createRoom } }) {
+        let data: any = cache.readQuery({
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
+        })
+        cache.writeQuery({
+          query: ROOM_BY_NAME_CAT,
+          variables: { searchRoomByName: '', searchRoomByCat: '' },
+          data: {
+            roomsByNameCat: [...data.roomsByNameCat, createRoom],
+          },
+        })
+      },
     }))
 
     const isFormInvalid = (): boolean => {
@@ -321,15 +338,15 @@ export default {
 
     const submitForm = async () => {
       if (isFormInvalid()) return
-      loading.value = true
-      await addRoom()
+      load.value = true
+      await createRoom()
         .catch((err) => {
           console.log({ err })
 
           errorMessage.value = err.message
         })
         .finally(() => {
-          loading.value = false
+          load.value = false
           successMessage.value = 'Room successfully added'
           roomInput.name = ''
           roomInput.description = ''
@@ -341,12 +358,15 @@ export default {
     }
 
     return {
+      result,
+      loading,
+      error,
       roomInput,
       roomErrors,
       skeletons,
       errorMessage,
       successMessage,
-      loading,
+      load,
       luxe,
       standard,
       submitForm,

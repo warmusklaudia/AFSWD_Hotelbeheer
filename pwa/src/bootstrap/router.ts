@@ -6,8 +6,10 @@ import {
   RouteRecordRaw,
 } from 'vue-router'
 import useAuthentication from '../composables/useAuthentication'
+import useCustomUser from '../composables/useCustomUser'
 
 const { user } = useAuthentication()
+const { customUser } = useCustomUser()
 
 const routes: RouteRecordRaw[] = [
   {
@@ -103,6 +105,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
     redirect: '/admin/home',
+    meta: { needsToBeAdmin: true },
     children: [
       {
         path: 'home',
@@ -158,6 +161,12 @@ router.beforeEach(
     if (to.meta.needsAuthentication && !user.value) return 'auth/login'
 
     if (to.meta.cantAuthentication && user.value) return '/'
+
+    if (to.meta.needsToBeAdmin && customUser.value?.role.name !== 'admin')
+      return '/'
+
+    if (to.meta.needsToBeAdmin && customUser.value?.role.name === 'admin')
+      return
   },
 )
 
