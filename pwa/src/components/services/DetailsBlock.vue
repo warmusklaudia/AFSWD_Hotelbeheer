@@ -34,10 +34,33 @@
         <p v-else class="italic text-neutral-500">No message</p>
       </div>
       <button
+        v-if="result.requestedService.resolved === false"
+        @click="markAsResolved()"
         class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
       >
-        MARK AS RESOLVED
+        <div v-if="!load">MARK AS RESOLVED</div>
+        <div v-else>
+          <Loader2 class="animate-spin" />
+        </div>
       </button>
+      <div class="flex flex-col" v-else>
+        <p class="text-center text-sm text-neutral-500">
+          Service resolved at
+          {{
+            new Date(result.requestedService.resolvedDate).toLocaleDateString()
+          }}
+          {{
+            new Date(result.requestedService.resolvedDate).toLocaleTimeString()
+          }}
+        </p>
+        <button
+          @click="markAsResolved()"
+          disabled
+          class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown rounded-md border px-6 py-2 text-sm opacity-50 focus:outline-none focus:ring"
+        >
+          MARK AS RESOLVED
+        </button>
+      </div>
     </div>
     <div
       class="bg-themeBrown m-2 h-80 w-80 rounded-md shadow-md lg:h-96 lg:w-96"
@@ -51,11 +74,19 @@
 </template>
 
 <script lang="ts">
-import { useQuery } from '@vue/apollo-composable'
-import { ref, watch } from 'vue'
-import { GET_REQUESTED_SERVICE } from '../../graphql/query.requestedService'
+import { useMutation, useQuery } from '@vue/apollo-composable'
+import { reactive, ref, watch } from 'vue'
+import { UPDATE_REQUESTED_SERVICE } from '../../graphql/mutation.requestedService'
+import {
+  GET_REQUESTED_SERVICE,
+  GET_REQUESTED_SERVICES,
+} from '../../graphql/query.requestedService'
+import { Loader2 } from 'lucide-vue-next'
 
 export default {
+  components: {
+    Loader2,
+  },
   props: {
     id: {
       type: String as () => string,
@@ -64,6 +95,16 @@ export default {
   },
   setup(props) {
     const id = ref<string>(props.id)
+    const load = ref<boolean>(false)
+    const errorMessage = ref<string>('')
+    const successMessage = ref<string>('')
+
+    const serviceInput = reactive({
+      id: id,
+      resolved: true,
+      resolvedDate: new Date(),
+    })
+
     const { result, loading, error, refetch } = useQuery(
       GET_REQUESTED_SERVICE,
       {
@@ -71,18 +112,61 @@ export default {
       },
     )
 
-    watch(result, () => {
-      console.log(result)
+    const {
+      result: resultServices,
+      loading: loadingServices,
+      error: errorServices,
+    } = useQuery(GET_REQUESTED_SERVICES, {
+      id: id,
     })
 
-    watch(props, () => {
+    const { mutate: updateRequestedService } = useMutation(
+      UPDATE_REQUESTED_SERVICE,
+      () => ({
+        variables: {
+          updateRequestedServiceInput: serviceInput,
+        },
+        update(cache, { data: { updateRequestedService } }) {
+          let data: any = cache.readQuery({
+            query: GET_REQUESTED_SERVICES,
+          })
+          cache.writeQuery({
+            query: GET_REQUESTED_SERVICES,
+            data: {
+              requestedServices: [
+                ...data.requestedServices,
+                updateRequestedService,
+              ],
+            },
+          })
+        },
+      }),
+    )
+
+    watch(result, () => {
+      console.log(result)
+      console.log(serviceInput)
+    })
+
+    const markAsResolved = async () => {
+      load.value = true
+      await updateRequestedService()
+        .catch((err) => {
+          errorMessage.value = err.message
+        })
+        .finally(() => {
+          load.value = false
+        })
+    }
+
+    watch(props, async () => {
       if (props.id !== '') {
         id.value = props.id
-        refetch()
+        await refetch()
       }
       console.log('detail page', props.id)
     })
-    return { result, loading, error }
+    return { result, loading, error, load, markAsResolved }
   },
 }
 </script>

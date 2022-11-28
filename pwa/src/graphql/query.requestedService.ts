@@ -15,6 +15,7 @@ export const GET_REQUESTED_SERVICES = gql`
       }
       message
       requestedDate
+      resolved
     }
   }
 `
@@ -34,6 +35,8 @@ export const GET_REQUESTED_SERVICE = gql`
       }
       message
       requestedDate
+      resolvedDate
+      resolved
     }
   }
 `

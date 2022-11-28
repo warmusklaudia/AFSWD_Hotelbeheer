@@ -22,12 +22,15 @@ export class RequestedServicesService {
     rs.userId = createRequestedServiceInput.userId
     rs.message = createRequestedServiceInput.message
     rs.requestedDate = createRequestedServiceInput.requestedDate
+    rs.resolved = createRequestedServiceInput.resolved
 
     return this.requestedServiceRepository.save(rs)
   }
 
   findAll(): Promise<RequestedService[]> {
-    return this.requestedServiceRepository.find()
+    return this.requestedServiceRepository.find({
+      order: { resolvedDate: 'ASC', requestedDate: 'DESC' },
+    })
   }
 
   findOne(id: string): Promise<RequestedService> {
@@ -55,6 +58,8 @@ export class RequestedServicesService {
     update.userId = updateRequestedServiceInput.userId
     update.message = updateRequestedServiceInput.message
     update.requestedDate = updateRequestedServiceInput.requestedDate
+    update.resolved = updateRequestedServiceInput.resolved
+    update.resolvedDate = updateRequestedServiceInput.resolvedDate
 
     return this.requestedServiceRepository.save(update)
   }

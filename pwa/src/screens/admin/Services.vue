@@ -48,14 +48,23 @@
                   </p>
                 </div>
               </div>
-
+              <p
+                class="font-title absolute m-auto w-96 -rotate-12 text-center text-2xl font-bold text-red-800 opacity-60 md:w-72 lg:w-96"
+                v-if="s.resolved"
+              >
+                RESOLVED
+              </p>
               <div
                 class="bg-themeGreen flex h-10 w-10 items-center justify-center rounded-full text-white"
               >
                 <MessageSquare />
                 <div
                   v-if="s.message"
-                  class="absolute ml-4 mt-4 h-2 w-2 animate-pulse rounded-full bg-red-600"
+                  class="absolute ml-4 mt-4 h-2 w-2 animate-ping rounded-full bg-red-500 opacity-60"
+                ></div>
+                <div
+                  v-if="s.message"
+                  class="absolute ml-4 mt-4 h-2 w-2 rounded-full bg-red-600"
                 ></div>
               </div>
             </div>
@@ -96,9 +105,6 @@ export default {
       console.log(id)
       reqServiceId.value = id
     }
-    watch(result, () => {
-      console.log(result.value)
-    })
 
     return { details, result, loading, error, skeletons, reqServiceId, checkId }
   },

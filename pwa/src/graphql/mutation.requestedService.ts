@@ -11,3 +11,17 @@ export const ADD_REQUESTED_SERVICE = gql`
     }
   }
 `
+
+export const UPDATE_REQUESTED_SERVICE = gql`
+  mutation updateRequestedService(
+    $updateRequestedServiceInput: UpdateRequestedServiceInput!
+  ) {
+    updateRequestedService(
+      updateRequestedServiceInput: $updateRequestedServiceInput
+    ) {
+      id
+      resolved
+      resolvedDate
+    }
+  }
+`
