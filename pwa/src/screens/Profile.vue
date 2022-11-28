@@ -14,16 +14,20 @@
                 <div v-if="loading"></div>
                 <div v-else-if="error"></div>
                 <div v-else-if="result" class="flex gap-10 overflow-x-auto max-w-[80vw]">
-                    <ul :key="r.id" v-for="r in result.findReservationsByUserId" class="flex gap-10">
-                        <li :key="room.id" v-for="room in r.rooms" class="flex flex-col items-center gap-3">
-                            <qrcode-vue :value="room.accessCode" :size="size" level="H" />
-                            <h4 class="font-title font-bold text-lg">{{ room.name }}</h4>
-                        </li>
+                    <template></template>
+                    <ul class="flex gap-10">
+                        <template :key="r.id" v-for="r in result.findReservationsByUserId">
+                            <li :key="room.id" v-for="room in r.rooms" class="flex flex-col items-center gap-3">
+                                <qrcode-vue :value="room.accessCode" :size="size" level="H" />
+                                <h4 class="font-title font-bold text-lg">{{ room.name }}</h4>
+                            </li>
+                        </template>
+
                     </ul>
                 </div>
 
             </div>
-            <div class="flex flex-col gap-3" v-if="customUser?.breakfastCode">
+            <div class="flex flex-col gap-3">
                 <h3 class="font-title font-bold text-2xl">
                     Breakfast
                 </h3>
@@ -44,6 +48,11 @@
                             :class="errorMessage ? 'border-red-500 text-red-600 ring-red-400' : ''" type="number"
                             name="amountAdults" v-model="amountCredits" min="0" step="5" />
                     </label>
+                    <div v-if="errorMessage != ''"
+                        class="text-red-600 bg-red-100 border-1 border-red-600 rounded-sm text-sm px-2 py-1 mt-1 flex items-center gap-2">
+                        <AlertTriangle />
+                        <p>{{ errorMessage }}</p>
+                    </div>
                     <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
                         @click="addCredits">
                         Add credits
@@ -128,7 +137,6 @@ const addCredits = async () => {
 
     const room = await addCreditsToUser().catch((err) => {
         errorMessage.value = err.message
-        console.log(err)
     })
 
     loadCustomUser()

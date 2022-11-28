@@ -17,10 +17,10 @@ export class ReservationsService {
     const r = new Reservation()
 
     r.userId = createReservationInput.userId
-    r.amountRooms = createReservationInput.amountRooms
     r.amountAdults = createReservationInput.amountAdults
     r.amountChildren = createReservationInput.amountChildren
     r.price = createReservationInput.price
+    r.breakfastAccess = createReservationInput.breakfastAccess
     r.reservationStartDate = createReservationInput.reservationStartDate
     r.reservationEndDate = createReservationInput.reservationEndDate
 
@@ -46,7 +46,6 @@ export class ReservationsService {
 
     update.id = new ObjectId(updateReservationInput.id)
     update.userId = updateReservationInput.userId
-    update.amountRooms = updateReservationInput.amountRooms
     update.amountAdults = updateReservationInput.amountAdults
     update.amountChildren = updateReservationInput.amountChildren
     update.price = updateReservationInput.price

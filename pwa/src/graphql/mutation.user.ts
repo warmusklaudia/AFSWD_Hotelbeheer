@@ -6,7 +6,6 @@ export const ADD_CREDITS_TO_USER = gql`
       id
       uid
       amountCredits
-      breakfastCode
       role {
         name
       }
