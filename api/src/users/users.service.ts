@@ -66,9 +66,16 @@ export class UsersService {
     //@ts-ignore
     const u: User = await this.findOne(new ObjectId(id))
 
-    console.log(u)
+    u.amountCredits ? (u.amountCredits += amount) : (u.amountCredits = amount)
 
-    u.amountCredits += amount
+    return this.userRepository.save(u)
+  }
+
+  async addBreakfastCodeToUser(id: string, code: string) {
+    //@ts-ignore
+    const u: User = await this.findOne(new ObjectId(id))
+
+    u.breakfastCode = code
 
     return this.userRepository.save(u)
   }

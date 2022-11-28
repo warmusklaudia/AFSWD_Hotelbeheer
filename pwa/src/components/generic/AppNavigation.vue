@@ -48,7 +48,7 @@
         </li>
         <li class="hidden sm:block">
             <ul class="flex items-center">
-                <li v-if="user" class="px-3">$ {{ customUser?.amountCredits == null ? 10.00 : customUser?.amountCredits.toFixed(2) }}</li>
+                <li v-if="user" class="px-3">$ {{ customUser?.amountCredits == null ? 20.00 : customUser?.amountCredits.toFixed(2) }}</li>
                 <li class="px-3 ">
                     <select name="" id=""
                         class="bg-transparent rounded-sm py-6 outline-none focus-visible:ring-2 cursor-pointer ring-themeBrown"
@@ -82,7 +82,5 @@ const setLocale = (event: Event) => {
 
 const { user } = useAuthentication()
 const { customUser } = useCustomUser()
-
-console.log(customUser)
 
 </script>

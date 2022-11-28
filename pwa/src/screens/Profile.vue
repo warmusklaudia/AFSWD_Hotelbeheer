@@ -23,7 +23,7 @@
                 </div>
 
             </div>
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-3" v-if="customUser?.breakfastCode">
                 <h3 class="font-title font-bold text-2xl">
                     Breakfast
                 </h3>
@@ -35,13 +35,13 @@
                 <h3 class="font-title font-bold text-2xl">Credits</h3>
                 <div class="flex flex-col gap-3 max-w-xs">
                     <label class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
-                        :class="true ? 'focus-within:text-red-600' : ''" for="amountAdults">
-                        <span class="font-title mb-2 block" :class="true ? 'text-red-600' : ''">
+                        :class="errorMessage ? 'focus-within:text-red-600' : ''" for="amountAdults">
+                        <span class="font-title mb-2 block" :class="errorMessage ? 'text-red-600' : ''">
                             Add amount
                         </span>
                         <input id="amountAdults"
                             class="ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
-                            :class="true ? 'border-red-500 text-red-600 ring-red-400' : ''" type="number"
+                            :class="errorMessage ? 'border-red-500 text-red-600 ring-red-400' : ''" type="number"
                             name="amountAdults" v-model="amountCredits" min="0" step="5" />
                     </label>
                     <button class="rounded-md bg-themeOffWhite px-4 py-2 text-themeBrown border border-themeBrown"
@@ -65,31 +65,73 @@ import { GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID } from "../graphql/query.reserva
 import { ref } from "vue";
 import { ADD_CREDITS_TO_USER } from "../graphql/mutation.user";
 import useCustomUser from "../composables/useCustomUser";
+import { GET_CURRENT_USER } from "../graphql/query.user";
 
 const { logout, user } = useAuthentication()
+const { customUser, loadCustomUser } = useCustomUser()
 const { replace } = useRouter()
+
+const amountCredits = ref(0)
+const errorMessage = ref('')
+const value = 'https://example.com'
+const size = 150
+
+console.log(customUser.value)
 
 const { result, loading, error } = useQuery(GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID, () => ({
     uid: user.value?.uid!
 }))
 
-// const { mutate: updateRoom } = useMutation(ADD_CREDITS_TO_USER, () => ({
-//     variables: {
-//         id: user.id, //id of uid gebruiken? 
-//         amount: amountCredits.value
-//     },
-// }))
-const { customUser } = useCustomUser()
-console.log(customUser)
+const { result: resultUser, loading: loadingUser, error: errUser } = useQuery(GET_CURRENT_USER)
 
-const value = 'https://example.com'
-const size = 150
+const { mutate: addCreditsToUser } = useMutation(ADD_CREDITS_TO_USER, () => ({
+    variables: {
+        id: customUser.value?.id, //id of uid gebruiken? 
+        amount: amountCredits.value
+    },
+    update(cache, { data: { addCreditsToUser } }) {
+        let data: any = cache.readQuery(
+            { query: GET_CURRENT_USER }
+        )
+        cache.writeQuery({
+            query: GET_CURRENT_USER,
+            data: {
+                findByCurrentUserUid: addCreditsToUser
+            }
+        })
+    }
+}))
 
-const amountCredits = ref(0)
+const getToken = async () => {
+    console.log(
+        `{ "authorization": "Bearer ${await user.value?.getIdToken()}" }`,
+    )
+}
 
-const addCredits = () => {
-    if (amountCredits.value == 0) return
-    console.log('add credits')
+const creditValidation = () => {
+    let hasSomeErrors = false
+
+    if (amountCredits.value === 0) {
+        errorMessage.value = 'Please enter a valid amount'
+        hasSomeErrors = true
+    } else {
+        errorMessage.value = ''
+    }
+
+    if (hasSomeErrors) return true
+    return false
+}
+
+const addCredits = async () => {
+    if (creditValidation()) return
+    console.log(resultUser)
+
+    const room = await addCreditsToUser().catch((err) => {
+        errorMessage.value = err.message
+        console.log(err)
+    })
+
+    loadCustomUser()
 }
 
 const handleLogOut = () => {
@@ -97,4 +139,6 @@ const handleLogOut = () => {
         replace('auth/login')
     })
 }
+
+getToken()
 </script>
