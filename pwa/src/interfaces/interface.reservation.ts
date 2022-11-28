@@ -4,7 +4,6 @@ export interface Reservation {
   id: string
   userId: string
   user: User
-  amountRooms: number
   amountAdults: number
   amountChildren: number
   price: number
