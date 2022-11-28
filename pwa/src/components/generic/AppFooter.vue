@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-3 md:px-6">
+    <div class="m-3 md:px-6">
         <footer class="mx-auto hidden max-w-6xl sm:block">
             <p class="text-sm text-neutral-800">
                 Carmino Deschuijmere & Klaudia Warmus - {{ $t('footer.disclaimer') }} {{ new Date().getFullYear() }}
