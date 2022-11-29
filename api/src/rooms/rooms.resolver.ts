@@ -24,7 +24,13 @@ import { UseGuards } from '@nestjs/common'
 export class RoomsResolver {
   constructor(
     private readonly roomsService: RoomsService,
+    private readonly reservationsService: ReservationsService,
   ) {}
+
+  @ResolveField()
+  reservation(@Parent() r: Room): Promise<Reservation> {
+    return this.reservationsService.findOne(r.reservationId)
+  }
 
   @Mutation(() => Room)
   createRoom(
@@ -41,6 +47,11 @@ export class RoomsResolver {
   @Query(() => [Room], { name: 'roomsWithoutReservation' })
   findRoomsWithoutReservation(): Promise<Room[]> {
     return this.roomsService.findRoomsWithoutReservation()
+  }
+
+  @Query(() => [Room], { name: 'roomsWithReservation' })
+  findRoomsWithReservation(): Promise<Room[]> {
+    return this.roomsService.findRoomsWithReservation()
   }
 
   @Query(() => Room, { name: 'room' })

@@ -4,7 +4,9 @@
       <admin-navigation />
       <div class="w-5/6 p-6">
         <admin-header name="Services" />
-        <div class="flex w-full flex-col p-6 md:flex-row">
+        <div
+          class="flex max-h-[60vh] w-full flex-col overflow-y-auto p-6 md:max-h-[65vh] md:flex-row lg:max-h-[70vh]"
+        >
           <div>
             <div
               class="grid animate-pulse grid-cols-1 gap-12 md:mx-6"
@@ -28,7 +30,7 @@
               v-for="s of result.requestedServices"
               :key="s.id"
               @click="checkId(s.id)"
-              class="mb-6 flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:w-72 lg:w-96"
+              class="relative mb-6 flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:max-h-[65vh] md:w-72 lg:max-h-[70vh] lg:w-96"
             >
               <div class="flex gap-4">
                 <div
@@ -55,7 +57,7 @@
                 RESOLVED
               </p>
               <div
-                class="bg-themeGreen flex h-10 w-10 items-center justify-center rounded-full text-white"
+                class="bg-themeGreen relative flex h-10 w-10 items-center justify-center rounded-full text-white"
               >
                 <MessageSquare />
                 <div

@@ -7,9 +7,17 @@ import { Reservation } from 'src/reservations/entities/reservation.entity'
 import { ReservationsService } from 'src/reservations/reservations.service'
 import { UsersService } from 'src/users/users.service'
 import { User } from 'src/users/entities/user.entity'
+import { Cleaning } from 'src/cleaning/entities/cleaning.entity'
+import { CleaningService } from 'src/cleaning/cleaning.service'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Room, Reservation, User])],
-  providers: [RoomsResolver, RoomsService, ReservationsService, UsersService],
+  imports: [TypeOrmModule.forFeature([Room, Reservation, User, Cleaning])],
+  providers: [
+    RoomsResolver,
+    RoomsService,
+    ReservationsService,
+    UsersService,
+    CleaningService,
+  ],
 })
 export class RoomsModule {}

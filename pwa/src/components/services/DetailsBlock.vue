@@ -1,7 +1,7 @@
 <template>
   <div v-if="result" class="pt-3 md:pt-0 md:pl-6">
     <div
-      class="absolute flex h-80 w-80 flex-col justify-between rounded-md bg-white p-6 lg:h-96 lg:w-96"
+      class="absolute z-20 flex h-80 w-80 flex-col justify-between rounded-md bg-white p-6 lg:h-96 lg:w-96"
     >
       <div>
         <div class="flex items-center gap-4 pb-6">
@@ -63,7 +63,7 @@
       </div>
     </div>
     <div
-      class="bg-themeBrown m-2 h-80 w-80 rounded-md shadow-md lg:h-96 lg:w-96"
+      class="bg-themeBrown absolute z-10 m-2 h-80 w-80 rounded-md shadow-md lg:h-96 lg:w-96"
     ></div>
   </div>
   <div v-else class="pl-6">
