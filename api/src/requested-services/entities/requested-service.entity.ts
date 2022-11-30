@@ -1,47 +1,47 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { ObjectId } from 'mongodb';
-import { Service } from 'src/services/entities/service.entity';
-import { User } from 'src/users/entities/user.entity';
+import { ObjectType, Field, ID } from '@nestjs/graphql'
+import { ObjectId } from 'mongodb'
+import { Service } from '../../services/entities/service.entity'
+import { User } from '../../users/entities/user.entity'
 import {
   Column,
   CreateDateColumn,
   Entity,
   ObjectIdColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from 'typeorm'
 
 @Entity()
 @ObjectType()
 export class RequestedService {
   @Field(() => ID, { description: 'id of the requestedService' })
   @ObjectIdColumn()
-  id: ObjectId;
+  id: ObjectId
 
   @Field(() => Service)
-  service: Service;
+  service: Service
 
   @Column()
-  serviceId: string;
+  serviceId: string
 
   @Field(() => User)
-  user: User;
+  user: User
 
   @Column()
-  userId: string;
+  userId: string
 
   @Field({ nullable: true }) // GraphQL
   @Column({ nullable: true }) //typeORM
-  message: string;
+  message: string
 
   @Field() // GraphQL
   @Column() //typeORM
-  requestedDate: Date;
+  requestedDate: Date
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
-  createdAt?: Date;
+  createdAt?: Date
 
   @Field({ nullable: true })
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
-  updatedAt?: Date;
+  updatedAt?: Date
 }

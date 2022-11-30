@@ -6,7 +6,7 @@ import { UpdateServiceInput } from './dto/update-service.input';
 import {
   ClientMessage,
   MessageTypes,
-} from 'src/bootstrap/entities/ClientMessage';
+} from '../bootstrap/entities/ClientMessage';
 
 @Resolver(() => Service)
 export class ServicesResolver {

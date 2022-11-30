@@ -6,11 +6,11 @@ import { UpdateUserInput } from './dto/update-user.input'
 import {
   ClientMessage,
   MessageTypes,
-} from 'src/bootstrap/entities/ClientMessage'
-import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
-import { RolesGuard } from 'src/auth/guard/role.guard'
+} from '../bootstrap/entities/ClientMessage'
+import { FirebaseGuard } from '../auth/guard/firebase.guard'
+import { RolesGuard } from '../auth/guard/role.guard'
 import { UseGuards } from '@nestjs/common'
-import { CurrentUser } from 'src/auth/decorators/user.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 
 @Resolver(() => User)
 export class UsersResolver {

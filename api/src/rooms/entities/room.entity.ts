@@ -6,7 +6,6 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Reservation } from 'src/reservations/entities/reservation.entity';
 import { ObjectId } from 'mongodb';
 
 @Entity()
@@ -23,9 +22,6 @@ export class Room {
   @Field()
   @Column()
   description: string;
-
-  @Field(() => Reservation, { nullable: true })
-  reservation: Reservation;
 
   @Column({ nullable: true })
   reservationId: string;

@@ -1,7 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql'
 import { ObjectId } from 'mongodb'
-import { Room } from 'src/rooms/entities/room.entity'
-import { User } from 'src/users/entities/user.entity'
+import { Room } from '../../rooms/entities/room.entity'
+import { User } from '../../users/entities/user.entity'
 import {
   Column,
   CreateDateColumn,

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ObjectId } from 'mongodb'
-import { ReservationsService } from 'src/reservations/reservations.service'
+import { ReservationsService } from '../reservations/reservations.service'
 import { DeleteResult, Repository } from 'typeorm'
 import { CreateRoomInput } from './dto/create-room.input'
 import { UpdateRoomInput } from './dto/update-room.input'

@@ -5,7 +5,7 @@ import {
   mixin,
 } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { UsersService } from 'src/users/users.service'
+import { UsersService } from '../../users/users.service'
 
 export const RolesGuard = (roles: string[]) => {
   @Injectable()

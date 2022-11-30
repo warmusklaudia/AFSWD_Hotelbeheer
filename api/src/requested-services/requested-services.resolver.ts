@@ -3,7 +3,6 @@ import {
   Query,
   Mutation,
   Args,
-  Int,
   ResolveField,
   Parent,
 } from '@nestjs/graphql';
@@ -14,12 +13,12 @@ import { UpdateRequestedServiceInput } from './dto/update-requested-service.inpu
 import {
   ClientMessage,
   MessageTypes,
-} from 'src/bootstrap/entities/ClientMessage';
-import { Service } from 'src/services/entities/service.entity';
-import { ServicesService } from 'src/services/services.service';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
-import { NotificationsGateway } from 'src/notifications/notifications.gateway';
+} from '../bootstrap/entities/ClientMessage';
+import { Service } from '../services/entities/service.entity';
+import { ServicesService } from '../services/services.service';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
+import { NotificationsGateway } from '../notifications/notifications.gateway';
 
 @Resolver(() => RequestedService)
 export class RequestedServicesResolver {

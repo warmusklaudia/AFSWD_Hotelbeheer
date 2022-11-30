@@ -13,10 +13,10 @@ import { UpdateReservationInput } from './dto/update-reservation.input'
 import {
   ClientMessage,
   MessageTypes,
-} from 'src/bootstrap/entities/ClientMessage'
-import { User } from 'src/users/entities/user.entity'
-import { UsersService } from 'src/users/users.service'
-import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
+} from '../bootstrap/entities/ClientMessage'
+import { User } from '../users/entities/user.entity'
+import { UsersService } from '../users/users.service'
+import { FirebaseGuard } from '../auth/guard/firebase.guard'
 import { UseGuards } from '@nestjs/common'
 
 @Resolver(() => Reservation)

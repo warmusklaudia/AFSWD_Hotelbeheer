@@ -3,8 +3,6 @@ import {
   Query,
   Mutation,
   Args,
-  ResolveField,
-  Parent,
 } from '@nestjs/graphql'
 import { RoomsService } from './rooms.service'
 import { Room } from './entities/room.entity'
@@ -13,11 +11,9 @@ import { UpdateRoomInput } from './dto/update-room.input'
 import {
   ClientMessage,
   MessageTypes,
-} from 'src/bootstrap/entities/ClientMessage'
-import { Reservation } from 'src/reservations/entities/reservation.entity'
-import { ReservationsService } from 'src/reservations/reservations.service'
-import { RolesGuard } from 'src/auth/guard/role.guard'
-import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
+} from '../bootstrap/entities/ClientMessage'
+import { RolesGuard } from '../auth/guard/role.guard'
+import { FirebaseGuard } from '../auth/guard/firebase.guard'
 import { UseGuards } from '@nestjs/common'
 
 @Resolver(() => Room)
