@@ -27,3 +27,18 @@ export const createRoom = (): Room => {
 
   return r
 }
+
+export const createRoomWithReservation = (): Room => {
+  const r = new Room()
+
+  r.id = new ObjectId('637f8f441569b77268921f43')
+  r.name = 'Nienna Suite'
+  r.description = 'De Nienna suite is onze standaard suite.'
+  r.rating = 4
+  r.category = 'standard'
+  r.location = 'other'
+  r.accessCode = '1234'
+  r.reservationId = '637f8f441569b77268921f43'
+
+  return r
+}

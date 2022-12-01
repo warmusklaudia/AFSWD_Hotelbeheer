@@ -1,6 +1,7 @@
 import { CreateUserInput } from '../dto/create-user.input'
 import { User } from '../entities/user.entity'
 import { ObjectId } from 'mongodb'
+import { Role } from '../entities/role.entity'
 export const createUserInputStub = (): CreateUserInput => {
   const u = new CreateUserInput()
 
@@ -17,6 +18,8 @@ export const createUser = (): User => {
   u.reservations = 0
   u.preferredLanguage = ''
   u.uid = 'tester'
+  u.role = new Role()
+  u.role.name = 'user'
 
   return u
 }
