@@ -5,7 +5,7 @@
       <div class="w-5/6 p-6">
         <admin-header name="Services" />
         <div
-          class="flex max-h-[60vh] w-full flex-col overflow-y-auto p-6 md:max-h-[65vh] md:flex-row lg:max-h-[70vh]"
+          class="flex w-full flex-col p-6 md:max-h-[65vh] md:flex-row md:overflow-y-auto lg:max-h-[70vh]"
         >
           <div>
             <div
@@ -14,10 +14,10 @@
             >
               <div v-for="i of skeletons" :key="i">
                 <div
-                  class="@dark:bg-neutral-700 aspect-square h-28 w-96 rounded-md bg-neutral-300 md:w-72 lg:w-96"
+                  class="aspect-square h-28 w-96 rounded-md bg-neutral-300 md:w-72 lg:w-96"
                 ></div>
                 <p
-                  class="@dark:bg-neutral-600 my-1 h-6 w-96 rounded bg-neutral-200 md:w-72 lg:w-96"
+                  class="my-1 h-6 w-96 rounded bg-neutral-200 md:w-72 lg:w-96"
                 ></p>
               </div>
             </div>
@@ -30,28 +30,28 @@
               v-for="s of result.requestedServices"
               :key="s.id"
               @click="checkId(s.id)"
-              class="relative mb-6 flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:max-h-[65vh] md:w-72 lg:max-h-[70vh] lg:w-96"
+              class="relative mb-6 flex h-20 w-56 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:h-28 md:max-h-[65vh] md:w-72 lg:max-h-[70vh] lg:w-96"
             >
-              <div class="flex gap-4">
+              <div class="flex gap-2 md:gap-4">
                 <div
-                  class="bg-themeGreen flex h-14 w-14 items-center justify-center rounded-full"
+                  class="bg-themeGreen flex h-10 w-10 items-center justify-center rounded-full md:h-14 md:w-14"
                 >
-                  <p class="font-title text-lg text-white">
+                  <p class="font-title text-sm text-white md:text-lg">
                     {{ s.user.firstName[0] }}{{ s.user.lastName[0] }}
                   </p>
                 </div>
                 <div>
-                  <h2 class="font-title text-lg">
+                  <h2 class="font-title text-sm md:text-lg">
                     {{ s.user.firstName }} {{ s.user.lastName }}
                   </h2>
-                  <p class="lowercase">
+                  <p class="text-sm lowercase md:text-base">
                     asks for
                     <span>{{ s.service.name }}</span>
                   </p>
                 </div>
               </div>
               <p
-                class="font-title absolute m-auto w-96 -rotate-12 text-center text-2xl font-bold text-red-800 opacity-60 md:w-72 lg:w-96"
+                class="font-title absolute m-auto w-56 -rotate-12 text-center text-lg font-bold text-red-800 opacity-60 md:w-72 md:text-2xl lg:w-96"
                 v-if="s.resolved"
               >
                 RESOLVED
@@ -59,7 +59,7 @@
               <div
                 class="bg-themeGreen relative flex h-10 w-10 items-center justify-center rounded-full text-white"
               >
-                <MessageSquare />
+                <MessageSquare class="w-5 md:w-8" />
                 <div
                   v-if="s.message"
                   class="absolute ml-4 mt-4 h-2 w-2 animate-ping rounded-full bg-red-500 opacity-60"
