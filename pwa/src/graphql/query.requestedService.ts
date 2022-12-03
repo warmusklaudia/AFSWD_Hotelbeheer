@@ -4,12 +4,18 @@ export const GET_REQUESTED_SERVICES = gql`
   query GetRequestedServices {
     requestedServices {
       id
+      user {
+        firstName
+        lastName
+      }
       service {
         id
         name
         price
       }
+      message
       requestedDate
+      resolved
     }
   }
 `
@@ -18,12 +24,19 @@ export const GET_REQUESTED_SERVICE = gql`
   query GetRequestedService($id: String!) {
     requestedService(id: $id) {
       id
+      user {
+        firstName
+        lastName
+      }
       service {
         id
         name
         price
       }
+      message
       requestedDate
+      resolvedDate
+      resolved
     }
   }
 `

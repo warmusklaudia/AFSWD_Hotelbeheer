@@ -23,6 +23,14 @@ export class User {
 
   @Field()
   @Column()
+  firstName: string
+
+  @Field()
+  @Column()
+  lastName: string
+
+  @Field({ defaultValue: 0 })
+  @Column()
   amountCredits: number = 0
 
   @Field()

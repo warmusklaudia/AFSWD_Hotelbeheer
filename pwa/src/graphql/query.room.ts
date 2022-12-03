@@ -24,6 +24,24 @@ export const ROOM_BY_ID = gql`
       category
       location
       accessCode
+      reservation {
+        cleaning {
+          cleaningId
+          changeTheLinens
+          clearTheTrash
+          disinfectSurfaces
+          cleanTheBathroom
+          vacuumTheFloor
+          mopTheFloor
+          finish
+          finishDate
+          cleanedBy {
+            id
+            firstName
+            lastName
+          }
+        }
+      }
     }
   }
 `
@@ -62,6 +80,25 @@ export const GET_ROOMS_WITHOUT_RESERVATION = gql`
       category
       location
       accessCode
+    }
+  }
+`
+
+export const GET_ROOMS_WITH_RESERVATION = gql`
+  query GetRoomsWithReservation {
+    roomsWithReservation {
+      id
+      name
+      description
+      rating
+      category
+      location
+      accessCode
+      reservation {
+        cleaning {
+          finish
+        }
+      }
     }
   }
 `

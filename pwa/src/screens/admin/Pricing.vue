@@ -23,11 +23,11 @@
                   UPDATE
                 </button>
               </div>
-
+              <p class="absolute py-1 pl-3 text-neutral-800">€</p>
               <input
                 v-model="r.price"
                 :id="r.rateName"
-                class="w-full rounded-md border px-3 py-1 text-neutral-800 outline-none focus-visible:ring"
+                class="w-full rounded-md border px-6 py-1 text-neutral-800 outline-none focus-visible:ring"
                 type="number"
                 :name="r.rateName"
                 disabled
@@ -76,6 +76,7 @@ export default {
 
     watch(showPopup, () => {
       refetch()
+      console.log(result)
     })
 
     return {

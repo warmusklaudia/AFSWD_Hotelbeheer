@@ -13,8 +13,11 @@ export class DatabaseSeedCommand {
   })
   async seed() {
     console.log('🌱 Start seeding')
-    const r = await this.seedService.addRooms()
-    console.log(r)
+    await Promise.all([
+      this.seedService.addRooms(),
+      this.seedService.addServices(),
+      this.seedService.addPrices(),
+    ])
     console.log('🌱 Seeding done 🏁')
   }
 
@@ -37,7 +40,11 @@ export class DatabaseSeedCommand {
   })
   async delete() {
     console.log('🌱 Start deleting')
-    await this.seedService.deleteAllRooms()
+    await Promise.all([
+      this.seedService.deleteAllRooms(),
+      this.seedService.deleteAllServices(),
+      this.seedService.deletePrices(),
+    ])
     console.log('🌱 Deleting done 🏁')
   }
 }

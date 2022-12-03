@@ -9,6 +9,7 @@ import { ServicesModule } from './services/services.module';
 import { RequestedServicesModule } from './requested-services/requested-services.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { AuthModule } from './auth/auth.module'
+import { CleaningModule } from './cleaning/cleaning.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './auth/auth.module'
     NotificationsModule,
     AuthModule,
     PricingModule,
+    CleaningModule,
   ],
   controllers: [],
   providers: [],

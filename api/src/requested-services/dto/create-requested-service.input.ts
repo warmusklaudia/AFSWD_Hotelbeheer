@@ -1,17 +1,23 @@
-import { InputType, Field } from '@nestjs/graphql';
-import { Service } from 'src/services/entities/service.entity';
+import { InputType, Field } from '@nestjs/graphql'
+import { Service } from 'src/services/entities/service.entity'
 
 @InputType()
 export class CreateRequestedServiceInput {
   @Field()
-  message: string;
+  message: string
 
   @Field()
-  serviceId: string;
+  serviceId: string
 
   @Field()
-  userId: string;
+  userId: string
 
   @Field()
-  requestedDate: Date;
+  requestedDate: Date
+
+  @Field({ nullable: true })
+  resolvedDate: Date
+
+  @Field({ defaultValue: false })
+  resolved: boolean
 }

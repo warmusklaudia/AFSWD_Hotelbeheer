@@ -40,6 +40,21 @@ export class RoomsService {
     })
   }
 
+  async findRoomsWithReservation(): Promise<Room[]> {
+    const date = new Date()
+    date.setHours(1, 0, 0, 0)
+    console.log(await this.roomsRepository.find())
+    return this.roomsRepository.find({
+      where: {
+        //@ts-ignore
+        reservationId: { $ne: null },
+        // reservation: {
+        //   reservationEndDate: date,
+        // },
+      },
+    })
+  }
+
   findOne(id: string): Promise<Room> {
     //@ts-ignore
     return this.roomsRepository.findOne(new ObjectId(id))
