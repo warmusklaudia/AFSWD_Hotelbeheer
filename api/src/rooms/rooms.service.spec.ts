@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { ReservationsService } from '../reservations/reservations.service'
-import { Repository } from 'typeorm'
+import { Like, Repository } from 'typeorm'
 import { Room } from './entities/room.entity'
 import { RoomsService } from './rooms.service'
 import {
@@ -28,9 +28,6 @@ describe('RoomsService', () => {
             save: jest.fn().mockResolvedValue(createRoom()),
             find: jest.fn().mockResolvedValue([createRoom()]),
             findOne: jest.fn().mockResolvedValue(createRoom()),
-            findRoomsWithoutReservation: jest
-              .fn()
-              .mockResolvedValue([createRoom(), createRoomWithReservation()]),
             delete: jest.fn(),
           },
         },
@@ -129,6 +126,123 @@ describe('RoomsService', () => {
         //does not return the mocked repository function
         const result = await service.findRoomsWithoutReservation()
         expect(result).toEqual([room])
+      })
+    })
+  })
+
+  describe('findByString', () => {
+    describe('when findByString is called', () => {
+      it('should call the repository find method', async () => {
+        const findSpy = jest.spyOn(mockRoomRepository, 'find')
+        await service.findByString('Nienna Suite', 'standard')
+        expect(findSpy).toBeCalledTimes(1)
+      })
+
+      it('should be called with the correct params', async () => {
+        const findSpy = jest.spyOn(mockRoomRepository, 'find')
+        await service.findByString('Nienna Suite', 'standard')
+        expect(findSpy).toBeCalledWith({
+          name: { $options: 'i', $regex: 'Nienna Suite' },
+          category: { $options: 'i', $regex: 'standard' },
+        })
+      })
+
+      it('should return the list of rooms', async () => {
+        const room = createRoom()
+        const result = await service.findByString('Nienna Suite', 'standard')
+        expect(result).toEqual([room])
+      })
+    })
+  })
+
+  describe('removeReservationFromRoom', () => {
+    describe('when removeReservationFromRoom is called', () => {
+      it('should call the repository findOne method', async () => {
+        const findSpy = jest.spyOn(mockRoomRepository, 'findOne')
+        await service.removeReservationFromRoom('637f8f441569b77268921f43')
+        expect(findSpy).toBeCalledTimes(1)
+      })
+
+      it('should be called with the correct params', async () => {
+        const findSpy = jest.spyOn(mockRoomRepository, 'findOne')
+        await service.removeReservationFromRoom('637f8f441569b77268921f43')
+        expect(findSpy).toBeCalledWith(new ObjectId('637f8f441569b77268921f43'))
+      })
+
+      it('should call the repository save method', async () => {
+        const saveSpy = jest.spyOn(mockRoomRepository, 'save')
+        await service.removeReservationFromRoom('637f8f441569b77268921f43')
+        expect(saveSpy).toBeCalledTimes(1)
+      })
+
+      it('should return the updated room', async () => {
+        const room = createRoom()
+        const result = await service.removeReservationFromRoom(
+          '637f8f441569b77268921f43',
+        )
+        expect(result).toEqual(room)
+      })
+
+      // it('should return null if the room does not exist', async () => {
+      //   const result = await service.removeReservationFromRoom(
+      //     '637f8f441569b77268921f43',
+      //   )
+      //   expect(result).toEqual(null)
+      // })
+
+      // it('should return null if the room does not have a reservation', async () => {
+      //   const result = await service.removeReservationFromRoom(
+      //     '637f8f441569b77268921f43',
+      //   )
+      //   expect(result).toEqual(null)
+      // })
+
+      it('should return the updated room if the room has a reservation', async () => {
+        const room = createRoom()
+        const result = await service.removeReservationFromRoom(
+          '637f8f441569b77268921f43',
+        )
+        expect(result).toEqual(room)
+      })
+    })
+  })
+
+  describe('addReservationToRoom', () => {
+    describe('when addReservationToRoom is called', () => {
+      it('should call the repository findOne method', async () => {
+        const findSpy = jest.spyOn(mockRoomRepository, 'findOne')
+        await service.addReservationToRoom(
+          '637f8f441569b77268921f43',
+          'd89a0bA4cc619d347024f42e',
+        )
+        expect(findSpy).toBeCalledTimes(1)
+      })
+
+      it('should be called with the correct params', async () => {
+        const findSpy = jest.spyOn(mockRoomRepository, 'findOne')
+        await service.addReservationToRoom(
+          '637f8f441569b77268921f43',
+          'd89a0bA4cc619d347024f42e',
+        )
+        expect(findSpy).toBeCalledWith(new ObjectId('637f8f441569b77268921f43'))
+      })
+
+      it('should call the repository save method', async () => {
+        const saveSpy = jest.spyOn(mockRoomRepository, 'save')
+        await service.addReservationToRoom(
+          '637f8f441569b77268921f43',
+          'd89a0bA4cc619d347024f42e',
+        )
+        expect(saveSpy).toBeCalledTimes(1)
+      })
+
+      it('should return the updated room', async () => {
+        const room = createRoom()
+        const result = await service.addReservationToRoom(
+          '637f8f441569b77268921f43',
+          'd89a0bA4cc619d347024f42e',
+        )
+        expect(result).toEqual(room)
       })
     })
   })

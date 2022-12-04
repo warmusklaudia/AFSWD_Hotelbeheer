@@ -116,6 +116,80 @@ describe('RoomsResolver', () => {
     })
   })
 
+  describe('findByString', () => {
+    let result: Room[]
+    let searchString: string
+    let categoryString: string
+
+    beforeEach(async () => {
+      searchString = 'Nienna Suite'
+      categoryString = 'standard'
+      result = await resolver.findByName(searchString, categoryString)
+    })
+
+    describe('When findByString is called.', () => {
+      it('Should call RoomsService.findByString', () => {
+        expect(service.findByString).toBeCalledTimes(1)
+        expect(service.findByString).toBeCalledWith(searchString, categoryString)
+      })
+
+      it('Should return some (or one) room(s).', () => {
+        expect(result).toEqual([createRoom()])
+      })
+    })
+  })
+
+  describe('removeReservationFromRoom', () => {
+    let result: Room
+    let roomId: string
+
+    beforeEach(async () => {
+      //@ts-ignore
+      roomId = createRoom().id
+      result = await resolver.removeReservationFromRoom(roomId)
+    })
+
+    describe('When removeReservationFromRoom is called.', () => {
+      it('Should call RoomsService.removeReservationFromRoom', () => {
+        expect(service.removeReservationFromRoom).toBeCalledTimes(1)
+        expect(service.removeReservationFromRoom).toBeCalledWith(
+          roomId
+        )
+      })
+
+      it('Should return the room without the reservation.', () => {
+        expect(result).toEqual(createRoom())
+      })
+    })
+  })
+
+  describe('addReservationToRoom', () => {
+    let result: Room
+    let roomId: string
+    let reservationId: string
+
+    beforeEach(async () => {
+      //@ts-ignore
+      roomId = createRoom().id
+      reservationId = new ObjectId().toHexString()
+      result = await resolver.addReservationToRoom(roomId, reservationId)
+    })
+
+    describe('When addReservationToRoom is called.', () => {
+      it('Should call RoomsService.addReservationToRoom', () => {
+        expect(service.addReservationToRoom).toBeCalledTimes(1)
+        expect(service.addReservationToRoom).toBeCalledWith(
+          roomId,
+          reservationId
+        )
+      })
+
+      it('Should return the room with the reservation.', () => {
+        expect(result).toEqual(createRoom())
+      })
+    })
+  })
+
   describe('update', () => {
     let resultRoom: Room
     beforeEach(async () => {
