@@ -74,6 +74,11 @@ export class ReservationsResolver {
     return this.reservationsService.findCleaningByReservationEndDate()
   }
 
+  @Query(() => [Reservation])
+  reservationsWithBreakfast(): Promise<Reservation[]> {
+    return this.reservationsService.findReservationsWithBreakfastAccess()
+  }
+
   @UseGuards(FirebaseGuard)
   @Mutation(() => Reservation)
   updateReservation(

@@ -9,6 +9,25 @@ export const ADD_CREDITS_TO_USER = gql`
       role {
         name
       }
+      firstName
+      lastName
+      imgUrl
+    }
+  }
+`
+
+export const UPDATE_USER = gql`
+  mutation updateUser($updateUserInput: UpdateUserInput!) {
+    updateUser(updateUserInput: $updateUserInput) {
+      id
+      uid
+      amountCredits
+      role {
+        name
+      }
+      firstName
+      lastName
+      imgUrl
     }
   }
 `

@@ -4,20 +4,6 @@
       <admin-navigation />
       <div class="w-5/6 p-6">
         <admin-header name="Breakfast access" />
-        <div class="p-6">
-          <label for="rooms" class="relative block w-11/12 md:w-2/3 lg:w-1/3">
-            <Search
-              class="pointer-events-none absolute top-1/2 ml-2 -translate-y-1/2 transform text-neutral-400"
-            />
-            <input
-              type="text"
-              name="rooms"
-              id="rooms"
-              className="w-full border rounded-md border-themeBrown pl-10  py-2 block focus:outline-none focus:ring focus:ring-themeBrown"
-              placeholder="Search"
-            />
-          </label>
-        </div>
         <div>
           <div
             class="grid animate-pulse gap-12 sm:grid-cols-1 md:mx-6 md:grid-cols-2 lg:grid-cols-3"
@@ -40,23 +26,47 @@
             class="grid gap-12 sm:grid-cols-1 md:mx-6 md:grid-cols-2 lg:grid-cols-3"
             v-else-if="result"
           >
-            <RouterLink to="" v-for="a of result.access" :key="a.id">
-              <div class="rounded-md bg-white p-3 shadow-md">
-                <img
-                  class="mb-2 aspect-video w-full object-cover"
-                  src="../../assets/user.jpg"
-                  :alt="`picture of a user`"
-                />
+            <div v-for="r of result.reservationsWithBreakfast" :key="r.id">
+              <div class="flex rounded-md bg-white p-3 shadow-md md:flex-col">
+                <div
+                  class="bg-themeGreen md:w-18 md:h-18 mr-4 flex h-12 w-12 items-center justify-center place-self-center rounded-full md:mr-0 md:mb-3"
+                >
+                  <p
+                    class="font-title text-sm text-white md:text-xl md:font-bold"
+                  >
+                    {{ r.user.firstName[0] }}{{ r.user.lastName[0] }}
+                  </p>
+                </div>
                 <div class="font-title text-themeGreen pb-3">
-                  <p class="pb-3 text-center text-xl">Klaudia Warmus</p>
+                  <p class="text-xl md:pb-3 md:text-center">
+                    {{ r.user.firstName }} {{ r.user.lastName }}
+                  </p>
                   <p class="text-lg">Access from</p>
                   <p class="font-bold">
-                    <span>21 Oct 2022</span> by <span>21 Oct 2022</span>
+                    <span>{{
+                      new Date(r.reservationStartDate)
+                        .toUTCString()
+                        .substring(
+                          4,
+                          new Date(r.reservationStartDate).toUTCString()
+                            .length - 12,
+                        )
+                    }}</span>
+                    to
+                    <span>{{
+                      new Date(r.reservationEndDate)
+                        .toUTCString()
+                        .substring(
+                          4,
+                          new Date(r.reservationStartDate).toUTCString()
+                            .length - 12,
+                        )
+                    }}</span>
                   </p>
                 </div>
               </div>
               <div></div>
-            </RouterLink>
+            </div>
           </div>
         </div>
       </div>
@@ -70,9 +80,8 @@ import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
 import { Search, Frown } from 'lucide-vue-next'
 import { useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
 import { ref } from 'vue'
-import { GET_ROOMS } from '../../graphql/query.room'
+import { GET_RESERVATIONS_WITH_BREAKFAST } from '../../graphql/query.reservation'
 
 export default {
   components: {
@@ -83,17 +92,7 @@ export default {
     Frown,
   },
   setup() {
-    const { result, loading, error } = useQuery(gql`
-      query x {
-        x {
-          id
-          name
-          description
-          rating
-          category
-        }
-      }
-    `)
+    const { result, loading, error } = useQuery(GET_RESERVATIONS_WITH_BREAKFAST)
     const skeletons = ref<number>(6)
     return { result, loading, error, skeletons }
   },
