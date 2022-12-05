@@ -11,8 +11,8 @@ export const GET_USER_BY_UID = gql`
       role {
         name
       }
-      createdAt
-      updatedAt
+      preferredLanguage
+      imgUrl
     }
   }
 `
@@ -23,6 +23,24 @@ export const GET_CURRENT_USER = gql`
       id
       uid
       amountCredits
+      role {
+        name
+      }
+      firstName
+      lastName
+      imgUrl
+    }
+  }
+`
+
+export const GET_USERS = gql`
+  query users {
+    users {
+      id
+      uid
+      firstName
+      lastName
+      imgUrl
       role {
         name
       }

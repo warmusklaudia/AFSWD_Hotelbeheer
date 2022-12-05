@@ -143,11 +143,6 @@ export default {
       }),
     )
 
-    watch(result, () => {
-      console.log(result)
-      console.log(serviceInput)
-    })
-
     const markAsResolved = async () => {
       load.value = true
       await updateRequestedService()
@@ -164,7 +159,6 @@ export default {
         id.value = props.id
         await refetch()
       }
-      console.log('detail page', props.id)
     })
     return { result, loading, error, load, markAsResolved }
   },

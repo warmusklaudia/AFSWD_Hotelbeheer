@@ -6,6 +6,7 @@ export interface User {
   firstName: string
   lastName: string
   amountCredits: number
+  imgUrl?: string
   role: Role
   createdAt?: Date
   updatedAt?: Date

@@ -21,13 +21,13 @@ export class User {
   @Column()
   uid: string
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  firstName: string
+  firstName?: string
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  lastName: string
+  lastName?: string
 
   @Field({ defaultValue: 0 })
   @Column()
@@ -40,6 +40,10 @@ export class User {
   @Field()
   @Column({ nullable: true })
   preferredLanguage?: string = ''
+
+  @Field()
+  @Column({ nullable: true })
+  imgUrl?: string = ''
 
   @Field(() => [Service], { nullable: 'itemsAndList' })
   @Column({ nullable: true })

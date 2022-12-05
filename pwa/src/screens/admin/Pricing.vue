@@ -7,7 +7,7 @@
         <div class="m-6 p-6 lg:flex lg:gap-12">
           <div class="grid gap-1 md:grid-cols-2 md:gap-6">
             <label
-              v-for="r of result.prices"
+              v-for="r of result?.prices"
               :key="r.rateId"
               class="mb-1 block text-neutral-500 focus-within:text-neutral-900"
               :for="r.rateName"
@@ -76,7 +76,6 @@ export default {
 
     watch(showPopup, () => {
       refetch()
-      console.log(result)
     })
 
     return {
