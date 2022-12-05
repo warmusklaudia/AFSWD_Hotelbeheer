@@ -1,3 +1,4 @@
+import Cleaning from './interface.cleaning'
 import { User } from './interface.user'
 
 export interface Reservation {
@@ -9,6 +10,7 @@ export interface Reservation {
   price: number
   reservationStartDate: Date
   reservationEndDate: Date
+  cleaning: Cleaning
   createdAt?: Date
   updatedAt?: Date
 }

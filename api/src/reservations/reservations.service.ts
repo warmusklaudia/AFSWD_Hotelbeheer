@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ObjectId } from 'mongodb'
 import { Room } from '../rooms/entities/room.entity'
+import { Cleaning } from '../cleaning/entities/cleaning.entity'
 import { DeleteResult, Repository } from 'typeorm'
 import { CreateReservationInput } from './dto/create-reservation.input'
 import { UpdateReservationInput } from './dto/update-reservation.input'
@@ -12,9 +13,23 @@ export class ReservationsService {
   constructor(
     @InjectRepository(Reservation)
     private readonly reservationsRepository: Repository<Reservation>,
+    @InjectRepository(Cleaning)
+    private readonly cleaningRepository: Repository<Cleaning>,
   ) {}
-  create(createReservationInput: CreateReservationInput): Promise<Reservation> {
+  async create(
+    createReservationInput: CreateReservationInput,
+  ): Promise<Reservation> {
     const r = new Reservation()
+    const c = new Cleaning()
+    const id = new ObjectId()
+    c.changeTheLinens = false
+    c.clearTheTrash = false
+    c.disinfectSurfaces = false
+    c.cleanTheBathroom = false
+    c.vacuumTheFloor = false
+    c.mopTheFloor = false
+    c.finish = false
+    const res = await this.cleaningRepository.save(c)
 
     r.userId = createReservationInput.userId
     r.amountAdults = createReservationInput.amountAdults
@@ -23,6 +38,7 @@ export class ReservationsService {
     r.breakfastAccess = createReservationInput.breakfastAccess
     r.reservationStartDate = createReservationInput.reservationStartDate
     r.reservationEndDate = createReservationInput.reservationEndDate
+    r.cleaningId = res.cleaningId.toString()
 
     return this.reservationsRepository.save(r)
   }
@@ -36,9 +52,30 @@ export class ReservationsService {
     return this.reservationsRepository.findOne(new ObjectId(id))
   }
 
+  findOneByReservationEndDate(id: string): Promise<Reservation> {
+    const date = new Date()
+    date.setHours(1, 0, 0, 0)
+    //@ts-ignore
+    return this.reservationsRepository.findOneBy(id, {
+      where: {
+        reservationEndDate: date,
+      },
+    })
+  }
+
   findByUserId(userId: string): Promise<Reservation[]> {
     //@ts-ignore
     return this.reservationsRepository.find({ userId })
+  }
+
+  findCleaningByReservationEndDate(): Promise<Reservation[]> {
+    const date = new Date()
+    date.setHours(1, 0, 0, 0)
+    return this.reservationsRepository.find({
+      where: {
+        reservationEndDate: date,
+      },
+    })
   }
 
   update(updateReservationInput: UpdateReservationInput) {

@@ -2,6 +2,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql'
 import { ObjectId } from 'mongodb'
 import { Room } from '../../rooms/entities/room.entity'
 import { User } from '../../users/entities/user.entity'
+import { Cleaning } from '../../cleaning/entities/cleaning.entity'
 import {
   Column,
   CreateDateColumn,
@@ -54,6 +55,12 @@ export class Reservation {
   @Field()
   @Column()
   reservationEndDate: Date
+
+  @Column({ nullable: true })
+  cleaningId: string
+
+  @Field(() => Cleaning, { nullable: true })
+  cleaning: Cleaning
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

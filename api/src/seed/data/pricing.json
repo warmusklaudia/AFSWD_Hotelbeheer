@@ -1,0 +1,26 @@
+[
+  {
+    "rateName": "Breakfast",
+    "price": 14
+  },
+  {
+    "rateName": "Child",
+    "price": 30
+  },
+  {
+    "rateName": "Adult",
+    "price": 40
+  },
+  {
+    "rateName": "Luxe",
+    "price": 35
+  },
+  {
+    "rateName": "Standard",
+    "price": 20
+  },
+  {
+    "rateName": "Night",
+    "price": 30
+  }
+]

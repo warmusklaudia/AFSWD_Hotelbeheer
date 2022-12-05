@@ -29,13 +29,21 @@ export class RequestedService {
   @Column()
   userId: string
 
-  @Field({ nullable: true }) // GraphQL
-  @Column({ nullable: true }) //typeORM
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   message: string
 
-  @Field() // GraphQL
-  @Column() //typeORM
+  @Field()
+  @Column()
   requestedDate: Date
+
+  @Field({ defaultValue: false })
+  @Column()
+  resolved: boolean
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  resolvedDate: Date
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

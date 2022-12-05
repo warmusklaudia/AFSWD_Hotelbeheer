@@ -18,17 +18,26 @@ import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { FirebaseGuard } from '../auth/guard/firebase.guard'
 import { UseGuards } from '@nestjs/common'
+import { CleaningService } from 'src/cleaning/cleaning.service'
+import { Cleaning } from 'src/cleaning/entities/cleaning.entity'
 
 @Resolver(() => Reservation)
 export class ReservationsResolver {
   constructor(
     private readonly reservationsService: ReservationsService,
     private readonly usersService: UsersService,
+    private readonly cleaningService: CleaningService,
   ) {}
 
   @ResolveField()
   user(@Parent() r: Reservation): Promise<User> {
     return this.usersService.findOneByUid(r.userId)
+  }
+
+  @ResolveField()
+  cleaning(@Parent() r: Reservation): Promise<Cleaning> {
+    //@ts-ignore
+    return this.cleaningService.findOne(r.cleaningId)
   }
 
   @UseGuards(FirebaseGuard)
@@ -58,6 +67,11 @@ export class ReservationsResolver {
     @Args('uid', { type: () => String }) uid: string,
   ): Promise<Reservation[]> {
     return this.reservationsService.findByUserId(uid)
+  }
+
+  @Query(() => [Reservation])
+  findCleaningByReservationEndDate(): Promise<Reservation[]> {
+    return this.reservationsService.findCleaningByReservationEndDate()
   }
 
   @UseGuards(FirebaseGuard)

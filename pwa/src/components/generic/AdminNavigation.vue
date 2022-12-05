@@ -1,13 +1,13 @@
 <template>
   <nav
     v-if="showNav"
-    class="bg-themeOffWhite flex min-h-screen w-44 flex-col justify-between p-4 shadow-lg md:w-52"
+    class="bg-themeOffWhite flex min-h-screen w-20 flex-col justify-between p-4 shadow-lg md:w-52"
   >
     <section>
       <div class="-mr-8 flex justify-end">
         <div
           @click="toggleNav()"
-          class="bg-themeGreen flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md"
+          class="bg-themeGreen hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md md:flex"
         >
           <ChevronsLeft />
         </div>
@@ -15,12 +15,33 @@
 
       <div class="font-title mb-6 mt-2 flex flex-col items-center">
         <div
-          class="bg-themeGreen w-18 h-18 flex items-center justify-center rounded-full"
+          v-if="imgSrc === ''"
+          class="bg-themeGreen md:w-18 md:h-18 flex h-10 w-10 items-center justify-center rounded-full"
         >
-          <p class="text-xl text-white">KW</p>
+          <p class="text-sm text-white md:text-xl">KW</p>
         </div>
+        <img
+          v-else
+          class="md:w-18 md:h-18 h-10 w-10 rounded-full object-cover"
+          :src="imgSrc"
+        />
+
+        <label for="pic-upload">
+          <div
+            class="bg-themeBrown -mt-4 hidden cursor-pointer items-center justify-center rounded-full md:flex md:h-6 md:w-6"
+          >
+            <p class="text-sm text-white md:text-xl"><Plus size="18" /></p>
+            <input
+              class="hidden"
+              @change="uploadPic"
+              id="pic-upload"
+              type="file"
+              accept="image/*"
+            />
+          </div>
+        </label>
         <p
-          class="text-themeGreen pt-2 text-center text-sm font-bold tracking-wider md:text-base lg:text-lg"
+          class="text-themeGreen hidden pt-2 text-center text-xs font-bold tracking-wider md:block md:text-base lg:text-lg"
         >
           Klaudia Warmus
         </p>
@@ -33,7 +54,7 @@
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Home />
-            <p class="ml-3">Home</p>
+            <p class="ml-3 hidden md:block">Home</p>
           </router-link>
         </li>
         <li>
@@ -43,7 +64,7 @@
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <BedDouble />
-            <p class="ml-3">Rooms</p>
+            <p class="ml-3 hidden md:block">Rooms</p>
           </router-link>
         </li>
         <li>
@@ -53,7 +74,7 @@
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <ShowerHead />
-            <p class="ml-3">Cleaning</p>
+            <p class="ml-3 hidden md:block">Cleaning</p>
           </router-link>
         </li>
         <li>
@@ -63,7 +84,7 @@
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <UserCog />
-            <p class="ml-3">Services</p>
+            <p class="ml-3 hidden md:block">Services</p>
           </router-link>
         </li>
         <li>
@@ -73,7 +94,7 @@
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Utensils />
-            <p class="ml-3">Breakfast access</p>
+            <p class="ml-3 hidden md:block">Breakfast access</p>
           </router-link>
         </li>
         <li>
@@ -83,7 +104,7 @@
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Coins />
-            <p class="ml-3">Pricing</p>
+            <p class="ml-3 hidden md:block">Pricing</p>
           </router-link>
         </li>
         <li>
@@ -93,7 +114,7 @@
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
             <Luggage />
-            <p class="ml-3">Guests</p>
+            <p class="ml-3 hidden md:block">Guests</p>
           </router-link>
         </li>
       </ul>
@@ -108,7 +129,7 @@
           class="hover:bg-themeBrown focus:ring-themeBrown my-6 flex w-full items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
         >
           <LogOut />
-          <p class="ml-3">Log out</p>
+          <p class="ml-3 hidden md:block">Log out</p>
         </button>
       </li>
     </ul>
@@ -140,9 +161,16 @@ import {
   LogOut,
   ChevronsLeft,
   ChevronsRight,
+  Plus,
 } from 'lucide-vue-next'
 import { ref, Ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import {
+  getStorage,
+  ref as refFirebase,
+  uploadBytes,
+  getDownloadURL,
+} from 'firebase/storage'
 import useAuthentication from '../../composables/useAuthentication'
 export default {
   components: {
@@ -156,10 +184,14 @@ export default {
     LogOut,
     ChevronsLeft,
     ChevronsRight,
+    Plus,
   },
 
   setup() {
-    const { logout } = useAuthentication()
+    const { logout, user } = useAuthentication()
+    const storage = getStorage()
+    const imgSrc = ref<string>('')
+    const storageRef = refFirebase(storage, user.value?.uid)
     const showNav = ref<boolean>(
       localStorage.adminNav ? localStorage.adminNav : true,
     )
@@ -168,6 +200,24 @@ export default {
       showNav.value = !showNav.value
       localStorage.adminNav = !localStorage.adminNav
     }
+
+    const uploadPic = async (event: Event) => {
+      const file = (event.target as HTMLInputElement).files?.[0]
+      await uploadBytes(storageRef, file as Blob)
+        .then(() => {
+          getImg()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+
+    const getImg = () => {
+      getDownloadURL(storageRef).then((link) => {
+        imgSrc.value = link
+      })
+    }
+    getImg()
 
     const { replace } = useRouter()
     const handleLogOut = () => {
@@ -178,8 +228,10 @@ export default {
 
     return {
       showNav,
+      imgSrc,
       handleLogOut,
       toggleNav,
+      uploadPic,
     }
   },
 }
