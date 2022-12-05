@@ -18,8 +18,8 @@ import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { FirebaseGuard } from '../auth/guard/firebase.guard'
 import { UseGuards } from '@nestjs/common'
-import { CleaningService } from 'src/cleaning/cleaning.service'
-import { Cleaning } from 'src/cleaning/entities/cleaning.entity'
+import { CleaningService } from '../cleaning/cleaning.service'
+import { Cleaning } from '../cleaning/entities/cleaning.entity'
 
 @Resolver(() => Reservation)
 export class ReservationsResolver {

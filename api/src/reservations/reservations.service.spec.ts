@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
+import { CleaningService } from '../cleaning/cleaning.service'
+import { Cleaning } from '../cleaning/entities/cleaning.entity'
 import { Reservation } from './entities/reservation.entity'
 import { ReservationsService } from './reservations.service'
+import { createReservation } from './stubs/reservation.stub'
 
 describe('ReservationsService', () => {
   let service: ReservationsService
@@ -12,8 +15,18 @@ describe('ReservationsService', () => {
         ReservationsService,
         {
           provide: getRepositoryToken(Reservation),
-          useValue: {},
+          useValue: {
+            save: jest.fn().mockResolvedValue(createReservation()),
+            find: jest.fn().mockResolvedValue([createReservation()]),
+            findOne: jest.fn().mockResolvedValue(createReservation()),
+            delete: jest.fn(),
+          },
         },
+        // {
+        //   provide: getRepositoryToken(Cleaning),
+        //   useValue: {
+        //   },
+        // },
       ],
     }).compile()
 

@@ -12,7 +12,5 @@ describe('CleaningService', () => {
     service = module.get<CleaningService>(CleaningService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+  it.todo('should be defined');
 });

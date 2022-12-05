@@ -3,11 +3,11 @@ import { RequestedServicesService } from './requested-services.service';
 import { RequestedServicesResolver } from './requested-services.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RequestedService } from './entities/requested-service.entity';
-import { Service } from 'src/services/entities/service.entity';
-import { ServicesService } from 'src/services/services.service';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
-import { NotificationsModule } from 'src/notifications/notifications.module';
+import { Service } from '../services/entities/service.entity';
+import { ServicesService } from '../services/services.service';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [

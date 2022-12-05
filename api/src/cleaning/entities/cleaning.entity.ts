@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { ObjectId } from 'mongodb'
-import { User } from 'src/users/entities/user.entity'
+import { User } from '../../users/entities/user.entity'
 
 @Entity()
 @ObjectType({ description: 'cleaning' })

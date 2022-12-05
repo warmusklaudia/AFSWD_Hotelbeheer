@@ -3,6 +3,8 @@ import {
   Query,
   Mutation,
   Args,
+  ResolveField,
+  Parent,
 } from '@nestjs/graphql'
 import { RoomsService } from './rooms.service'
 import { Room } from './entities/room.entity'
@@ -15,6 +17,8 @@ import {
 import { RolesGuard } from '../auth/guard/role.guard'
 import { FirebaseGuard } from '../auth/guard/firebase.guard'
 import { UseGuards } from '@nestjs/common'
+import { ReservationsService } from '../reservations/reservations.service'
+import { Reservation } from '../reservations/entities/reservation.entity'
 
 @Resolver(() => Room)
 export class RoomsResolver {
@@ -23,7 +27,7 @@ export class RoomsResolver {
     private readonly reservationsService: ReservationsService,
   ) {}
 
-  @ResolveField()
+  @ResolveField(() => Reservation)
   reservation(@Parent() r: Room): Promise<Reservation> {
     return this.reservationsService.findOne(r.reservationId)
   }

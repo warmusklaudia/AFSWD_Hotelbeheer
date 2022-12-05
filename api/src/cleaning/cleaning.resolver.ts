@@ -11,15 +11,15 @@ import { CleaningService } from './cleaning.service'
 import { Cleaning } from './entities/cleaning.entity'
 import { CreateCleaningInput } from './dto/create-cleaning.input'
 import { UpdateCleaningInput } from './dto/update-cleaning.input'
-import { UsersService } from 'src/users/users.service'
-import { User } from 'src/users/entities/user.entity'
+import { UsersService } from '../users/users.service'
+import { User } from '../users/entities/user.entity'
 import { UseGuards } from '@nestjs/common'
-import { FirebaseGuard } from 'src/auth/guard/firebase.guard'
-import { RolesGuard } from 'src/auth/guard/role.guard'
+import { FirebaseGuard } from '../auth/guard/firebase.guard'
+import { RolesGuard } from '../auth/guard/role.guard'
 import {
   ClientMessage,
   MessageTypes,
-} from 'src/bootstrap/entities/ClientMessage'
+} from '../bootstrap/entities/ClientMessage'
 
 @Resolver(() => Cleaning)
 export class CleaningResolver {

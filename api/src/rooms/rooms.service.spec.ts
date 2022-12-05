@@ -1,27 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { ReservationsService } from '../reservations/reservations.service'
-import { Like, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { Room } from './entities/room.entity'
 import { RoomsService } from './rooms.service'
 import {
   createRoomInputStub,
   createRoom,
-  createRoomWithReservation,
 } from './stubs/room.stub'
 import { Reservation } from '../reservations/entities/reservation.entity'
 import { createReservation } from '../reservations/stubs/reservation.stub'
 import { ObjectId } from 'mongodb'
+import { Cleaning } from "../cleaning/entities/cleaning.entity"
+import { CleaningService } from "../cleaning/cleaning.service"
 
 describe('RoomsService', () => {
   let service: RoomsService
   let mockRoomRepository: Repository<Room>
+
+  jest.mock('../reservations/reservations.service')
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RoomsService,
         ReservationsService,
+        CleaningService,
         {
           provide: getRepositoryToken(Room),
           useValue: {
@@ -40,6 +44,10 @@ describe('RoomsService', () => {
             delete: jest.fn(),
           },
         },
+        {
+          provide: getRepositoryToken(Cleaning),
+          useValue:{}
+        }
       ],
     }).compile()
 
