@@ -93,7 +93,7 @@ export default {
       required: true,
     },
   },
-  setup(props) {
+  setup(props: any) {
     const id = ref<string>(props.id)
     const load = ref<boolean>(false)
     const errorMessage = ref<string>('')

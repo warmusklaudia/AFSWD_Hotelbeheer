@@ -94,7 +94,7 @@ export default {
       required: true,
     },
   },
-  setup(props) {
+  setup(props: any) {
     const load = ref<boolean>(false)
     const errorMessage = ref<string>('')
     const successMessage = ref<string>('')
