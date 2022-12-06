@@ -228,7 +228,7 @@ export default {
       required: true,
     },
   },
-  setup(props) {
+  setup(props: any) {
     const { user } = useAuthentication()
     const cleaningInput = reactive({
       id: '',

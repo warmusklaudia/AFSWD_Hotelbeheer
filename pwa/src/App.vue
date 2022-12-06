@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import useGraphql from './composables/useGraphql'
+import useGraphql from './composables/useGraphQL'
 import { provide } from '@vue/runtime-core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import useCustomUser from './composables/useCustomUser'
