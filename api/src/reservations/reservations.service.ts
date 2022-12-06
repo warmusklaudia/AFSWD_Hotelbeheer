@@ -78,6 +78,14 @@ export class ReservationsService {
     })
   }
 
+  findReservationsWithBreakfastAccess(): Promise<Reservation[]> {
+    return this.reservationsRepository.find({
+      where: {
+        breakfastAccess: true,
+      },
+    })
+  }
+
   update(updateReservationInput: UpdateReservationInput) {
     const update = new Reservation()
 

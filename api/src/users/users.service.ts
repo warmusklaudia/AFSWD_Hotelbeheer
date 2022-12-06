@@ -18,6 +18,7 @@ export class UsersService {
     const u = new User()
 
     u.uid = createUserInput.uid
+    u.imgUrl = createUserInput.imgUrl
     return this.userRepository.save(u)
   }
 
@@ -34,11 +35,16 @@ export class UsersService {
     return this.userRepository.findOneBy({ uid })
   }
 
-  update(updateUserInput: UpdateUserInput) {
-    const update = new User()
+  async update(updateUserInput: UpdateUserInput) {
+    //@ts-ignore
+    const update = await this.userRepository.findOne(updateUserInput.id)
 
-    update.id = new ObjectId(updateUserInput.id)
-    //update.preferredLanguage = updateUserInput.preferredLanguage;
+    update.imgUrl = updateUserInput.imgUrl
+    update.firstName = updateUserInput.firstName
+    update.lastName = updateUserInput.lastName
+    update.preferredLanguage = updateUserInput.preferredLanguage
+    update.role.name = updateUserInput.role.name
+    update.imgUrl = updateUserInput.imgUrl
 
     return this.userRepository.save(update)
   }

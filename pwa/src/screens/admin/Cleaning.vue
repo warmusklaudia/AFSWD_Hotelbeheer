@@ -95,10 +95,6 @@ export default {
       roomId.value = id
     }
 
-    watch(result, () => {
-      console.log(result)
-    })
-
     const skeletons = ref<number>(6)
     return {
       togglePopup,

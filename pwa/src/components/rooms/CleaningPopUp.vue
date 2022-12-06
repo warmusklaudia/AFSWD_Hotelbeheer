@@ -264,7 +264,6 @@ export default {
     }))
 
     const submitCleaning = async () => {
-      console.log(cleaningInput)
       await updateCleaning()
         .then(() => {
           refetch()
@@ -277,7 +276,6 @@ export default {
     const finishCleaning = async () => {
       cleaningInput.finish = true
       cleaningInput.cleanedById = user.value!.uid
-      console.log(cleaningInput)
       await updateCleaning()
         .then(() => {
           refetch()

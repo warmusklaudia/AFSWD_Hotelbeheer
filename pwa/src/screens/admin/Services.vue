@@ -104,7 +104,6 @@ export default {
     const reqServiceId = ref<string>('')
     const { result, loading, error } = useQuery(GET_REQUESTED_SERVICES)
     const checkId = (id: string) => {
-      console.log(id)
       reqServiceId.value = id
     }
 

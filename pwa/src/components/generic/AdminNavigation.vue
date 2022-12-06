@@ -15,15 +15,17 @@
 
       <div class="font-title mb-6 mt-2 flex flex-col items-center">
         <div
-          v-if="imgSrc === ''"
+          v-if="customUser?.imgUrl === ''"
           class="bg-themeGreen md:w-18 md:h-18 flex h-10 w-10 items-center justify-center rounded-full"
         >
-          <p class="text-sm text-white md:text-xl">KW</p>
+          <p class="text-sm text-white md:text-xl">
+            {{ customUser?.firstName[0] }}{{ customUser?.lastName[0] }}
+          </p>
         </div>
         <img
           v-else
           class="md:w-18 md:h-18 h-10 w-10 rounded-full object-cover"
-          :src="imgSrc"
+          :src="customUser?.imgUrl"
         />
 
         <label for="pic-upload">
@@ -43,7 +45,7 @@
         <p
           class="text-themeGreen hidden pt-2 text-center text-xs font-bold tracking-wider md:block md:text-base lg:text-lg"
         >
-          Klaudia Warmus
+          {{ customUser?.firstName }} {{ customUser?.lastName }}
         </p>
       </div>
       <ul class="text-themeGreen font-title text-sm lg:text-base">
@@ -109,12 +111,12 @@
         </li>
         <li>
           <router-link
-            to="/admin/guests"
+            to="/admin/users"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
           >
-            <Luggage />
-            <p class="ml-3 hidden md:block">Guests</p>
+            <Users />
+            <p class="ml-3 hidden md:block">Manage users</p>
           </router-link>
         </li>
       </ul>
@@ -157,13 +159,13 @@ import {
   UserCog,
   Utensils,
   Coins,
-  Luggage,
+  Users,
   LogOut,
   ChevronsLeft,
   ChevronsRight,
   Plus,
 } from 'lucide-vue-next'
-import { ref, Ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   getStorage,
@@ -172,6 +174,10 @@ import {
   getDownloadURL,
 } from 'firebase/storage'
 import useAuthentication from '../../composables/useAuthentication'
+import useCustomUser from '../../composables/useCustomUser'
+import { useMutation, useQuery } from '@vue/apollo-composable'
+import { UPDATE_USER } from '../../graphql/mutation.user'
+import { GET_CURRENT_USER } from '../../graphql/query.user'
 export default {
   components: {
     Home,
@@ -180,18 +186,46 @@ export default {
     UserCog,
     Utensils,
     Coins,
-    Luggage,
     LogOut,
     ChevronsLeft,
     ChevronsRight,
     Plus,
+    Users,
   },
 
   setup() {
     const { logout, user } = useAuthentication()
+    const { customUser, loadCustomUser } = useCustomUser()
     const storage = getStorage()
-    const imgSrc = ref<string>('')
     const storageRef = refFirebase(storage, user.value?.uid)
+    const userInput = reactive({
+      id: customUser.value?.id,
+      imgUrl: '',
+      firstName: customUser.value?.firstName,
+      lastName: customUser.value?.lastName,
+      role: {
+        name: customUser.value?.role.name,
+      },
+    })
+    const {
+      result: resultUser,
+      loading: loadingUser,
+      error: errUser,
+    } = useQuery(GET_CURRENT_USER)
+    const { mutate: updateUser } = useMutation(UPDATE_USER, () => ({
+      variables: {
+        updateUserInput: userInput,
+      },
+      update(cache, { data: { updateUser } }) {
+        let data: any = cache.readQuery({ query: GET_CURRENT_USER })
+        cache.writeQuery({
+          query: GET_CURRENT_USER,
+          data: {
+            findByCurrentUserUid: updateUser,
+          },
+        })
+      },
+    }))
     const showNav = ref<boolean>(
       localStorage.adminNav ? localStorage.adminNav : true,
     )
@@ -200,12 +234,12 @@ export default {
       showNav.value = !showNav.value
       localStorage.adminNav = !localStorage.adminNav
     }
-
     const uploadPic = async (event: Event) => {
       const file = (event.target as HTMLInputElement).files?.[0]
+
       await uploadBytes(storageRef, file as Blob)
-        .then(() => {
-          getImg()
+        .then(async () => {
+          await Promise.all([getImg(), updateUser(), loadCustomUser()])
         })
         .catch((err) => {
           console.log(err)
@@ -214,7 +248,7 @@ export default {
 
     const getImg = () => {
       getDownloadURL(storageRef).then((link) => {
-        imgSrc.value = link
+        userInput.imgUrl = link
       })
     }
     getImg()
@@ -225,10 +259,9 @@ export default {
         return replace('/')
       })
     }
-
     return {
       showNav,
-      imgSrc,
+      customUser,
       handleLogOut,
       toggleNav,
       uploadPic,

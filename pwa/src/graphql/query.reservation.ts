@@ -51,3 +51,32 @@ export const GET_RESERVATIONS_WITH_ROOMS_BY_USER_ID = gql`
     }
   }
 `
+
+export const GET_RESERVATIONS_WITH_BREAKFAST = gql`
+  query getReservationsWithBreakfast {
+    reservationsWithBreakfast {
+      user {
+        id
+        firstName
+        lastName
+      }
+      breakfastAccess
+      reservationStartDate
+      reservationEndDate
+    }
+  }
+`
+export const RESERVATIONS_BY_USER_ID = gql`
+  query GetReservationsByUserId($uid: String!) {
+    findReservationsByUserId(uid: $uid) {
+      id
+      amountAdults
+      amountChildren
+      reservationStartDate
+      reservationEndDate
+      rooms {
+        name
+      }
+    }
+  }
+`
