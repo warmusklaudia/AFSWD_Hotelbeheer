@@ -114,9 +114,8 @@
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
-import { BellRing } from 'lucide-vue-next'
 import useAuthentication from '../../composables/useAuthentication'
-
+import { BellRing } from 'lucide-vue-next'
 export default {
   components: {
     RouteHolder,
@@ -126,9 +125,11 @@ export default {
   },
   setup() {
     const { user } = useAuthentication()
+
     const getToken = async () => {
       console.log(await user.value?.getIdToken())
     }
+
     getToken()
     return {}
   },
