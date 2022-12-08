@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { ObjectId } from 'mongodb'
-import { ReservationsService } from "../reservations/reservations.service"
+import { ReservationsService } from '../reservations/reservations.service'
 import {
   ClientMessage,
   MessageTypes,
@@ -12,11 +12,11 @@ import { Room } from './entities/room.entity'
 import { RoomsResolver } from './rooms.resolver'
 import { RoomsService } from './rooms.service'
 import { createRoom, createRoomInputStub } from './stubs/room.stub'
-import { CleaningService } from "../cleaning/cleaning.service"
-import { getRepositoryToken } from "@nestjs/typeorm"
-import { Reservation } from "../reservations/entities/reservation.entity"
-import { createReservation } from "../reservations/stubs/reservation.stub"
-import { Cleaning } from "../cleaning/entities/cleaning.entity"
+import { CleaningService } from '../cleaning/cleaning.service'
+import { getRepositoryToken } from '@nestjs/typeorm'
+import { Reservation } from '../reservations/entities/reservation.entity'
+import { createReservation } from '../reservations/stubs/reservation.stub'
+import { Cleaning } from '../cleaning/entities/cleaning.entity'
 
 jest.mock('./rooms.service')
 jest.mock('../reservations/reservations.service')
@@ -31,26 +31,26 @@ describe('RoomsResolver', () => {
         RoomsResolver,
         RoomsService,
         ReservationsService,
-        CleaningService,
+        //CleaningService,
         {
           provide: UsersService,
           useValue: {
             findOneByUid: jest.fn().mockResolvedValue(createUser()),
           },
         },
-        {
-          provide: getRepositoryToken(Reservation),
-          useValue: {
-            save: jest.fn().mockResolvedValue(createReservation()),
-            find: jest.fn().mockResolvedValue([createReservation()]),
-            findOne: jest.fn().mockResolvedValue(createReservation()),
-            delete: jest.fn(),
-          },
-        },
-        {
-          provide: getRepositoryToken(Cleaning),
-          useValue: {},
-        },
+        // {
+        //   provide: getRepositoryToken(Reservation),
+        //   useValue: {
+        //     save: jest.fn().mockResolvedValue(createReservation()),
+        //     find: jest.fn().mockResolvedValue([createReservation()]),
+        //     findOne: jest.fn().mockResolvedValue(createReservation()),
+        //     delete: jest.fn(),
+        //   },
+        // },
+        // {
+        //   provide: getRepositoryToken(Cleaning),
+        //   useValue: {},
+        // },
       ],
     }).compile()
 
@@ -152,7 +152,10 @@ describe('RoomsResolver', () => {
     describe('When findByString is called.', () => {
       it('Should call RoomsService.findByString', () => {
         expect(service.findByString).toBeCalledTimes(1)
-        expect(service.findByString).toBeCalledWith(searchString, categoryString)
+        expect(service.findByString).toBeCalledWith(
+          searchString,
+          categoryString,
+        )
       })
 
       it('Should return some (or one) room(s).', () => {
@@ -174,9 +177,7 @@ describe('RoomsResolver', () => {
     describe('When removeReservationFromRoom is called.', () => {
       it('Should call RoomsService.removeReservationFromRoom', () => {
         expect(service.removeReservationFromRoom).toBeCalledTimes(1)
-        expect(service.removeReservationFromRoom).toBeCalledWith(
-          roomId
-        )
+        expect(service.removeReservationFromRoom).toBeCalledWith(roomId)
       })
 
       it('Should return the room without the reservation.', () => {
@@ -202,7 +203,7 @@ describe('RoomsResolver', () => {
         expect(service.addReservationToRoom).toBeCalledTimes(1)
         expect(service.addReservationToRoom).toBeCalledWith(
           roomId,
-          reservationId
+          reservationId,
         )
       })
 
