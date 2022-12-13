@@ -48,12 +48,8 @@
             v-if="loading"
           >
             <div v-for="i of skeletons" :key="i">
-              <div
-                class="@dark:bg-neutral-700 aspect-square rounded-md bg-neutral-300"
-              ></div>
-              <p
-                class="@dark:bg-neutral-600 my-1 h-6 w-full rounded bg-neutral-200"
-              ></p>
+              <div class="aspect-square rounded-md bg-neutral-300"></div>
+              <p class="my-1 h-6 w-full rounded bg-neutral-200"></p>
             </div>
           </div>
           <div class="flex items-center" v-else-if="error">
@@ -61,7 +57,7 @@
             <Frown />
           </div>
           <div
-            class="grid max-h-[60vh] gap-12 overflow-y-auto sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:max-h-[70vh] lg:grid-cols-3"
+            class="grid max-h-[60vh] gap-12 overflow-y-auto sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:grid-cols-3"
             v-else-if="result"
           >
             <RouterLink
