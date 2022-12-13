@@ -195,7 +195,7 @@ export default {
 
   setup() {
     const { logout, user } = useAuthentication()
-    const { customUser, loadCustomUser } = useCustomUser()
+    const { customUser, loadCustomUser, logOutCustomUser } = useCustomUser()
     const storage = getStorage()
     const storageRef = refFirebase(storage, user.value?.uid)
     const userInput = reactive({
@@ -255,6 +255,8 @@ export default {
 
     const { replace } = useRouter()
     const handleLogOut = () => {
+      // console.log('logout')
+      // logOutCustomUser()
       logout().then(() => {
         return replace('/')
       })

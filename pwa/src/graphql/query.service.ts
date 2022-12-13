@@ -10,3 +10,11 @@ export const GET_SERVICES = gql`
     }
   }
 `
+
+export const GET_SERVICE = gql`
+  query getService($id: String!) {
+    service(id: $id) {
+      name
+    }
+  }
+`

@@ -22,7 +22,11 @@
             class="grid max-h-[60vh] gap-12 overflow-y-auto sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:max-h-[70vh] lg:grid-cols-3"
             v-else-if="result"
           >
-            <div v-for="r of result.roomsWithReservation" :key="r.id">
+            <div
+              v-if="result.roomsWithReservation.length > 0"
+              v-for="r of result.roomsWithReservation"
+              :key="r.id"
+            >
               <button
                 :class="
                   r.reservation.cleaning.finish === true ? 'opacity-75' : ''
@@ -49,6 +53,15 @@
                 <div class="bg-themeGreen h-1 w-full"></div>
               </button>
             </div>
+            <div
+              class="flex flex-col items-center justify-center opacity-80"
+              v-else
+            >
+              <NoData class="h-48 w-48 md:h-56 md:w-56" />
+              <p class="md:text-md pt-4 text-center text-sm">
+                There are no rooms to clean.
+              </p>
+            </div>
           </div>
           <div v-if="showPopup">
             <cleaning-pop-up :togglePopup="() => togglePopup()" :id="roomId" />
@@ -70,6 +83,7 @@ import { useQuery } from '@vue/apollo-composable'
 import luxe from '../../assets/luxe-suite.webp'
 import standard from '../../assets/standard-suite.webp'
 import { GET_ROOMS_WITH_RESERVATION } from '../../graphql/query.room'
+import NoData from '../../assets/svg/NoData.vue'
 
 export default {
   components: {
@@ -81,6 +95,7 @@ export default {
     Plus,
     Frown,
     Check,
+    NoData,
   },
   setup() {
     const { result, loading, error } = useQuery(GET_ROOMS_WITH_RESERVATION)

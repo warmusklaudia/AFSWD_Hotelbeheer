@@ -20,6 +20,7 @@
     <div class="absolute right-6 z-30 place-self-end" v-if="showPopup">
       <notification-card
         :reservation="newReservation"
+        :requestedService="newRequestedService"
         :togglePopup="() => togglePopup()"
       />
     </div>
@@ -46,28 +47,40 @@ export default {
     BellRing,
   },
   setup() {
-    const { socketServer } = useSocket()
+    const { socketServer, connected } = useSocket()
+    const connectedToServer = ref<boolean>(connected.value)
     const notifications = ref<boolean>(false)
     const showPopup = ref<boolean>(false)
     const newReservation = ref<Reservation | null>(null)
+    const newRequestedService = ref<any>(null)
 
     const togglePopup = () => {
       showPopup.value = !showPopup.value
     }
 
-    socketServer.value!.on(
-      'reservation:newReservation',
-      (reservation: Reservation) => {
-        notifications.value = true
-        console.log(reservation)
-        newReservation.value = reservation
-        console.log(newReservation)
-      },
-    )
+    if (connected.value === true) {
+      socketServer.value!.on(
+        'reservation:newReservation',
+        (reservation: Reservation) => {
+          notifications.value = true
+          newReservation.value = reservation
+        },
+      )
+
+      socketServer.value!.on(
+        'requestedService:newRequestedService',
+        (requestedService) => {
+          notifications.value = true
+          newRequestedService.value = requestedService
+        },
+      )
+    }
+
     return {
       notifications,
       showPopup,
       newReservation,
+      newRequestedService,
       togglePopup,
     }
   },

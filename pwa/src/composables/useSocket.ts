@@ -19,14 +19,26 @@ export default () => {
   const sendNewReservation = (reservation: any) => {
     socketServer.value?.emit('reservation:created', reservation)
     console.log(reservation)
-    newReservation.value = true
+  }
+
+  const sendNewRequestedService = (requestedService: any) => {
+    socketServer.value?.emit('requestedService:created', requestedService)
+    console.log(requestedService)
   }
 
   const handleNewReservation = () => {
     socketServer.value?.on('reservation:created', (reservation: any) => {
       console.log(reservation)
     })
-    newReservation.value = false
+  }
+
+  const handleNewRequestedService = () => {
+    socketServer.value?.on(
+      'requestedService:created',
+      (requestedService: any) => {
+        console.log(requestedService)
+      },
+    )
   }
 
   const _disconnect = () => {
@@ -67,5 +79,7 @@ export default () => {
     connectToServer,
     disconnectFromServer,
     handleNewReservation,
+    sendNewRequestedService,
+    handleNewRequestedService,
   }
 }

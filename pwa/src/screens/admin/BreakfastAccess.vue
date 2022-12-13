@@ -27,7 +27,7 @@
             v-else-if="result"
           >
             <div
-              v-if="result.reservationsWithBreakfast > 0"
+              v-if="result.reservationsWithBreakfast.length > 0"
               v-for="r of result.reservationsWithBreakfast"
               :key="r.id"
             >
