@@ -27,7 +27,9 @@
               v-for="u of result.users"
               :key="u.id"
             >
-              <div class="flex rounded-md bg-white p-3 shadow-md md:flex-col">
+              <div
+                class="flex rounded-md bg-white p-3 shadow-md hover:opacity-80 md:flex-col"
+              >
                 <div
                   v-if="u?.imgUrl === ''"
                   class="bg-themeGreen md:w-18 md:h-18 mr-4 flex h-12 w-12 items-center justify-center place-self-center rounded-full md:mr-0 md:mb-3"
@@ -42,9 +44,12 @@
                   v-else
                   class="md:w-18 md:h-18 mr-4 flex h-12 w-12 place-self-center rounded-full object-cover md:mr-0 md:mb-3"
                   :src="u?.imgUrl"
+                  :alt="`Picture of ${u.firstName} ${u.lastName}`"
                 />
-                <div class="font-title text-themeGreen pb-3">
-                  <p class="text-xl md:pb-3 md:text-center">
+                <div class="text-themeGreen pb-3">
+                  <p
+                    class="font-title text-xl font-bold md:pb-3 md:text-center"
+                  >
                     {{ u.firstName }} {{ u.lastName }}
                   </p>
                   <p class="text-center text-lg">{{ u.role.name }}</p>

@@ -27,6 +27,7 @@
             </div>
             <div
               v-else-if="result"
+              v-if="result.requestedServices.length > 0"
               v-for="s of result.requestedServices"
               :key="s.id"
               @click="checkId(s.id)"
@@ -34,12 +35,19 @@
             >
               <div class="flex gap-2 md:gap-4">
                 <div
+                  v-if="s.user.imgUrl === ''"
                   class="bg-themeGreen flex h-10 w-10 items-center justify-center rounded-full md:h-14 md:w-14"
                 >
                   <p class="font-title text-sm text-white md:text-lg">
                     {{ s.user.firstName[0] }}{{ s.user.lastName[0] }}
                   </p>
                 </div>
+                <img
+                  v-else
+                  class="flex h-10 w-10 items-center justify-center rounded-full object-cover md:h-14 md:w-14"
+                  :src="s.user.imgUrl"
+                  :alt="`Picture of ${s.user.firstName}`"
+                />
                 <div>
                   <h2 class="font-title text-sm md:text-lg">
                     {{ s.user.firstName }} {{ s.user.lastName }}
@@ -71,7 +79,19 @@
               </div>
             </div>
           </div>
-          <DetailsBlock :id="reqServiceId ? reqServiceId : ''" />
+          <DetailsBlock
+            v-if="result?.requestedServices.length > 0"
+            :id="reqServiceId ? reqServiceId : ''"
+          />
+          <div
+            class="flex flex-col items-center justify-center opacity-80"
+            v-else
+          >
+            <NoData class="h-48 w-48 md:h-56 md:w-56" />
+            <p class="md:text-md pt-4 text-center text-sm">
+              There is no one with breakfast access.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -88,6 +108,7 @@ import { Ref, ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import { GET_REQUESTED_SERVICES } from '../../graphql/query.requestedService'
 import { Frown } from 'lucide-vue-next'
+import NoData from '../../assets/svg/NoData.vue'
 
 export default {
   components: {
@@ -97,6 +118,7 @@ export default {
     DetailsBlock,
     MessageSquare,
     Frown,
+    NoData,
   },
   setup() {
     const details = ref<boolean>(false)

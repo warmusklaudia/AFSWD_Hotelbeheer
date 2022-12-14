@@ -33,6 +33,14 @@ export class RequestedServicesService {
     })
   }
 
+  findUnresolved(): Promise<RequestedService[]> {
+    return this.requestedServiceRepository.find({
+      where: {
+        resolved: false,
+      },
+    })
+  }
+
   findOne(id: string): Promise<RequestedService> {
     //@ts-ignore
     return this.requestedServiceRepository.findOne(new ObjectId(id))

@@ -26,9 +26,14 @@
             class="grid gap-12 sm:grid-cols-1 md:mx-6 md:grid-cols-2 lg:grid-cols-3"
             v-else-if="result"
           >
-            <div v-for="r of result.reservationsWithBreakfast" :key="r.id">
+            <div
+              v-if="result.reservationsWithBreakfast.length > 0"
+              v-for="r of result.reservationsWithBreakfast"
+              :key="r.id"
+            >
               <div class="flex rounded-md bg-white p-3 shadow-md md:flex-col">
                 <div
+                  v-if="r.user.imgUrl === ''"
                   class="bg-themeGreen md:w-18 md:h-18 mr-4 flex h-12 w-12 items-center justify-center place-self-center rounded-full md:mr-0 md:mb-3"
                 >
                   <p
@@ -37,6 +42,12 @@
                     {{ r.user.firstName[0] }}{{ r.user.lastName[0] }}
                   </p>
                 </div>
+                <img
+                  v-else
+                  class="md:w-18 md:h-18 mr-4 flex h-12 w-12 items-center justify-center place-self-center rounded-full object-cover md:mr-0 md:mb-3"
+                  :src="r.user.imgUrl"
+                  :alt="`Picture of ${r.user.firstName}`"
+                />
                 <div class="font-title text-themeGreen pb-3">
                   <p class="text-xl md:pb-3 md:text-center">
                     {{ r.user.firstName }} {{ r.user.lastName }}
@@ -67,6 +78,15 @@
               </div>
               <div></div>
             </div>
+            <div
+              class="flex flex-col items-center justify-center opacity-80"
+              v-else
+            >
+              <NoData class="h-48 w-48 md:h-56 md:w-56" />
+              <p class="md:text-md pt-4 text-center text-sm">
+                There is no one with breakfast access.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -82,6 +102,7 @@ import { Search, Frown } from 'lucide-vue-next'
 import { useQuery } from '@vue/apollo-composable'
 import { ref } from 'vue'
 import { GET_RESERVATIONS_WITH_BREAKFAST } from '../../graphql/query.reservation'
+import NoData from '../../assets/svg/NoData.vue'
 
 export default {
   components: {
@@ -90,6 +111,7 @@ export default {
     AdminHeader,
     Search,
     Frown,
+    NoData,
   },
   setup() {
     const { result, loading, error } = useQuery(GET_RESERVATIONS_WITH_BREAKFAST)

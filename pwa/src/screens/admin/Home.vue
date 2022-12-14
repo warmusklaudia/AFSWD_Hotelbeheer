@@ -16,7 +16,7 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                88
+                {{ roomsAvailable }}
               </p>
               <p class="text-themeGreen text-center lg:p-3">Rooms available</p>
             </div>
@@ -35,9 +35,11 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                29
+                {{ requestedServices }}
               </p>
-              <p class="text-themeGreen text-center lg:p-3">Rooms to clean</p>
+              <p class="text-themeGreen text-center lg:p-3">
+                Requested services
+              </p>
             </div>
           </div>
           <div
@@ -54,11 +56,9 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                6
+                {{ cleanings }}
               </p>
-              <p class="text-themeGreen text-center lg:p-3">
-                Ask for roomservice
-              </p>
+              <p class="text-themeGreen text-center lg:p-3">Rooms to clean</p>
             </div>
           </div>
           <div
@@ -75,9 +75,9 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                2
+                {{ reservations }}
               </p>
-              <p class="text-themeGreen text-center lg:p-3">Ask for wake up</p>
+              <p class="text-themeGreen text-center lg:p-3">Reservations</p>
             </div>
           </div>
           <div
@@ -94,7 +94,7 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                5
+                {{ breakfastAccess }}
               </p>
               <p class="text-themeGreen text-center lg:p-3">
                 Has access to breakfast room
@@ -115,7 +115,16 @@ import RouteHolder from '../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
 import { BellRing } from 'lucide-vue-next'
-import useAuthentication from '../../composables/useAuthentication'
+import { GET_ROOMS_WITHOUT_RESERVATION } from '../../graphql/query.room'
+import { useQuery } from '@vue/apollo-composable'
+import { ref, watch } from 'vue'
+import { GET_UNRESOLVED_SERVICES } from '../../graphql/query.requestedService'
+import {
+  GET_RESERVATIONS,
+  GET_RESERVATIONS_WITH_BREAKFAST,
+} from '../../graphql/query.reservation'
+import { GET_CLEANINGS } from '../../graphql/query.cleaning'
+import useSocket from '../../composables/useSocket'
 
 export default {
   components: {
@@ -125,12 +134,65 @@ export default {
     BellRing,
   },
   setup() {
-    const { user } = useAuthentication()
-    const getToken = async () => {
-      console.log(await user.value?.getIdToken())
+    const roomsAvailable = ref<number>(0)
+    const requestedServices = ref<number>(0)
+    const breakfastAccess = ref<number>(0)
+    const reservations = ref<number>(0)
+    const cleanings = ref<number>(0)
+    const { result, loading, error } = useQuery(GET_ROOMS_WITHOUT_RESERVATION)
+    const {
+      result: resultRs,
+      loading: loadingRs,
+      error: errorRs,
+    } = useQuery(GET_UNRESOLVED_SERVICES)
+    const {
+      result: breakfastResult,
+      loading: breakfastLoading,
+      error: breakfastError,
+    } = useQuery(GET_RESERVATIONS_WITH_BREAKFAST)
+    const {
+      result: resultRes,
+      loading: loadingRes,
+      error: errorRes,
+    } = useQuery(GET_RESERVATIONS)
+    const {
+      result: resultCleaning,
+      loading: loadingCleaning,
+      error: errorCleaning,
+    } = useQuery(GET_CLEANINGS)
+
+    watch(result, () => {
+      roomsAvailable.value = result.value.roomsWithoutReservation.length
+    })
+
+    watch(resultRs, () => {
+      requestedServices.value =
+        resultRs.value.unresolvedRequestedServices.length
+    })
+
+    watch(breakfastResult, () => {
+      breakfastAccess.value =
+        breakfastResult.value.reservationsWithBreakfast.length
+    })
+
+    watch(resultRes, () => {
+      reservations.value = resultRes.value.reservations.length
+    })
+
+    watch(resultCleaning, () => {
+      cleanings.value = resultCleaning.value.notFinishedCleanings.length
+    })
+
+    return {
+      result,
+      loading,
+      error,
+      roomsAvailable,
+      requestedServices,
+      breakfastAccess,
+      reservations,
+      cleanings,
     }
-    getToken()
-    return {}
   },
 }
 </script>

@@ -225,7 +225,7 @@ import { Search, Plus, Frown, X, Loader2, AlertTriangle } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import Room from '../../../interfaces/interface.room'
-import { GET_ROOMS, ROOM_BY_ID } from '../../../graphql/query.room'
+import { GET_ROOM, GET_ROOMS, ROOM_BY_ID } from '../../../graphql/query.room'
 import { useRoute } from 'vue-router'
 export default {
   components: {
@@ -246,7 +246,7 @@ export default {
     const successMessage = ref<string>('')
 
     const { params } = useRoute()
-    const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
+    const { result, loading, error } = useQuery<{ room: Room }>(GET_ROOM, {
       id: params.id,
     })
 

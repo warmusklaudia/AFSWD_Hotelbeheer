@@ -46,6 +46,20 @@ export const ROOM_BY_ID = gql`
   }
 `
 
+export const GET_ROOM = gql`
+  query room($id: String!) {
+    room(id: $id) {
+      id
+      name
+      description
+      rating
+      category
+      location
+      accessCode
+    }
+  }
+`
+
 export const GET_ROOM_By_ID = gql`
   query GetRooms($id: String!) {
     room(id: $id) {

@@ -171,17 +171,17 @@
                 "
                 class="mt-6 aspect-video h-36 w-40 rounded-md object-cover shadow-md md:h-48 md:w-56"
                 src="../../../assets/default_profile.jpg"
-                alt="default profile picture"
+                alt="Default profile picture"
               />
               <img
                 v-else
                 class="mt-6 aspect-video h-36 w-40 rounded-md object-cover shadow-md md:h-48 md:w-56"
                 :src="userInput.imgUrl"
-                :alt="`picture of ${result?.findByUid.firstName}`"
+                :alt="`Picture of ${result?.findByUid.firstName}`"
               />
               <label for="uploadPic">
                 <div
-                  class="bg-themeBrown -mt-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
+                  class="bg-themeBrown -mt-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:opacity-90"
                 >
                   <p class="text-sm text-white md:text-xl">
                     <Plus size="24" />

@@ -26,11 +26,12 @@
           v-else
           class="md:w-18 md:h-18 h-10 w-10 rounded-full object-cover"
           :src="customUser?.imgUrl"
+          :alt="`Picture of ${customUser?.firstName} ${customUser?.lastName}`"
         />
 
         <label for="pic-upload">
           <div
-            class="bg-themeBrown -mt-4 hidden cursor-pointer items-center justify-center rounded-full md:flex md:h-6 md:w-6"
+            class="bg-themeBrown -mt-4 hidden cursor-pointer items-center justify-center rounded-full hover:opacity-90 md:flex md:h-6 md:w-6"
           >
             <p class="text-sm text-white md:text-xl"><Plus size="18" /></p>
             <input
@@ -111,6 +112,16 @@
         </li>
         <li>
           <router-link
+            to="/admin/reservations"
+            active-class="bg-themeBrown bg-opacity-20 font-bold"
+            class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
+          >
+            <CalendarDays />
+            <p class="ml-3 hidden md:block">Reservations</p>
+          </router-link>
+        </li>
+        <li>
+          <router-link
             to="/admin/users"
             active-class="bg-themeBrown bg-opacity-20 font-bold"
             class="hover:bg-themeBrown focus:ring-themeBrown flex items-center rounded p-2 hover:bg-opacity-20 focus:outline-none focus:ring"
@@ -164,6 +175,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Plus,
+  CalendarDays,
 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -191,11 +203,12 @@ export default {
     ChevronsRight,
     Plus,
     Users,
+    CalendarDays,
   },
 
   setup() {
     const { logout, user } = useAuthentication()
-    const { customUser, loadCustomUser } = useCustomUser()
+    const { customUser, loadCustomUser, logOutCustomUser } = useCustomUser()
     const storage = getStorage()
     const storageRef = refFirebase(storage, user.value?.uid)
     const userInput = reactive({
@@ -255,6 +268,8 @@ export default {
 
     const { replace } = useRouter()
     const handleLogOut = () => {
+      // console.log('logout')
+      // logOutCustomUser()
       logout().then(() => {
         return replace('/')
       })

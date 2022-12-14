@@ -17,22 +17,28 @@ export default () => {
   const { user } = useAuthentication()
 
   provideApolloClient(apolloClient)
-  const { result, load, document } = useLazyQuery(GET_CURRENT_USER)
+  const { result, refetch } = useQuery(GET_CURRENT_USER)
 
   const loadCustomUser = (): Promise<void> => {
+    refetch()
     return new Promise((resolve, reject) => {
       watch(result, ({ findByCurrentUserUid }) => {
+        console.log(result)
         if (findByCurrentUserUid) {
           setCustomUser(findByCurrentUserUid)
           resolve()
         }
       })
-      load(document.value)
     })
+  }
+
+  const logOutCustomUser = () => {
+    // customUser.value = null
   }
 
   return {
     customUser: customUser,
     loadCustomUser,
+    logOutCustomUser,
   }
 }

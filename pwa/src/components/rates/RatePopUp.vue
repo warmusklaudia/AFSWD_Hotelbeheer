@@ -18,7 +18,7 @@
           Rate <span class="text-xl">{{ result?.price.rateId }}</span>
         </h2>
         <form
-          class="mt-6 flex h-full flex-col justify-between"
+          class="mt-2 flex h-full flex-col justify-between"
           @submit.prevent="submitForm"
         >
           <label
@@ -46,12 +46,15 @@
               :name="result?.price.rateName"
             />
           </label>
-          <p class="pt-3 text-green-700 lg:text-lg">
+          <p class="lg:text-md pt-1 text-green-700 lg:pt-2">
             {{ errorMessage == '' ? successMessage : '' }}
           </p>
-          <p class="pt-3 text-red-700 lg:text-lg">
+          <p class="lg:text-md pt-1 text-red-700 lg:pt-2">
             {{ errorMessage !== '' ? errorMessage : '' }}
           </p>
+          <div class="hidden items-center justify-center md:flex">
+            <Cash class="md:h-28 md:w-28 lg:h-36 lg:w-36" />
+          </div>
           <button
             class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown m-auto mb-6 flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
             :disabled="load"
@@ -78,11 +81,13 @@ import { Rate } from '../../interfaces/interface.rate'
 import { GET_PRICES, PRICE_BY_ID } from '../../graphql/query.pricing'
 import { reactive, ref, watch } from 'vue'
 import { UPDATE_PRICES } from '../../graphql/mutation.pricing'
+import Cash from '../../assets/svg/Cash.vue'
 export default {
   components: {
     Check,
     X,
     Loader2,
+    Cash,
   },
   props: {
     togglePopup: {

@@ -5,8 +5,10 @@ export const GET_REQUESTED_SERVICES = gql`
     requestedServices {
       id
       user {
+        uid
         firstName
         lastName
+        imgUrl
       }
       service {
         id
@@ -15,6 +17,7 @@ export const GET_REQUESTED_SERVICES = gql`
       }
       message
       requestedDate
+      resolvedDate
       resolved
     }
   }
@@ -25,8 +28,10 @@ export const GET_REQUESTED_SERVICE = gql`
     requestedService(id: $id) {
       id
       user {
+        uid
         firstName
         lastName
+        imgUrl
       }
       service {
         id
@@ -51,6 +56,29 @@ export const GET_REQUESTED_SERVICES_BY_USER_ID = gql`
         price
       }
       requestedDate
+    }
+  }
+`
+
+export const GET_UNRESOLVED_SERVICES = gql`
+  query getUnresolvedServices {
+    unresolvedRequestedServices {
+      id
+      user {
+        uid
+        firstName
+        lastName
+        imgUrl
+      }
+      service {
+        id
+        name
+        price
+      }
+      message
+      requestedDate
+      resolvedDate
+      resolved
     }
   }
 `

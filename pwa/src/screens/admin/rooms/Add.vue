@@ -226,13 +226,7 @@ import standard from '../../../assets/standard-suite.webp'
 import { Search, Plus, Frown, X, Loader2 } from 'lucide-vue-next'
 import { reactive, ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
-import Room from '../../../interfaces/interface.room'
-import {
-  GET_ROOMS,
-  ROOM_BY_NAME_CAT,
-  ROOM_INSERT_DATA,
-} from '../../../graphql/query.room'
-import gql from 'graphql-tag'
+import { ROOM_BY_NAME_CAT } from '../../../graphql/query.room'
 import { useRouter } from 'vue-router'
 export default {
   name: 'AddRoom',
@@ -261,12 +255,12 @@ export default {
     })
 
     const roomInput = reactive({
-      name: 'hrtgef',
-      description: 'gtrefzd',
+      name: '',
+      description: '',
       rating: 1,
-      category: 'Luxe',
-      location: 'htgrfe',
-      accessCode: 'gtrfez',
+      category: '',
+      location: '',
+      accessCode: '',
     })
     const { push } = useRouter()
     const { result, loading, error } = useQuery(ROOM_BY_NAME_CAT, {
