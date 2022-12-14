@@ -52,6 +52,11 @@ export class CleaningResolver {
     return this.cleaningService.findOne(id)
   }
 
+  @Query(() => [Cleaning], { name: 'notFinishedCleanings' })
+  findNotFinishedCleanings(): Promise<Cleaning[]> {
+    return this.cleaningService.findNotFinished()
+  }
+
   @UseGuards(FirebaseGuard, RolesGuard(['admin']))
   @Mutation(() => Cleaning)
   updateCleaning(

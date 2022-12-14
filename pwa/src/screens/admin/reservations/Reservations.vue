@@ -19,7 +19,7 @@
             <Frown />
           </div>
           <div
-            class="grid max-h-[60vh] gap-12 overflow-y-auto p-2 sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:grid-cols-3"
+            class="grid max-h-[60vh] gap-12 overflow-y-auto p-2 sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:max-h-[70vh] lg:grid-cols-3"
             v-else-if="result"
           >
             <button

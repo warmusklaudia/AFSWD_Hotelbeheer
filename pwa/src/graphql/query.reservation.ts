@@ -91,6 +91,7 @@ export const GET_RESERVATIONS_WITH_BREAKFAST = gql`
         id
         firstName
         lastName
+        imgUrl
       }
       breakfastAccess
       reservationStartDate

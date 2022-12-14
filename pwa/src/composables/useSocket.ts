@@ -6,7 +6,7 @@ import { Reservation } from '../interfaces/interface.reservation'
 // SHARED
 const socketServer = ref<Socket>()
 const connected = ref<boolean>(false)
-const newReservation = ref<boolean>(false)
+const newNotification = ref<boolean>(false)
 
 export default () => {
   const { customUser } = useCustomUser()
@@ -19,11 +19,15 @@ export default () => {
   const sendNewReservation = (reservation: any) => {
     socketServer.value?.emit('reservation:created', reservation)
     console.log(reservation)
+    newNotification.value = true
+    console.log(newNotification)
   }
 
   const sendNewRequestedService = (requestedService: any) => {
     socketServer.value?.emit('requestedService:created', requestedService)
     console.log(requestedService)
+    newNotification.value = true
+    console.log(newNotification)
   }
 
   const handleNewReservation = () => {
@@ -74,7 +78,7 @@ export default () => {
   return {
     socketServer,
     connected,
-    newReservation,
+    newNotification,
     sendNewReservation,
     connectToServer,
     disconnectFromServer,

@@ -33,6 +33,7 @@
             >
               <div class="flex rounded-md bg-white p-3 shadow-md md:flex-col">
                 <div
+                  v-if="r.user.imgUrl === ''"
                   class="bg-themeGreen md:w-18 md:h-18 mr-4 flex h-12 w-12 items-center justify-center place-self-center rounded-full md:mr-0 md:mb-3"
                 >
                   <p
@@ -41,6 +42,12 @@
                     {{ r.user.firstName[0] }}{{ r.user.lastName[0] }}
                   </p>
                 </div>
+                <img
+                  v-else
+                  class="md:w-18 md:h-18 mr-4 flex h-12 w-12 items-center justify-center place-self-center rounded-full object-cover md:mr-0 md:mb-3"
+                  :src="r.user.imgUrl"
+                  :alt="`Picture of ${r.user.firstName}`"
+                />
                 <div class="font-title text-themeGreen pb-3">
                   <p class="text-xl md:pb-3 md:text-center">
                     {{ r.user.firstName }} {{ r.user.lastName }}

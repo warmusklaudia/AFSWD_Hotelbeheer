@@ -35,6 +35,14 @@ import RouteHolder from '../../components/holders/RouteHolder.vue'
 import useSocket from '../../composables/useSocket'
 import NotificationCard from '../../components/notifications/NotificationCard.vue'
 import { Reservation } from '../../interfaces/interface.reservation'
+import { useQuery } from '@vue/apollo-composable'
+import { GET_ROOMS_WITHOUT_RESERVATION } from '../../graphql/query.room'
+import { GET_UNRESOLVED_SERVICES } from '../../graphql/query.requestedService'
+import {
+  GET_RESERVATIONS,
+  GET_RESERVATIONS_WITH_BREAKFAST,
+} from '../../graphql/query.reservation'
+import { GET_CLEANINGS } from '../../graphql/query.cleaning'
 export default {
   props: {
     name: {
@@ -49,7 +57,7 @@ export default {
     Bell,
   },
   setup() {
-    const { socketServer, connected } = useSocket()
+    const { socketServer, connected, newNotification } = useSocket()
     const connectedToServer = ref<boolean>(connected.value)
     const notifications = ref<boolean>(false)
     const showPopup = ref<boolean>(false)
@@ -60,12 +68,29 @@ export default {
       showPopup.value = !showPopup.value
     }
 
+    const { refetch: refetchRWR } = useQuery(GET_ROOMS_WITHOUT_RESERVATION)
+    const { refetch: refetchURS } = useQuery(GET_UNRESOLVED_SERVICES)
+    const { refetch: refetchRWB } = useQuery(GET_RESERVATIONS_WITH_BREAKFAST)
+    const { refetch: refetchR } = useQuery(GET_RESERVATIONS)
+    const { refetch: refetchC } = useQuery(GET_CLEANINGS)
+
+    const refetchHomeData = () => {
+      refetchRWR()
+      refetchURS()
+      refetchRWB()
+      refetchR()
+      refetchC()
+    }
+
     if (connected.value === true) {
       socketServer.value!.on(
         'reservation:newReservation',
         (reservation: Reservation) => {
           notifications.value = true
           newReservation.value = reservation
+          newNotification.value = false
+          console.log(newNotification)
+          refetchHomeData()
         },
       )
 
@@ -74,6 +99,9 @@ export default {
         (requestedService) => {
           notifications.value = true
           newRequestedService.value = requestedService
+          newNotification.value = false
+          console.log(newNotification)
+          refetchHomeData()
         },
       )
     }

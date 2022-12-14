@@ -36,6 +36,14 @@ export class CleaningService {
     return this.cleaningRepository.findOne(new ObjectId(id))
   }
 
+  findNotFinished(): Promise<Cleaning[]> {
+    return this.cleaningRepository.find({
+      where: {
+        finish: false,
+      },
+    })
+  }
+
   async update(updateCleaningInput: UpdateCleaningInput) {
     //@ts-ignore
     const update = await this.cleaningRepository.findOne(updateCleaningInput.id)

@@ -56,11 +56,9 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                6
+                {{ cleanings }}
               </p>
-              <p class="text-themeGreen text-center lg:p-3">
-                Ask for roomservice
-              </p>
+              <p class="text-themeGreen text-center lg:p-3">Rooms to clean</p>
             </div>
           </div>
           <div
@@ -77,9 +75,9 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                2
+                {{ reservations }}
               </p>
-              <p class="text-themeGreen text-center lg:p-3">Ask for wake up</p>
+              <p class="text-themeGreen text-center lg:p-3">Reservations</p>
             </div>
           </div>
           <div
@@ -96,7 +94,7 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                5
+                {{ breakfastAccess }}
               </p>
               <p class="text-themeGreen text-center lg:p-3">
                 Has access to breakfast room
@@ -121,6 +119,12 @@ import { GET_ROOMS_WITHOUT_RESERVATION } from '../../graphql/query.room'
 import { useQuery } from '@vue/apollo-composable'
 import { ref, watch } from 'vue'
 import { GET_UNRESOLVED_SERVICES } from '../../graphql/query.requestedService'
+import {
+  GET_RESERVATIONS,
+  GET_RESERVATIONS_WITH_BREAKFAST,
+} from '../../graphql/query.reservation'
+import { GET_CLEANINGS } from '../../graphql/query.cleaning'
+import useSocket from '../../composables/useSocket'
 
 export default {
   components: {
@@ -132,12 +136,30 @@ export default {
   setup() {
     const roomsAvailable = ref<number>(0)
     const requestedServices = ref<number>(0)
+    const breakfastAccess = ref<number>(0)
+    const reservations = ref<number>(0)
+    const cleanings = ref<number>(0)
     const { result, loading, error } = useQuery(GET_ROOMS_WITHOUT_RESERVATION)
     const {
       result: resultRs,
       loading: loadingRs,
       error: errorRs,
     } = useQuery(GET_UNRESOLVED_SERVICES)
+    const {
+      result: breakfastResult,
+      loading: breakfastLoading,
+      error: breakfastError,
+    } = useQuery(GET_RESERVATIONS_WITH_BREAKFAST)
+    const {
+      result: resultRes,
+      loading: loadingRes,
+      error: errorRes,
+    } = useQuery(GET_RESERVATIONS)
+    const {
+      result: resultCleaning,
+      loading: loadingCleaning,
+      error: errorCleaning,
+    } = useQuery(GET_CLEANINGS)
 
     watch(result, () => {
       roomsAvailable.value = result.value.roomsWithoutReservation.length
@@ -147,7 +169,30 @@ export default {
       requestedServices.value =
         resultRs.value.unresolvedRequestedServices.length
     })
-    return { result, loading, error, roomsAvailable, requestedServices }
+
+    watch(breakfastResult, () => {
+      breakfastAccess.value =
+        breakfastResult.value.reservationsWithBreakfast.length
+    })
+
+    watch(resultRes, () => {
+      reservations.value = resultRes.value.reservations.length
+    })
+
+    watch(resultCleaning, () => {
+      cleanings.value = resultCleaning.value.notFinishedCleanings.length
+    })
+
+    return {
+      result,
+      loading,
+      error,
+      roomsAvailable,
+      requestedServices,
+      breakfastAccess,
+      reservations,
+      cleanings,
+    }
   },
 }
 </script>
