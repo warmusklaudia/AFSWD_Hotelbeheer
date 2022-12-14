@@ -18,13 +18,13 @@
               v-if="result.findByUid.imgUrl"
               class="mb-6 mt-6 aspect-video h-36 w-40 rounded-md object-cover shadow-md md:h-48 md:w-56"
               :src="result.findByUid.imgUrl"
-              :alt="`picture of ${result.findByUid.firstName}`"
+              :alt="`Picture of ${result.findByUid.firstName}`"
             />
             <img
               v-else
               class="mb-6 mt-6 aspect-video h-36 w-40 rounded-md object-cover shadow-md md:h-48 md:w-56"
               src="../../../assets/default_profile.jpg"
-              :alt="`default user picture`"
+              :alt="`Default user picture`"
             />
             <p class="pt-2">
               Name:

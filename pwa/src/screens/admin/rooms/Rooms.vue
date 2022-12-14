@@ -65,7 +65,7 @@
               v-for="r of result.roomsByNameCat"
               :key="r.id"
             >
-              <div class="rounded-md bg-white p-3 shadow-md">
+              <div class="rounded-md bg-white p-3 shadow-md hover:opacity-90">
                 <img
                   v-if="r.category == 'Luxe'"
                   class="mb-6 aspect-video w-full object-cover"

@@ -4,9 +4,10 @@
       <route-holder :title="name" />
       <div
         @click=";[(notifications = false), togglePopup()]"
-        class="bg-themeGreen col-end-3 flex h-12 w-12 cursor-pointer items-center justify-center justify-self-end rounded-full text-white shadow-md md:col-end-7 md:h-14 md:w-14 lg:col-end-8 lg:h-16 lg:w-16"
+        class="bg-themeGreen col-end-3 flex h-12 w-12 cursor-pointer items-center justify-center justify-self-end rounded-full text-white shadow-md hover:opacity-90 md:col-end-7 md:h-14 md:w-14 lg:col-end-8 lg:h-16 lg:w-16"
       >
-        <bell-ring />
+        <bell v-if="!notifications" />
+        <bell-ring v-if="notifications" />
         <div
           v-if="notifications"
           class="absolute ml-4 mt-4 h-2 w-2 animate-ping rounded-full bg-red-500 opacity-60"
@@ -28,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { BellRing } from 'lucide-vue-next'
+import { BellRing, Bell } from 'lucide-vue-next'
 import { ref } from 'vue'
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import useSocket from '../../composables/useSocket'
@@ -45,6 +46,7 @@ export default {
     NotificationCard,
     RouteHolder,
     BellRing,
+    Bell,
   },
   setup() {
     const { socketServer, connected } = useSocket()

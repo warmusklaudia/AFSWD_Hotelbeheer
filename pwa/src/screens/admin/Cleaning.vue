@@ -19,7 +19,7 @@
             <Frown />
           </div>
           <div
-            class="grid max-h-[60vh] gap-12 overflow-y-auto sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:max-h-[70vh] lg:grid-cols-3"
+            class="grid max-h-[60vh] gap-12 overflow-y-auto p-2 sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:max-h-[70vh] lg:grid-cols-3"
             v-else-if="result"
           >
             <div
@@ -31,7 +31,7 @@
                 :class="
                   r.reservation.cleaning.finish === true ? 'opacity-75' : ''
                 "
-                class="rounded-md bg-white p-3 shadow-md"
+                class="rounded-md bg-white p-3 shadow-md hover:opacity-90"
                 @click=";[togglePopup(), checkId(r.id)]"
               >
                 <img

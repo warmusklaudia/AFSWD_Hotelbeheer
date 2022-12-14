@@ -14,13 +14,11 @@
           </div>
           <div v-else-if="result">
             <img
-              class="lg:w-94 mb-6 mt-6 aspect-video rounded-md object-cover shadow-md"
+              class="lg:w-94 my-6 aspect-video rounded-md object-cover shadow-md"
               :src="luxe"
               :alt="`picture of a -suite`"
             />
-            <p class="leading-7 lg:max-w-sm">
-              {{ result.room.description }}
-            </p>
+
             <p class="pt-2">
               Category:
               <span class="font-title pl-2 font-bold">{{
@@ -92,10 +90,9 @@
             </div>
           </div>
           <div class="lg:w-1/2">
-            <h1 class="font-title pb-6 text-xl font-bold lg:text-2xl">
-              Reservation history
-            </h1>
-            <reservation-history-table :reservations="[1, 2, 3]" />
+            <p class="leading-8 lg:max-w-sm lg:pt-3">
+              {{ result?.room.description }}
+            </p>
           </div>
         </div>
       </div>
@@ -107,7 +104,6 @@
 import RouteHolder from '../../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
-import ReservationHistoryTable from '../../../components/rooms/ReservationHistoryTable.vue'
 import luxe from '../../../assets/luxe-suite.webp'
 import {
   Search,
@@ -124,20 +120,14 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import Room from '../../../interfaces/interface.room'
-import {
-  GET_ROOMS,
-  ROOM_BY_ID,
-  ROOM_BY_NAME_CAT,
-  ROOM_INSERT_DATA,
-} from '../../../graphql/query.room'
+import { ROOM_BY_NAME_CAT, GET_ROOM } from '../../../graphql/query.room'
 import { DELETE_ROOM } from '../../../graphql/mutation.room'
-import { makeReference, Reference } from '@apollo/client/cache'
+
 export default {
   components: {
     RouteHolder,
     AdminNavigation,
     AdminHeader,
-    ReservationHistoryTable,
     Search,
     Plus,
     Frown,
@@ -152,7 +142,7 @@ export default {
     const { params } = useRoute()
     const { push } = useRouter()
     const load = ref<boolean>(false)
-    const { result, loading, error } = useQuery<{ room: Room }>(ROOM_BY_ID, {
+    const { result, loading, error } = useQuery<{ room: Room }>(GET_ROOM, {
       id: params.id,
     })
 

@@ -26,7 +26,7 @@
         <div class="text-themeGreen mx-6 text-center">
           <button
             @click="togglePopup()"
-            class="border-themeGreen float-right flex h-8 w-8 items-center justify-center self-end rounded-full border"
+            class="border-themeGreen float-right flex h-8 w-8 items-center justify-center self-end rounded-full border hover:opacity-80"
           >
             <X />
           </button>
@@ -35,128 +35,131 @@
             Room <span>{{ result?.room.name }}</span>
           </h2>
         </div>
-        <ul class="ml-10 flex flex-col gap-2">
-          <li>
-            <label for="linens" class="flex gap-2">
-              <input
-                id="linens"
-                type="checkbox"
-                class="peer sr-only"
-                v-model="cleaningInput.changeTheLinens"
-                :disabled="result?.room.reservation?.cleaning.finish"
-              />
-              <div
-                class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
-              ></div>
-              <div
-                class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
-              >
-                <Check size="20" />
-              </div>
-              Change the linens
-            </label>
-          </li>
-          <li>
-            <label for="trash" class="flex gap-2">
-              <input
-                id="trash"
-                type="checkbox"
-                class="peer sr-only"
-                v-model="cleaningInput.clearTheTrash"
-                :disabled="result?.room.reservation?.cleaning.finish"
-              />
-              <div
-                class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
-              ></div>
-              <div
-                class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
-              >
-                <Check size="20" />
-              </div>
-              Clear the trash
-            </label>
-          </li>
-          <li>
-            <label for="sufraces" class="flex gap-2">
-              <input
-                id="sufraces"
-                type="checkbox"
-                class="peer sr-only"
-                v-model="cleaningInput.disinfectSurfaces"
-                :disabled="result?.room.reservation?.cleaning.finish"
-              />
-              <div
-                class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
-              ></div>
-              <div
-                class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
-              >
-                <Check size="20" />
-              </div>
-              Disinfect surfaces
-            </label>
-          </li>
-          <li>
-            <label for="bathroom" class="flex gap-2">
-              <input
-                id="bathroom"
-                type="checkbox"
-                class="peer sr-only"
-                v-model="cleaningInput.cleanTheBathroom"
-                :disabled="result?.room.reservation?.cleaning.finish"
-              />
-              <div
-                class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
-              ></div>
-              <div
-                class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
-              >
-                <Check size="20" />
-              </div>
-              Clean the bathroom
-            </label>
-          </li>
-          <li>
-            <label for="vacuumFloors" class="flex gap-2">
-              <input
-                id="vacuumFloors"
-                type="checkbox"
-                class="peer sr-only"
-                v-model="cleaningInput.vacuumTheFloor"
-                :disabled="result?.room.reservation?.cleaning.finish"
-              />
-              <div
-                class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
-              ></div>
-              <div
-                class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
-              >
-                <Check size="20" />
-              </div>
-              Vacuum the floor
-            </label>
-          </li>
-          <li>
-            <label for="mopFloors" class="flex gap-2">
-              <input
-                id="mopFloors"
-                type="checkbox"
-                class="peer sr-only"
-                v-model="cleaningInput.mopTheFloor"
-                :disabled="result?.room.reservation?.cleaning.finish"
-              />
-              <div
-                class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
-              ></div>
-              <div
-                class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
-              >
-                <Check size="20" />
-              </div>
-              Mop the floor
-            </label>
-          </li>
-        </ul>
+        <div class="items-center justify-evenly lg:flex">
+          <ul class="ml-10 flex flex-col gap-2">
+            <li>
+              <label for="linens" class="flex gap-2">
+                <input
+                  id="linens"
+                  type="checkbox"
+                  class="peer sr-only"
+                  v-model="cleaningInput.changeTheLinens"
+                  :disabled="result?.room.reservation?.cleaning.finish"
+                />
+                <div
+                  class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
+                ></div>
+                <div
+                  class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
+                >
+                  <Check size="20" />
+                </div>
+                Change the linens
+              </label>
+            </li>
+            <li>
+              <label for="trash" class="flex gap-2">
+                <input
+                  id="trash"
+                  type="checkbox"
+                  class="peer sr-only"
+                  v-model="cleaningInput.clearTheTrash"
+                  :disabled="result?.room.reservation?.cleaning.finish"
+                />
+                <div
+                  class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
+                ></div>
+                <div
+                  class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
+                >
+                  <Check size="20" />
+                </div>
+                Clear the trash
+              </label>
+            </li>
+            <li>
+              <label for="sufraces" class="flex gap-2">
+                <input
+                  id="sufraces"
+                  type="checkbox"
+                  class="peer sr-only"
+                  v-model="cleaningInput.disinfectSurfaces"
+                  :disabled="result?.room.reservation?.cleaning.finish"
+                />
+                <div
+                  class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
+                ></div>
+                <div
+                  class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
+                >
+                  <Check size="20" />
+                </div>
+                Disinfect surfaces
+              </label>
+            </li>
+            <li>
+              <label for="bathroom" class="flex gap-2">
+                <input
+                  id="bathroom"
+                  type="checkbox"
+                  class="peer sr-only"
+                  v-model="cleaningInput.cleanTheBathroom"
+                  :disabled="result?.room.reservation?.cleaning.finish"
+                />
+                <div
+                  class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
+                ></div>
+                <div
+                  class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
+                >
+                  <Check size="20" />
+                </div>
+                Clean the bathroom
+              </label>
+            </li>
+            <li>
+              <label for="vacuumFloors" class="flex gap-2">
+                <input
+                  id="vacuumFloors"
+                  type="checkbox"
+                  class="peer sr-only"
+                  v-model="cleaningInput.vacuumTheFloor"
+                  :disabled="result?.room.reservation?.cleaning.finish"
+                />
+                <div
+                  class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
+                ></div>
+                <div
+                  class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
+                >
+                  <Check size="20" />
+                </div>
+                Vacuum the floor
+              </label>
+            </li>
+            <li>
+              <label for="mopFloors" class="flex gap-2">
+                <input
+                  id="mopFloors"
+                  type="checkbox"
+                  class="peer sr-only"
+                  v-model="cleaningInput.mopTheFloor"
+                  :disabled="result?.room.reservation?.cleaning.finish"
+                />
+                <div
+                  class="peer-checked:bg-themeOffWhite border-themeBrown h-6 w-6 rounded-md border bg-white shadow-inner"
+                ></div>
+                <div
+                  class="text-themeBrown invisible absolute flex h-6 w-6 items-center justify-center peer-checked:visible"
+                >
+                  <Check size="20" />
+                </div>
+                Mop the floor
+              </label>
+            </li>
+          </ul>
+          <clean-up class="hidden lg:flex lg:h-36 lg:w-56" />
+        </div>
         <div>
           <p
             class="text-center text-sm text-neutral-500"
@@ -198,7 +201,6 @@
       </div>
     </div>
   </div>
-
   <div
     class="bg-themeBrown fixed top-1/2 left-1/2 z-20 m-2 h-96 w-2/3 -translate-x-1/2 -translate-y-1/2 transform rounded-lg pt-6 text-lg shadow-lg md:h-96 md:w-2/5"
   ></div>
@@ -210,11 +212,12 @@ import { reactive, watch } from 'vue'
 import { Check, X, Frown } from 'lucide-vue-next'
 import { ROOM_BY_ID } from '../../graphql/query.room'
 import { UPDATE_CLEANING } from '../../graphql/mutation.cleaning'
-import { GET_USER_BY_UID } from '../../graphql/query.user'
+import CleanUp from '../../assets/svg/CleanUp.vue'
 import Room from '../../interfaces/interface.room'
 import useAuthentication from '../../composables/useAuthentication'
 
 export default {
+  components: { Check, X, Frown, CleanUp },
   props: {
     togglePopup: {
       type: Function,
@@ -295,6 +298,5 @@ export default {
       finishCleaning,
     }
   },
-  components: { Check, X, Frown },
 }
 </script>

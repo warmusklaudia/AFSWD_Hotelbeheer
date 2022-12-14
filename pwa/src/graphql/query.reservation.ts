@@ -10,6 +10,38 @@ export const GET_RESERVATIONS = gql`
       reservationStartDate
       reservationEndDate
       price
+      user {
+        firstName
+        lastName
+      }
+      rooms {
+        id
+        name
+      }
+      breakfastAccess
+    }
+  }
+`
+
+export const RESERVATION_BY_ID = gql`
+  query GetReservation($id: String!) {
+    reservation(id: $id) {
+      id
+      amountRooms
+      amountAdults
+      amountChildren
+      reservationStartDate
+      reservationEndDate
+      price
+      user {
+        firstName
+        lastName
+      }
+      rooms {
+        id
+        name
+      }
+      breakfastAccess
     }
   }
 `

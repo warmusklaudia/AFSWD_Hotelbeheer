@@ -144,6 +144,15 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../screens/admin/Pricing.vue'),
       },
       {
+        path: 'reservations',
+        component: () =>
+          import('../screens/admin/reservations/Reservations.vue'),
+      },
+      {
+        path: 'reservations/:id',
+        component: () => import('../screens/admin/reservations/_id.vue'),
+      },
+      {
         path: 'users',
         component: () => import('../screens/admin/users/Users.vue'),
       },

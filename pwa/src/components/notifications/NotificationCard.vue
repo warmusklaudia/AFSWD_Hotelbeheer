@@ -6,7 +6,7 @@
       <div class="text-themeGreen mx-6 text-center">
         <button
           @click="togglePopup()"
-          class="border-themeGreen float-right flex h-8 w-8 items-center justify-center self-end rounded-full border border-white text-white"
+          class="border-themeGreen float-right flex h-8 w-8 items-center justify-center self-end rounded-full border border-white text-white hover:opacity-80"
         >
           <X />
         </button>
@@ -75,11 +75,12 @@
         </p>
       </div>
       <div class="pt-2" v-if="props?.reservation">
-        <button
-          class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown m-auto mb-6 flex items-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-80 focus:outline-none focus:ring"
+        <router-link
+          to="/admin/reservations"
+          class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown m-auto mb-6 hidden w-64 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-80 focus:outline-none focus:ring md:flex"
         >
           SHOW RESERVATIONS
-        </button>
+        </router-link>
       </div>
       <div class="pt-2" v-if="props?.requestedService">
         <router-link
