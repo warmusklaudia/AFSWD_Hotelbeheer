@@ -20,8 +20,21 @@ export const UPDATE_REQUESTED_SERVICE = gql`
       updateRequestedServiceInput: $updateRequestedServiceInput
     ) {
       id
-      resolved
+      user {
+        uid
+        firstName
+        lastName
+        imgUrl
+      }
+      service {
+        id
+        name
+        price
+      }
+      message
+      requestedDate
       resolvedDate
+      resolved
     }
   }
 `

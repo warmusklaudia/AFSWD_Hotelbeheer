@@ -35,12 +35,19 @@
             >
               <div class="flex gap-2 md:gap-4">
                 <div
+                  v-if="s.user.imgUrl === ''"
                   class="bg-themeGreen flex h-10 w-10 items-center justify-center rounded-full md:h-14 md:w-14"
                 >
                   <p class="font-title text-sm text-white md:text-lg">
                     {{ s.user.firstName[0] }}{{ s.user.lastName[0] }}
                   </p>
                 </div>
+                <img
+                  v-else
+                  class="flex h-10 w-10 items-center justify-center rounded-full object-cover md:h-14 md:w-14"
+                  :src="s.user.imgUrl"
+                  :alt="`Picture of ${s.user.firstName}`"
+                />
                 <div>
                   <h2 class="font-title text-sm md:text-lg">
                     {{ s.user.firstName }} {{ s.user.lastName }}

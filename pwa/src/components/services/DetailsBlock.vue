@@ -7,6 +7,7 @@
         <div>
           <div class="flex items-center gap-4 pb-6">
             <div
+              v-if="result.requestedService.user.imgUrl === ''"
               class="bg-themeGreen flex h-14 w-14 items-center justify-center rounded-full"
             >
               <p class="font-title text-lg text-white">
@@ -14,6 +15,12 @@
                 }}{{ result.requestedService.user.lastName[0] }}
               </p>
             </div>
+            <img
+              v-else
+              class="flex h-14 w-14 items-center justify-center rounded-full object-cover"
+              :src="result.requestedService.user.imgUrl"
+              :alt="`Picture of ${result.requestedService.user.firstName}`"
+            />
             <h2 class="font-title text-lg">
               {{ result.requestedService.user.firstName }}
               {{ result.requestedService.user.lastName }}
@@ -89,9 +96,11 @@ import { UPDATE_REQUESTED_SERVICE } from '../../graphql/mutation.requestedServic
 import {
   GET_REQUESTED_SERVICE,
   GET_REQUESTED_SERVICES,
+  GET_UNRESOLVED_SERVICES,
 } from '../../graphql/query.requestedService'
 import { Loader2 } from 'lucide-vue-next'
 import ChooseServiceSvg from '../../assets/svg/ChooseServiceSvg.vue'
+import { userInfo } from 'os'
 
 export default {
   components: {
@@ -112,8 +121,12 @@ export default {
 
     const serviceInput = reactive({
       id: id,
-      resolved: true,
+      userId: '',
+      serviceId: '',
+      message: '',
+      requestedDate: new Date(),
       resolvedDate: new Date(),
+      resolved: true,
     })
 
     const { result, loading, error, refetch } = useQuery(
@@ -122,12 +135,27 @@ export default {
         id: id,
       },
     )
+    watch(result, () => {
+      console.log(result)
+      serviceInput.userId = result.value.requestedService.user.uid
+      serviceInput.serviceId = result.value.requestedService.service.id
+      serviceInput.message = result.value.requestedService.message
+      serviceInput.requestedDate = result.value.requestedService.requestedDate
+    })
 
     const {
       result: resultServices,
       loading: loadingServices,
       error: errorServices,
     } = useQuery(GET_REQUESTED_SERVICES, {
+      id: id,
+    })
+
+    const {
+      result: resultUnServices,
+      loading: loadingUnServices,
+      error: errorUnServices,
+    } = useQuery(GET_UNRESOLVED_SERVICES, {
       id: id,
     })
 
@@ -141,6 +169,9 @@ export default {
           let data: any = cache.readQuery({
             query: GET_REQUESTED_SERVICES,
           })
+          let dataUn: any = cache.readQuery({
+            query: GET_UNRESOLVED_SERVICES,
+          })
           cache.writeQuery({
             query: GET_REQUESTED_SERVICES,
             data: {
@@ -148,6 +179,15 @@ export default {
                 ...data.requestedServices,
                 updateRequestedService,
               ],
+            },
+          })
+          cache.writeQuery({
+            query: GET_UNRESOLVED_SERVICES,
+            data: {
+              unresolvedRequestedServices:
+                dataUn.unresolvedRequestedServices.filter(
+                  (service: any) => service.id !== updateRequestedService.id,
+                ),
             },
           })
         },

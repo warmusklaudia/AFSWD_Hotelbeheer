@@ -15,7 +15,7 @@
           <div v-else-if="result">
             <img
               class="lg:w-94 my-6 aspect-video rounded-md object-cover shadow-md"
-              :src="luxe"
+              :src="result.room.category === 'Standard' ? standard : luxe"
               :alt="`picture of a -suite`"
             />
 
@@ -105,6 +105,8 @@ import RouteHolder from '../../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import luxe from '../../../assets/luxe-suite.webp'
+import standard from '../../../assets/standard-suite.webp'
+import Room from '../../../interfaces/interface.room'
 import {
   Search,
   Plus,
@@ -119,7 +121,6 @@ import {
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQuery } from '@vue/apollo-composable'
-import Room from '../../../interfaces/interface.room'
 import { ROOM_BY_NAME_CAT, GET_ROOM } from '../../../graphql/query.room'
 import { DELETE_ROOM } from '../../../graphql/mutation.room'
 
@@ -194,6 +195,7 @@ export default {
       error,
       params,
       luxe,
+      standard,
       showCode,
       load,
       removeRoom,

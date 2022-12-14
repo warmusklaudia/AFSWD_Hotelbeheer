@@ -16,7 +16,7 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                88
+                {{ roomsAvailable }}
               </p>
               <p class="text-themeGreen text-center lg:p-3">Rooms available</p>
             </div>
@@ -35,9 +35,11 @@
               <p
                 class="font-title text-themeGreen decoration-themeBrown pb-3 text-center text-7xl underline decoration-4 lg:text-8xl"
               >
-                29
+                {{ requestedServices }}
               </p>
-              <p class="text-themeGreen text-center lg:p-3">Rooms to clean</p>
+              <p class="text-themeGreen text-center lg:p-3">
+                Requested services
+              </p>
             </div>
           </div>
           <div
@@ -114,8 +116,12 @@
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
-import useAuthentication from '../../composables/useAuthentication'
 import { BellRing } from 'lucide-vue-next'
+import { GET_ROOMS_WITHOUT_RESERVATION } from '../../graphql/query.room'
+import { useQuery } from '@vue/apollo-composable'
+import { ref, watch } from 'vue'
+import { GET_UNRESOLVED_SERVICES } from '../../graphql/query.requestedService'
+
 export default {
   components: {
     RouteHolder,
@@ -124,14 +130,24 @@ export default {
     BellRing,
   },
   setup() {
-    const { user } = useAuthentication()
+    const roomsAvailable = ref<number>(0)
+    const requestedServices = ref<number>(0)
+    const { result, loading, error } = useQuery(GET_ROOMS_WITHOUT_RESERVATION)
+    const {
+      result: resultRs,
+      loading: loadingRs,
+      error: errorRs,
+    } = useQuery(GET_UNRESOLVED_SERVICES)
 
-    const getToken = async () => {
-      console.log(await user.value?.getIdToken())
-    }
+    watch(result, () => {
+      roomsAvailable.value = result.value.roomsWithoutReservation.length
+    })
 
-    getToken()
-    return {}
+    watch(resultRs, () => {
+      requestedServices.value =
+        resultRs.value.unresolvedRequestedServices.length
+    })
+    return { result, loading, error, roomsAvailable, requestedServices }
   },
 }
 </script>
