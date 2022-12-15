@@ -177,7 +177,7 @@ import {
   Plus,
   CalendarDays,
 } from 'lucide-vue-next'
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   getStorage,
@@ -190,6 +190,7 @@ import useCustomUser from '../../composables/useCustomUser'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { UPDATE_USER } from '../../graphql/mutation.user'
 import { GET_CURRENT_USER } from '../../graphql/query.user'
+import usePicture from '../../composables/usePicture'
 export default {
   components: {
     Home,
@@ -207,38 +208,10 @@ export default {
   },
 
   setup() {
-    const { logout, user } = useAuthentication()
-    const { customUser, loadCustomUser } = useCustomUser()
-    const storage = getStorage()
-    const storageRef = refFirebase(storage, user.value?.uid)
-    const userInput = reactive({
-      id: customUser.value?.id,
-      imgUrl: '',
-      firstName: customUser.value?.firstName,
-      lastName: customUser.value?.lastName,
-      role: {
-        name: customUser.value?.role.name,
-      },
-    })
-    const {
-      result: resultUser,
-      loading: loadingUser,
-      error: errUser,
-    } = useQuery(GET_CURRENT_USER)
-    const { mutate: updateUser } = useMutation(UPDATE_USER, () => ({
-      variables: {
-        updateUserInput: userInput,
-      },
-      update(cache, { data: { updateUser } }) {
-        let data: any = cache.readQuery({ query: GET_CURRENT_USER })
-        cache.writeQuery({
-          query: GET_CURRENT_USER,
-          data: {
-            findByCurrentUserUid: updateUser,
-          },
-        })
-      },
-    }))
+    const { logout } = useAuthentication()
+    const { customUser } = useCustomUser()
+    const { uploadPic } = usePicture()
+
     const showNav = ref<boolean>(
       localStorage.adminNav ? localStorage.adminNav : true,
     )
@@ -247,29 +220,9 @@ export default {
       showNav.value = !showNav.value
       localStorage.adminNav = !localStorage.adminNav
     }
-    const uploadPic = async (event: Event) => {
-      const file = (event.target as HTMLInputElement).files?.[0]
-
-      await uploadBytes(storageRef, file as Blob)
-        .then(async () => {
-          await Promise.all([getImg(), updateUser(), loadCustomUser()])
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-
-    const getImg = () => {
-      getDownloadURL(storageRef).then((link) => {
-        userInput.imgUrl = link
-      })
-    }
-    getImg()
 
     const { replace } = useRouter()
     const handleLogOut = () => {
-      // console.log('logout')
-      // logOutCustomUser()
       logout().then(() => {
         return replace('/')
       })

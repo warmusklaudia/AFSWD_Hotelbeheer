@@ -11,22 +11,21 @@ import { useMutation, useQuery } from '@vue/apollo-composable'
 import { UPDATE_USER } from '../graphql/mutation.user'
 import { GET_CURRENT_USER } from '../graphql/query.user'
 
-const { customUser, loadCustomUser } = useCustomUser()
-const { user } = useAuthentication()
-const userInput = reactive({
-  id: customUser.value?.id,
-  imgUrl: '',
-  firstName: customUser.value?.firstName,
-  lastName: customUser.value?.lastName,
-  role: {
-    name: customUser.value?.role.name,
-  },
-})
-
 export default () => {
+  const { customUser, loadCustomUser } = useCustomUser()
+  const { user } = useAuthentication()
+  const userInput = reactive({
+    id: customUser.value?.id,
+    imgUrl: '',
+    firstName: customUser.value?.firstName,
+    lastName: customUser.value?.lastName,
+    role: {
+      name: customUser.value?.role.name,
+    },
+  })
   const storage = getStorage()
 
-  const storageRef = refFirebase(storage, user.value?.uid)
+  const storageRef = refFirebase(storage, customUser.value?.uid)
   const {
     result: resultUser,
     loading: loadingUser,
@@ -49,7 +48,7 @@ export default () => {
 
   const uploadPic = async (event: Event) => {
     const file = (event.target as HTMLInputElement).files?.[0]
-
+    console.log(userInput)
     await uploadBytes(storageRef, file as Blob)
       .then(async () => {
         await Promise.all([await getImg(), updateUser()])

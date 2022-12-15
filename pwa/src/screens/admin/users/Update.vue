@@ -208,7 +208,6 @@
 import RouteHolder from '../../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
-import { UPDATE_ROOM } from '../../../graphql/mutation.room'
 import luxe from '../../../assets/luxe-suite.webp'
 import standard from '../../../assets/standard-suite.webp'
 import { Search, Plus, Frown, X, Loader2, AlertTriangle } from 'lucide-vue-next'
