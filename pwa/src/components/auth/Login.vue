@@ -32,7 +32,7 @@
             type="email"
             id="email"
             name="email"
-            class="w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
+            class="border-themeBrown ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
             autocomplete="email"
             v-model="userInput.email"
           />
@@ -51,7 +51,7 @@
             type="password"
             id="password"
             name="password"
-            class="w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
+            class="border-themeBrown ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
             autocomplete="current-password"
           />
         </label>

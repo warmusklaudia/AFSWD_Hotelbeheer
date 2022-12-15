@@ -25,10 +25,9 @@
                 id="category"
                 class="border-themeBrown focus:ring-themeBrown block w-full rounded-md border py-2 px-4 text-neutral-600 focus:outline-none focus:ring"
               >
-                <option value="" selected disabled>Pick category</option>
+                <option value="">All</option>
                 <option value="Luxe">Luxe</option>
                 <option value="Standard">Standard</option>
-                <option value="">All</option>
               </select>
             </label>
           </div>

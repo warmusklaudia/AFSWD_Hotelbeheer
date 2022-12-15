@@ -188,6 +188,7 @@ import { useRouter } from 'vue-router'
 import { X, Loader2 } from 'lucide-vue-next'
 import { ADD_USER } from '../../graphql/mutation.user'
 import { useMutation } from '@vue/apollo-composable'
+import useCustomUser from '../../composables/useCustomUser'
 
 export default {
   components: {
@@ -195,8 +196,9 @@ export default {
     Loader2,
   },
   setup() {
-    const { register } = useAuthentication()
+    const { register, logout } = useAuthentication()
     const { replace } = useRouter()
+    const { loadCustomUser } = useCustomUser()
 
     const errorMessage = ref<string>('')
     const loading = ref<boolean>(false)
@@ -278,11 +280,12 @@ export default {
       if (isFormInvalid()) return
       loading.value = true
       register(fullName.value, userInput.email, userInput.password)
-        .then((u) => {
+        .then(async (u) => {
           customUserInput.uid = u.value!.uid
           console.log(customUserInput)
-          createUser()
-          replace('/auth/login')
+          await Promise.all([await createUser(), loadCustomUser()])
+          loadCustomUser()
+          replace('/')
         })
         .catch((error) => (errorMessage.value = error.message))
         .finally(() => {

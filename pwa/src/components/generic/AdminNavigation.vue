@@ -1,17 +1,9 @@
 <template>
   <nav
-    v-if="showNav"
     class="bg-themeOffWhite flex min-h-screen w-20 flex-col justify-between p-4 shadow-lg md:w-52"
   >
     <section>
-      <div class="-mr-8 flex justify-end">
-        <div
-          @click="toggleNav()"
-          class="bg-themeGreen hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md md:flex"
-        >
-          <ChevronsLeft />
-        </div>
-      </div>
+      <div class="-mr-8 flex justify-end"></div>
 
       <div class="font-title mb-6 mt-2 flex flex-col items-center">
         <div
@@ -147,19 +139,6 @@
       </li>
     </ul>
   </nav>
-
-  <div
-    v-else
-    class="bg-themeOffWhite flex min-h-screen w-11 flex-col justify-between p-4 shadow-lg"
-  >
-    <div @click="toggleNav()" class="-mr-8 flex justify-end">
-      <div
-        class="bg-themeGreen flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md"
-      >
-        <ChevronsRight />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -177,19 +156,10 @@ import {
   Plus,
   CalendarDays,
 } from 'lucide-vue-next'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-  getStorage,
-  ref as refFirebase,
-  uploadBytes,
-  getDownloadURL,
-} from 'firebase/storage'
 import useAuthentication from '../../composables/useAuthentication'
 import useCustomUser from '../../composables/useCustomUser'
-import { useMutation, useQuery } from '@vue/apollo-composable'
-import { UPDATE_USER } from '../../graphql/mutation.user'
-import { GET_CURRENT_USER } from '../../graphql/query.user'
 import usePicture from '../../composables/usePicture'
 export default {
   components: {
@@ -212,26 +182,16 @@ export default {
     const { customUser } = useCustomUser()
     const { uploadPic } = usePicture()
 
-    const showNav = ref<boolean>(
-      localStorage.adminNav ? localStorage.adminNav : true,
-    )
-
-    const toggleNav = async () => {
-      showNav.value = !showNav.value
-      localStorage.adminNav = !localStorage.adminNav
-    }
-
     const { replace } = useRouter()
     const handleLogOut = () => {
+      customUser.value = null
       logout().then(() => {
         return replace('/')
       })
     }
     return {
-      showNav,
       customUser,
       handleLogOut,
-      toggleNav,
       uploadPic,
     }
   },
