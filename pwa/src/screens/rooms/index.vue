@@ -11,11 +11,11 @@
             <p>Error happened.</p>
         </div>
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3" v-else-if="result">
-            <RouterLink :to="`reservations/${r.id}`" v-for="r of result.rooms" :key="r.id">
-                <img v-if="r.category == 'luxe'" class="w-full mb-6 object-cover aspect-video" :src="luxe"
+            <RouterLink :to="`rooms/${r.id}`" v-for="r of result.rooms" :key="r.id">
+                <img v-if="r.category.toLowerCase() == 'luxe'" class="w-full mb-6 object-cover aspect-video" :src="luxe"
                     :alt="`picture of a ${r.category}-suite`" />
-                <img v-else-if="r.category == 'standard'" class="w-full mb-6 object-cover aspect-video" :src="standard"
-                    :alt="`picture of a ${r.category}-suite`" />
+                <img v-else-if="r.category.toLowerCase() == 'standard'" class="w-full mb-6 object-cover aspect-video" :src="standard"
+                    :alt="`picture of a ${r.category.toLowerCase() }-suite`" />
                 <img v-else class="w-full mb-6 object-cover aspect-video" :src="standard"
                     :alt="`picture of a standard-suite`" />
                 <ul class="flex gap-1">
