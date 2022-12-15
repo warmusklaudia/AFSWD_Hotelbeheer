@@ -32,7 +32,7 @@
             type="email"
             id="email"
             name="email"
-            class="w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
+            class="border-themeBrown ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
             autocomplete="email"
             v-model="userInput.email"
           />
@@ -51,14 +51,15 @@
             type="password"
             id="password"
             name="password"
-            class="w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
+            class="border-themeBrown ring-themeBrown w-full rounded-md border border-neutral-200 px-3 py-1 text-neutral-800 outline-none ring-neutral-300 focus-visible:ring"
             autocomplete="current-password"
           />
         </label>
       </div>
 
       <button
-        class=":disabled='loading' bg-themeBrown mt-6 flex w-full items-center justify-center rounded-md py-2 px-3 text-white outline-none ring-neutral-300 hover:bg-neutral-700 focus-visible:ring"
+        class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown mt-6 flex w-full items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
+        :disabled="loading"
       >
         <span v-if="!loading"> Login </span>
         <div v-else>
@@ -104,12 +105,10 @@ const submitForm = () => {
     errorMessage.value = 'Please fill in all fields.'
   }
   customUser.value = null
-  console.log('customUser.value', customUser.value)
 
   login(userInput.email, userInput.password)
     .then(async (u) => {
       if (u) await loadCustomUser()
-      console.log('customUser.value', customUser.value)
       if (customUser.value?.role.name === 'admin') {
         return replace('/admin')
       }

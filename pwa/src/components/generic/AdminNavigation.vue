@@ -1,17 +1,9 @@
 <template>
   <nav
-    v-if="showNav"
     class="bg-themeOffWhite flex min-h-screen w-20 flex-col justify-between p-4 shadow-lg md:w-52"
   >
     <section>
-      <div class="-mr-8 flex justify-end">
-        <div
-          @click="toggleNav()"
-          class="bg-themeGreen hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md md:flex"
-        >
-          <ChevronsLeft />
-        </div>
-      </div>
+      <div class="-mr-8 flex justify-end"></div>
 
       <div class="font-title mb-6 mt-2 flex flex-col items-center">
         <div
@@ -147,19 +139,6 @@
       </li>
     </ul>
   </nav>
-
-  <div
-    v-else
-    class="bg-themeOffWhite flex min-h-screen w-11 flex-col justify-between p-4 shadow-lg"
-  >
-    <div @click="toggleNav()" class="-mr-8 flex justify-end">
-      <div
-        class="bg-themeGreen flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white shadow-md"
-      >
-        <ChevronsRight />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -177,19 +156,11 @@ import {
   Plus,
   CalendarDays,
 } from 'lucide-vue-next'
-import { reactive, ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-  getStorage,
-  ref as refFirebase,
-  uploadBytes,
-  getDownloadURL,
-} from 'firebase/storage'
 import useAuthentication from '../../composables/useAuthentication'
 import useCustomUser from '../../composables/useCustomUser'
-import { useMutation, useQuery } from '@vue/apollo-composable'
-import { UPDATE_USER } from '../../graphql/mutation.user'
-import { GET_CURRENT_USER } from '../../graphql/query.user'
+import usePicture from '../../composables/usePicture'
 export default {
   components: {
     Home,
@@ -207,78 +178,20 @@ export default {
   },
 
   setup() {
-    const { logout, user } = useAuthentication()
-    const { customUser, loadCustomUser, logOutCustomUser } = useCustomUser()
-    const storage = getStorage()
-    const storageRef = refFirebase(storage, user.value?.uid)
-    const userInput = reactive({
-      id: customUser.value?.id,
-      imgUrl: '',
-      firstName: customUser.value?.firstName,
-      lastName: customUser.value?.lastName,
-      role: {
-        name: customUser.value?.role.name,
-      },
-    })
-    const {
-      result: resultUser,
-      loading: loadingUser,
-      error: errUser,
-    } = useQuery(GET_CURRENT_USER)
-    const { mutate: updateUser } = useMutation(UPDATE_USER, () => ({
-      variables: {
-        updateUserInput: userInput,
-      },
-      update(cache, { data: { updateUser } }) {
-        let data: any = cache.readQuery({ query: GET_CURRENT_USER })
-        cache.writeQuery({
-          query: GET_CURRENT_USER,
-          data: {
-            findByCurrentUserUid: updateUser,
-          },
-        })
-      },
-    }))
-    const showNav = ref<boolean>(
-      localStorage.adminNav ? localStorage.adminNav : true,
-    )
-
-    const toggleNav = async () => {
-      showNav.value = !showNav.value
-      localStorage.adminNav = !localStorage.adminNav
-    }
-    const uploadPic = async (event: Event) => {
-      const file = (event.target as HTMLInputElement).files?.[0]
-
-      await uploadBytes(storageRef, file as Blob)
-        .then(async () => {
-          await Promise.all([getImg(), updateUser(), loadCustomUser()])
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-
-    const getImg = () => {
-      getDownloadURL(storageRef).then((link) => {
-        userInput.imgUrl = link
-      })
-    }
-    getImg()
+    const { logout } = useAuthentication()
+    const { customUser } = useCustomUser()
+    const { uploadPic } = usePicture()
 
     const { replace } = useRouter()
     const handleLogOut = () => {
-      // console.log('logout')
-      // logOutCustomUser()
+      customUser.value = null
       logout().then(() => {
         return replace('/')
       })
     }
     return {
-      showNav,
       customUser,
       handleLogOut,
-      toggleNav,
       uploadPic,
     }
   },

@@ -5,7 +5,7 @@
     <div class="flex h-full flex-col justify-between">
       <div class="text-themeGreen mx-6 text-center">
         <button
-          @click="togglePopup()"
+          @click=";[togglePopup(), resetNotifications()]"
           class="border-themeGreen float-right flex h-8 w-8 items-center justify-center self-end rounded-full border border-white text-white hover:opacity-80"
         >
           <X />
@@ -76,6 +76,7 @@
       </div>
       <div class="pt-2" v-if="props?.reservation">
         <router-link
+          @click="resetNotifications(), togglePopup()"
           to="/admin/reservations"
           class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown m-auto mb-6 hidden w-64 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-80 focus:outline-none focus:ring md:flex"
         >
@@ -84,6 +85,7 @@
       </div>
       <div class="pt-2" v-if="props?.requestedService">
         <router-link
+          @click="resetNotifications(), togglePopup()"
           to="/admin/services"
           class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown m-auto mb-6 hidden w-64 items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-80 focus:outline-none focus:ring md:flex"
         >
@@ -132,22 +134,23 @@ export default {
         error: ErrUser,
       } = useQuery(GET_USER_BY_UID, { uid: props.requestedService.userId })
       watch(result, () => {
-        console.log(result)
         serviceName.value = result.value.service.name
       })
       watch(resUser, () => {
-        console.log(resUser)
         firstName.value = resUser.value.findByUid.firstName
         lastName.value = resUser.value.findByUid.lastName
       })
     }
-    console.log(props.reservation)
-    console.log(props.requestedService)
+    const resetNotifications = () => {
+      sessionStorage.removeItem('newReservation')
+      sessionStorage.removeItem('newRequestedService')
+    }
     return {
       props,
       serviceName,
       firstName,
       lastName,
+      resetNotifications,
     }
   },
   components: { Check, X, Frown },

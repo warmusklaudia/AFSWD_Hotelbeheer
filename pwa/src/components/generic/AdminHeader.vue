@@ -3,7 +3,7 @@
     <div class="relative flex w-full justify-between">
       <route-holder :title="name" />
       <div
-        @click=";[(notifications = false), togglePopup()]"
+        @click=";[notificationFalse(), togglePopup()]"
         class="bg-themeGreen col-end-3 flex h-12 w-12 cursor-pointer items-center justify-center justify-self-end rounded-full text-white shadow-md hover:opacity-90 md:col-end-7 md:h-14 md:w-14 lg:col-end-8 lg:h-16 lg:w-16"
       >
         <bell v-if="!notifications" />
@@ -59,13 +59,33 @@ export default {
   setup() {
     const { socketServer, connected, newNotification } = useSocket()
     const connectedToServer = ref<boolean>(connected.value)
-    const notifications = ref<boolean>(false)
-    const showPopup = ref<boolean>(false)
-    const newReservation = ref<Reservation | null>(null)
-    const newRequestedService = ref<any>(null)
-
+    const notifications = ref<boolean>(
+      sessionStorage.getItem('notifications') === 'true' ? true : false,
+    )
+    const showPopup = ref<boolean>(
+      sessionStorage.getItem('showPopup') === 'true' ? true : false,
+    )
+    const newReservation = ref<any>(
+      sessionStorage.getItem('newReservation')
+        ? //@ts-ignore
+          JSON.parse(sessionStorage.getItem('newReservation'))
+        : null,
+    )
+    const newRequestedService = ref<any>(
+      sessionStorage.getItem('newRequestedService')
+        ? //@ts-ignore
+          JSON.parse(sessionStorage.getItem('newRequestedService'))
+        : null,
+    )
     const togglePopup = () => {
       showPopup.value = !showPopup.value
+      notifications.value = false
+      notificationFalse()
+      sessionStorage.setItem('showPopup', showPopup.value.toString())
+    }
+
+    const notificationFalse = () => {
+      sessionStorage.setItem('notifications', 'false')
     }
 
     const { refetch: refetchRWR } = useQuery(GET_ROOMS_WITHOUT_RESERVATION)
@@ -87,9 +107,11 @@ export default {
         'reservation:newReservation',
         (reservation: Reservation) => {
           notifications.value = true
+          sessionStorage.setItem('notifications', 'true')
           newReservation.value = reservation
+          newRequestedService.value = null
+          sessionStorage.setItem('newReservation', JSON.stringify(reservation))
           newNotification.value = false
-          console.log(newNotification)
           refetchHomeData()
         },
       )
@@ -98,9 +120,14 @@ export default {
         'requestedService:newRequestedService',
         (requestedService) => {
           notifications.value = true
+          sessionStorage.setItem('notifications', 'true')
           newRequestedService.value = requestedService
+          newReservation.value = null
+          sessionStorage.setItem(
+            'newRequestedService',
+            JSON.stringify(requestedService),
+          )
           newNotification.value = false
-          console.log(newNotification)
           refetchHomeData()
         },
       )
@@ -112,6 +139,7 @@ export default {
       newReservation,
       newRequestedService,
       togglePopup,
+      notificationFalse,
     }
   },
 }

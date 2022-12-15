@@ -18,6 +18,9 @@ export class UsersService {
     const u = new User()
 
     u.uid = createUserInput.uid
+    u.firstName = createUserInput.firstName
+    u.lastName = createUserInput.lastName
+    u.preferredLanguage = createUserInput.preferredLanguage
     u.imgUrl = createUserInput.imgUrl
     return this.userRepository.save(u)
   }

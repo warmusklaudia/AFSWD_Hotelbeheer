@@ -5,9 +5,9 @@
       <div class="w-5/6 p-6">
         <admin-header name="Services" />
         <div
-          class="flex w-full flex-col p-6 md:max-h-[65vh] md:flex-row md:overflow-y-auto lg:max-h-[70vh]"
+          class="flex max-h-[60vh] w-full flex-col overflow-y-auto p-6 md:max-h-[65vh] md:flex-row lg:max-h-[70vh]"
         >
-          <div>
+          <div class="max-h-[45vh] md:max-h-[65vh] lg:max-h-[70vh]">
             <div
               class="grid animate-pulse grid-cols-1 gap-12 md:mx-6"
               v-if="loading"
@@ -31,7 +31,7 @@
               v-for="s of result.requestedServices"
               :key="s.id"
               @click="checkId(s.id)"
-              class="relative mb-6 flex h-20 w-56 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:h-28 md:max-h-[65vh] md:w-72 lg:max-h-[70vh] lg:w-96"
+              class="relative mb-6 flex w-56 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:h-28 md:w-72 lg:w-96"
             >
               <div class="flex gap-2 md:gap-4">
                 <div

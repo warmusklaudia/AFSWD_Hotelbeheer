@@ -19,7 +19,7 @@
             <Frown />
           </div>
           <div
-            class="grid max-h-[60vh] gap-12 overflow-y-auto p-2 sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:max-h-[70vh] lg:grid-cols-3"
+            class="grid max-h-[75vh] gap-12 overflow-y-auto p-2 sm:grid-cols-1 md:mx-6 md:max-h-[65vh] md:grid-cols-2 lg:max-h-[70vh] lg:grid-cols-3"
             v-else-if="result"
           >
             <button
@@ -75,7 +75,7 @@
 import { useQuery } from '@vue/apollo-composable'
 import { watch, ref } from 'vue'
 import { GET_RESERVATIONS } from '../../../graphql/query.reservation'
-import { Calendar, Contact, Bed } from 'lucide-vue-next'
+import { Calendar, Contact, Bed, Frown } from 'lucide-vue-next'
 import AdminHeader from '../../../components/generic/AdminHeader.vue'
 import AdminNavigation from '../../../components/generic/AdminNavigation.vue'
 import ReservationPopup from '../../../components/reservations/ReservationPopup.vue'
@@ -89,6 +89,7 @@ export default {
     Calendar,
     Contact,
     Bed,
+    Frown,
   },
   setup() {
     const skeletons = ref<number>(6)
@@ -96,9 +97,6 @@ export default {
     let showPopup = ref<boolean>(false)
     let reservationId = ref<string>('')
 
-    watch(result, () => {
-      console.log(result)
-    })
     const togglePopup = () => {
       showPopup.value = !showPopup.value
     }

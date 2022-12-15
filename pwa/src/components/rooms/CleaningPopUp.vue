@@ -249,7 +249,6 @@ export default {
     )
 
     watch(result, () => {
-      console.log(result)
       const r = result.value!.room.reservation!.cleaning
       cleaningInput.id = r.cleaningId
       cleaningInput.changeTheLinens = r.changeTheLinens

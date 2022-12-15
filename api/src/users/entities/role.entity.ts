@@ -4,7 +4,7 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql'
 @ObjectType()
 export class Role {
   @Field(() => String)
-  name: string
+  name?: string
 
   @Field({ nullable: true })
   updatedAt?: Date
