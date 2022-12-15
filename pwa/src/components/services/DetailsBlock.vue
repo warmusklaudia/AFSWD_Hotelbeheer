@@ -137,7 +137,6 @@ export default {
       },
     )
     watch(result, () => {
-      console.log(result)
       serviceInput.userId = result.value?.requestedService.user.uid
       serviceInput.serviceId = result.value?.requestedService.service.id
       serviceInput.message = result.value?.requestedService.message

@@ -18,7 +18,6 @@ export default () => {
     refetch()
     return new Promise((resolve, reject) => {
       watch(result, ({ findByCurrentUserUid }) => {
-        console.log(result)
         if (findByCurrentUserUid) {
           setCustomUser(findByCurrentUserUid)
           resolve()

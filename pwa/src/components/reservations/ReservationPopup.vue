@@ -153,9 +153,6 @@ export default {
     const { result, loading, error } = useQuery(RESERVATION_BY_ID, {
       id: props.id,
     })
-    watch(result, () => {
-      console.log(result.value.reservation)
-    })
     return { result, loading, error }
   },
 }

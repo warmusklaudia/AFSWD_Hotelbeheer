@@ -26,7 +26,7 @@
       <router-link
         class="ring-themeBrown inline-block rounded-sm py-6 outline-none focus-visible:ring-2"
         to="/services"
-        active-class="opacity-60"
+        active-class="opacity-60 "
       >
         <ConciergeBell class="mx-auto mb-2 h-5 sm:hidden" />
         <p>{{ $t('navigation.services') }}</p>

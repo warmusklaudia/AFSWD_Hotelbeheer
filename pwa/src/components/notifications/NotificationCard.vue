@@ -134,11 +134,9 @@ export default {
         error: ErrUser,
       } = useQuery(GET_USER_BY_UID, { uid: props.requestedService.userId })
       watch(result, () => {
-        console.log(result)
         serviceName.value = result.value.service.name
       })
       watch(resUser, () => {
-        console.log(resUser)
         firstName.value = resUser.value.findByUid.firstName
         lastName.value = resUser.value.findByUid.lastName
       })
@@ -147,8 +145,6 @@ export default {
       sessionStorage.removeItem('newReservation')
       sessionStorage.removeItem('newRequestedService')
     }
-    console.log(props.reservation)
-    console.log(props.requestedService)
     return {
       props,
       serviceName,

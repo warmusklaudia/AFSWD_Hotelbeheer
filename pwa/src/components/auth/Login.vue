@@ -105,12 +105,10 @@ const submitForm = () => {
     errorMessage.value = 'Please fill in all fields.'
   }
   customUser.value = null
-  console.log('customUser.value', customUser.value)
 
   login(userInput.email, userInput.password)
     .then(async (u) => {
       if (u) await loadCustomUser()
-      console.log('customUser.value', customUser.value)
       if (customUser.value?.role.name === 'admin') {
         return replace('/admin')
       }

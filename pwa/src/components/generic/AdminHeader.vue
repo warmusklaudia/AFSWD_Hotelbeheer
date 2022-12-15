@@ -112,7 +112,6 @@ export default {
           newRequestedService.value = null
           sessionStorage.setItem('newReservation', JSON.stringify(reservation))
           newNotification.value = false
-          console.log(newNotification)
           refetchHomeData()
         },
       )
@@ -129,7 +128,6 @@ export default {
             JSON.stringify(requestedService),
           )
           newNotification.value = false
-          console.log(newNotification)
           refetchHomeData()
         },
       )

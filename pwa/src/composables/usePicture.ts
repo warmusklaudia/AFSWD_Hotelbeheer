@@ -48,7 +48,6 @@ export default () => {
 
   const uploadPic = async (event: Event) => {
     const file = (event.target as HTMLInputElement).files?.[0]
-    console.log(userInput)
     await uploadBytes(storageRef, file as Blob)
       .then(async () => {
         await Promise.all([await getImg(), updateUser()])

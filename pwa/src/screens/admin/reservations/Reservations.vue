@@ -97,9 +97,6 @@ export default {
     let showPopup = ref<boolean>(false)
     let reservationId = ref<string>('')
 
-    watch(result, () => {
-      console.log(result)
-    })
     const togglePopup = () => {
       showPopup.value = !showPopup.value
     }

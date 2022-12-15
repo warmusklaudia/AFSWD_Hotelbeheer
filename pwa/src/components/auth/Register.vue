@@ -282,7 +282,6 @@ export default {
       register(fullName.value, userInput.email, userInput.password)
         .then(async (u) => {
           customUserInput.uid = u.value!.uid
-          console.log(customUserInput)
           await Promise.all([await createUser(), loadCustomUser()])
           loadCustomUser()
           replace('/')
