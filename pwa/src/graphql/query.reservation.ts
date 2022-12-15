@@ -27,6 +27,8 @@ export const GET_RESERVATION_BY_ID = gql`
       rooms {
         id
         name
+        description
+        category
         accessCode
       }
       price
