@@ -27,6 +27,10 @@ const routes: RouteRecordRaw[] = [
         meta: { needsAuthentication: false },
       },
       {
+        path: 'rooms/:id',
+        component: () => import('../screens/rooms/_id.vue'),
+      },
+      {
         path: 'services',
         component: () => import('../screens/services/index.vue'),
         meta: { needsAuthentication: true },
@@ -40,6 +44,10 @@ const routes: RouteRecordRaw[] = [
         path: 'reservations',
         component: () => import('../screens/reservations/index.vue'),
         meta: { needsAuthentication: true },
+      },
+      {
+        path: 'reservations/:id',
+        component: () => import('../screens/reservations/_id.vue'),
       },
       {
         path: 'reservations/add',

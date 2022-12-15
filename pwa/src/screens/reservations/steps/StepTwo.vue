@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="grid sm:grid-cols-[auto_1fr] sm:gap-12">
-      <img v-if="selectedRoom.category == 'luxe'"
+      <img v-if="selectedRoom.category.toLowerCase() == 'luxe'"
         class="mb-6 aspect-square w-full object-cover rounded-xl shadow-md max-w-64" :src="luxe"
         :alt="`picture of a ${selectedRoom.category}-suite`" />
-      <img v-else-if="selectedRoom.category == 'standard'"
+      <img v-else-if="selectedRoom.category.toLowerCase() == 'standard'"
         class="mb-6 aspect-square w-full object-cover rounded-xl shadow-md max-w-64" :src="standard"
         :alt="`picture of a ${selectedRoom.category}-suite`" />
       <img v-else class="mb-6 aspect-square w-full object-cover rounded-xl shadow-md max-w-64" :src="standard"

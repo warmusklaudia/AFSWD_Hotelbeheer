@@ -18,8 +18,17 @@ export const GET_RESERVATION_BY_ID = gql`
   query GetReservation($id: String!) {
     reservation(id: $id) {
       id
+      amountRooms
+      amountAdults
+      amountChildren
+      breakfastAccess
       reservationStartDate
       reservationEndDate
+      rooms {
+        id
+        name
+        accessCode
+      }
       price
     }
   }
