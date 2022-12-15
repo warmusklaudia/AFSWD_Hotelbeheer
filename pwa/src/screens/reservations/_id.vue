@@ -33,33 +33,6 @@
                             </div>
                         </div>
                     </li>
-                    <li v-for="room of result.reservation.rooms" class="overflow-y-auto">
-                        <img v-if="room.category.toLowerCase() == 'luxe'"
-                            class="w-2/4 object-cover aspect-video rounded-md" :src="luxe"
-                            :alt="`picture of a ${room.category.toLowerCase()}-suite`" />
-                        <img v-else-if="room.category.toLowerCase() == 'standard'"
-                            class="w-2/4 object-cover aspect-video rounded-md" :src="standard"
-                            :alt="`picture of a ${room.category}-suite`" />
-                        <img v-else class="w-2/4 object-cover aspect-video rounded-md" :src="standard"
-                            :alt="`picture of a standard-suite`" />
-                        <div>
-                            <h3>{{ room.name }}</h3>
-                            <ul class="flex gap-1 mb-3">
-                                <li v-for="n in room.rating">
-                                    <Star class="fill-themeBrown stroke-themeBrown" />
-                                </li>
-                                <li v-if="room.rating < 5" v-for="n in 5 - result.room.rating">
-                                    <Star />
-                                </li>
-                            </ul>
-                            <p class="tracking-wide md:text-lg mb-3">
-                                {{ room.description }}
-                            </p>
-                            <p class="font-semibold">Price: € {{ room.category.toLowerCase() === 'luxe' ? 500 :
-                                    300
-                            }}</p>
-                        </div>
-                    </li>
                 </ul>
             </div>
             <div class="order-first	md:order-last">
@@ -94,8 +67,6 @@
 <script setup lang="ts">
 import { useQuery } from '@vue/apollo-composable'
 import { useRoute } from 'vue-router'
-
-import { Star } from "lucide-vue-next";
 
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import useAuthentication from "../../composables/useAuthentication";
