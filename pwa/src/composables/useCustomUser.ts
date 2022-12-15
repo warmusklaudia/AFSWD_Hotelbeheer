@@ -1,9 +1,11 @@
 import {
   provideApolloClient,
   useLazyQuery,
+  useMutation,
   useQuery,
 } from '@vue/apollo-composable'
 import { ref, Ref, watch } from 'vue'
+import { ADD_USER } from '../graphql/mutation.user'
 import { GET_CURRENT_USER } from '../graphql/query.user'
 import { User } from '../interfaces/interface.user'
 import useAuthentication from './useAuthentication'
@@ -32,13 +34,8 @@ export default () => {
     })
   }
 
-  const logOutCustomUser = () => {
-    // customUser.value = null
-  }
-
   return {
     customUser: customUser,
     loadCustomUser,
-    logOutCustomUser,
   }
 }

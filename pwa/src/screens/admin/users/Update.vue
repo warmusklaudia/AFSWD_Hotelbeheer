@@ -117,6 +117,7 @@
                   >
                     <option value="en">en</option>
                     <option value="nl">nl</option>
+                    <option value="fr">fr</option>
                   </select>
                 </label>
                 <div class="mt-3 flex items-center">
@@ -310,14 +311,14 @@ export default {
       }
 
       if (userInput.lastName === '') {
-        userErrors.lastName = 'Description is required'
+        userErrors.lastName = 'Last name is required'
         hasErrors = true
       } else {
         userErrors.lastName = ''
       }
 
       if (userInput.preferredLanguage === '') {
-        userErrors.preferredLanguage = 'Category is required'
+        userErrors.preferredLanguage = 'Preferred language is required'
         hasErrors = true
       } else {
         userErrors.preferredLanguage = ''

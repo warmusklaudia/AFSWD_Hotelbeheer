@@ -58,7 +58,8 @@
       </div>
 
       <button
-        class=":disabled='loading' bg-themeBrown mt-6 flex w-full items-center justify-center rounded-md py-2 px-3 text-white outline-none ring-neutral-300 hover:bg-neutral-700 focus-visible:ring"
+        class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown mt-6 flex w-full items-center justify-center rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
+        :disabled="loading"
       >
         <span v-if="!loading"> Login </span>
         <div v-else>

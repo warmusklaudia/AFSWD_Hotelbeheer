@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RouterView class="min-h-screen" />
+    <RouterView class="bg-themeWhite min-h-screen" />
   </div>
 </template>
 

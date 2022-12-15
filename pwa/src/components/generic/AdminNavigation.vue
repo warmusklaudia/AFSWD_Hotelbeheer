@@ -208,7 +208,7 @@ export default {
 
   setup() {
     const { logout, user } = useAuthentication()
-    const { customUser, loadCustomUser, logOutCustomUser } = useCustomUser()
+    const { customUser, loadCustomUser } = useCustomUser()
     const storage = getStorage()
     const storageRef = refFirebase(storage, user.value?.uid)
     const userInput = reactive({

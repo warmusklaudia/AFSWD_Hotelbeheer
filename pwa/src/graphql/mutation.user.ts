@@ -31,3 +31,18 @@ export const UPDATE_USER = gql`
     }
   }
 `
+
+export const ADD_USER = gql`
+  mutation createUser($createUserInput: CreateUserInput!) {
+    createUser(createUserInput: $createUserInput) {
+      id
+      uid
+      role {
+        name
+      }
+      firstName
+      lastName
+      imgUrl
+    }
+  }
+`
