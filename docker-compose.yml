@@ -1,15 +1,10 @@
-version: '3.7'
 services:
-  db:
-  
   api:
     build:
       context: ./api
       dockerfile: ./Dockerfile
     ports:
       - 8000:8000
-    depends_on:
-      - db
 
   pwa:
     build:
