@@ -16,7 +16,7 @@ services:
       context: ./api
       dockerfile: ./Dockerfile
     ports:
-      - 8000:8000
+      - 3003:3003
     depends_on:
       - db
   pwa:
@@ -24,7 +24,7 @@ services:
       context: ./pwa
       dockerfile: ./Dockerfile
     ports:
-      - 3000:3000
+      - 5173:80
     depends_on:
       - api
 volumes:
