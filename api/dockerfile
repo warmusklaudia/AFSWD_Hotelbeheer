@@ -26,6 +26,7 @@ WORKDIR /api/dist
 
 # Use alpine for the last image, as it's the smallest.
 FROM node:16.14.0-alpine AS production-container
+WORKDIR /api
 COPY ["package-lock.json*", "./"]
 
 # As this file hasn't been changed, the cache isn't invalidated
