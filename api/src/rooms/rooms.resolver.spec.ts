@@ -12,6 +12,11 @@ import { Room } from './entities/room.entity'
 import { RoomsResolver } from './rooms.resolver'
 import { RoomsService } from './rooms.service'
 import { createRoom, createRoomInputStub } from './stubs/room.stub'
+import { CleaningService } from "../cleaning/cleaning.service"
+import { getRepositoryToken } from "@nestjs/typeorm"
+import { Reservation } from "../reservations/entities/reservation.entity"
+import { createReservation } from "../reservations/stubs/reservation.stub"
+import { Cleaning } from "../cleaning/entities/cleaning.entity"
 
 jest.mock('./rooms.service')
 jest.mock('../reservations/reservations.service')
@@ -26,11 +31,25 @@ describe('RoomsResolver', () => {
         RoomsResolver,
         RoomsService,
         ReservationsService,
+        CleaningService,
         {
           provide: UsersService,
           useValue: {
             findOneByUid: jest.fn().mockResolvedValue(createUser()),
           },
+        },
+        {
+          provide: getRepositoryToken(Reservation),
+          useValue: {
+            save: jest.fn().mockResolvedValue(createReservation()),
+            find: jest.fn().mockResolvedValue([createReservation()]),
+            findOne: jest.fn().mockResolvedValue(createReservation()),
+            delete: jest.fn(),
+          },
+        },
+        {
+          provide: getRepositoryToken(Cleaning),
+          useValue: {},
         },
       ],
     }).compile()
