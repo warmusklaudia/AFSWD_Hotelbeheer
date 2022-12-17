@@ -14,7 +14,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'mongodb',
-        url: 'mongodb://localhost:27017/api', // Local
+        url: 'mongodb://localhost:27037/api', // Local
         //url: 'mongodb://db:localhost:27037/api', //docker
         entities: [__dirname + '/../**/*.entity.{js,ts}'],
         synchronize: true, // Careful with this in production
