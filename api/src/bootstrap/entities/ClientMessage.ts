@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql'
 
 export enum MessageTypes {
   success = 'success',
@@ -9,11 +9,14 @@ export enum MessageTypes {
 @ObjectType()
 export class ClientMessage {
   @Field()
-  message: string;
+  message: string
 
   @Field()
-  type: MessageTypes;
+  type: MessageTypes
 
   @Field()
-  statusCode: number;
+  statusCode: number
+
+  @Field()
+  id?: string
 }

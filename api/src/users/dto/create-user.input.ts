@@ -1,19 +1,23 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql'
+import { Role } from '../entities/role.entity'
 
 @InputType()
 export class CreateUserInput {
   @Field()
-  uid: string;
+  uid: string
 
-  // @Field()
-  // preferredLanguage?: string;
+  @Field({ nullable: true })
+  firstName?: string
 
-  // @Field()
-  // amountCredits?: number;
+  @Field({ nullable: true })
+  lastName?: string
 
-  // @Field()
-  // reservations?: number;
+  @Field({ nullable: true })
+  preferredLanguage?: string
 
-  // @Field()
-  // breakfastCode?: string;
+  @Field({ nullable: true })
+  imgUrl?: string
+
+  @Field({ nullable: true })
+  role?: Role
 }

@@ -1,97 +1,135 @@
 <template>
-  <main class="bg-themeWhite h-full">
+  <div class="bg-themeWhite h-full">
     <section class="flex h-full w-full">
       <admin-navigation />
       <div class="w-5/6 p-6">
         <admin-header name="Services" />
-        <div class="flex w-full flex-col p-6 md:flex-row">
-          <div>
+        <div
+          class="flex max-h-[60vh] w-full flex-col overflow-y-auto p-6 md:max-h-[65vh] md:flex-row lg:max-h-[70vh]"
+        >
+          <div class="max-h-[45vh] md:max-h-[65vh] lg:max-h-[70vh]">
             <div
-              @click="showDetails, (details = !details)"
-              class="flex h-28 w-96 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:w-72 lg:w-96"
+              class="grid animate-pulse grid-cols-1 gap-12 md:mx-6"
+              v-if="loading"
             >
-              <div class="flex gap-4">
+              <div v-for="i of skeletons" :key="i">
                 <div
-                  class="bg-themeGreen flex h-14 w-14 items-center justify-center rounded-full"
-                >
-                  <p class="font-title text-lg text-white">RW</p>
-                </div>
-                <div>
-                  <h2 class="font-title text-lg">Ronald Wilson</h2>
-                  <p>asks for room cleaning</p>
-                </div>
-              </div>
-
-              <div
-                class="bg-themeGreen flex h-10 w-10 items-center justify-center rounded-full text-white"
-              >
-                <MessageSquare />
+                  class="aspect-square h-28 w-96 rounded-md bg-neutral-300 md:w-72 lg:w-96"
+                ></div>
+                <p
+                  class="my-1 h-6 w-96 rounded bg-neutral-200 md:w-72 lg:w-96"
+                ></p>
               </div>
             </div>
-          </div>
-          <div v-if="details" class="pt-3 md:pt-0 md:pl-6">
+            <div class="flex items-center" v-else-if="error">
+              <p class="ml-6 text-xl md:mr-2">Error happened</p>
+              <Frown />
+            </div>
             <div
-              class="absolute flex h-80 w-80 flex-col justify-between rounded-md bg-white p-6 lg:h-96 lg:w-96"
+              v-else-if="result"
+              v-if="result.requestedServices.length > 0"
+              v-for="s of result.requestedServices"
+              :key="s.id"
+              @click="checkId(s.id)"
+              class="relative mb-6 flex w-56 cursor-pointer items-center justify-between rounded-md bg-white p-3 shadow-md hover:opacity-90 md:h-28 md:w-72 lg:w-96"
             >
-              <div>
-                <div class="flex items-center gap-4 pb-6">
-                  <div
-                    class="bg-themeGreen flex h-14 w-14 items-center justify-center rounded-full"
-                  >
-                    <p class="font-title text-lg text-white">RW</p>
-                  </div>
-                  <h2 class="font-title text-lg">Ronald Wilson</h2>
+              <div class="flex gap-2 md:gap-4">
+                <div
+                  v-if="s.user.imgUrl === ''"
+                  class="bg-themeGreen flex h-10 w-10 items-center justify-center rounded-full md:h-14 md:w-14"
+                >
+                  <p class="font-title text-sm text-white md:text-lg">
+                    {{ s.user.firstName[0] }}{{ s.user.lastName[0] }}
+                  </p>
                 </div>
-                <p>
-                  <span>Room cleaning</span> asked on
-                  <span>Tue 11 Oct 21:32</span>
-                </p>
-                <p>Message:</p>
-                <p class="italic text-neutral-500">No message</p>
+                <img
+                  v-else
+                  class="flex h-10 w-10 items-center justify-center rounded-full object-cover md:h-14 md:w-14"
+                  :src="s.user.imgUrl"
+                  :alt="`Picture of ${s.user.firstName}`"
+                />
+                <div>
+                  <h2 class="font-title text-sm md:text-lg">
+                    {{ s.user.firstName }} {{ s.user.lastName }}
+                  </h2>
+                  <p class="text-sm lowercase md:text-base">
+                    asks for
+                    <span>{{ s.service.name }}</span>
+                  </p>
+                </div>
               </div>
-              <button
-                class="border-themeBrown bg-themeOffWhite text-themeBrown focus:ring-themeBrown hover:bg-themeBrown rounded-md border px-6 py-2 text-sm hover:bg-opacity-20 focus:outline-none focus:ring"
+              <p
+                class="font-title absolute m-auto w-56 -rotate-12 text-center text-lg font-bold text-red-800 opacity-60 md:w-72 md:text-2xl lg:w-96"
+                v-if="s.resolved"
               >
-                MARK AS RESOLVED
-              </button>
+                RESOLVED
+              </p>
+              <div
+                class="bg-themeGreen relative flex h-10 w-10 items-center justify-center rounded-full text-white"
+              >
+                <MessageSquare class="w-5 md:w-8" />
+                <div
+                  v-if="s.message"
+                  class="absolute ml-4 mt-4 h-2 w-2 animate-ping rounded-full bg-red-500 opacity-60"
+                ></div>
+                <div
+                  v-if="s.message"
+                  class="absolute ml-4 mt-4 h-2 w-2 rounded-full bg-red-600"
+                ></div>
+              </div>
             </div>
-            <div
-              class="bg-themeBrown m-2 h-80 w-80 rounded-md shadow-md lg:h-96 lg:w-96"
-            ></div>
           </div>
-          <div v-else class="pl-6">
-            <div class="flex h-full w-full items-center justify-center">
-              <h1 class="font-title text-xl text-neutral-500">
-                Choose a service
-              </h1>
-            </div>
+          <DetailsBlock
+            v-if="result?.requestedServices.length > 0"
+            :id="reqServiceId ? reqServiceId : ''"
+          />
+          <div
+            class="flex flex-col items-center justify-center opacity-80"
+            v-else
+          >
+            <NoData class="h-48 w-48 md:h-56 md:w-56" />
+            <p class="md:text-md pt-4 text-center text-sm">
+              There is no one with breakfast access.
+            </p>
           </div>
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
 import RouteHolder from '../../components/holders/RouteHolder.vue'
 import AdminNavigation from '../../components/generic/AdminNavigation.vue'
 import AdminHeader from '../../components/generic/AdminHeader.vue'
+import DetailsBlock from '../../components/services/DetailsBlock.vue'
 import { MessageSquare } from 'lucide-vue-next'
-import { Ref, ref } from 'vue'
+import { Ref, ref, watch } from 'vue'
+import { useQuery } from '@vue/apollo-composable'
+import { GET_REQUESTED_SERVICES } from '../../graphql/query.requestedService'
+import { Frown } from 'lucide-vue-next'
+import NoData from '../../assets/svg/NoData.vue'
 
 export default {
   components: {
     RouteHolder,
     AdminNavigation,
     AdminHeader,
+    DetailsBlock,
     MessageSquare,
+    Frown,
+    NoData,
   },
   setup() {
-    const details: Ref<boolean> = ref(false)
-    const showDetails = () => {
-      console.log('show details')
+    const details = ref<boolean>(false)
+    const skeletons = ref<number>(3)
+    const reqServiceId = ref<string>('')
+    const { result, loading, error } = useQuery(GET_REQUESTED_SERVICES)
+    const checkId = (id: string) => {
+      reqServiceId.value = id
     }
-    return { showDetails, details }
+
+    return { details, result, loading, error, skeletons, reqServiceId, checkId }
   },
 }
 </script>

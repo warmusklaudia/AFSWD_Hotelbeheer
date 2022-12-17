@@ -1,22 +1,17 @@
 <template>
   <div>
-    <RouterView class="min-h-screen" />
+    <RouterView class="bg-themeWhite min-h-screen" />
   </div>
 </template>
 
 <script setup lang="ts">
-import useCustomUser from "./composables/useCustomUser"
-import useAuthentication from './composables/useAuthentication'
-import useGraphql from './composables/useGraphql'
-import { provide } from "@vue/runtime-core";
-import { DefaultApolloClient } from "@vue/apollo-composable";
+import useGraphql from './composables/useGraphQL'
+import { provide } from '@vue/runtime-core'
+import { DefaultApolloClient } from '@vue/apollo-composable'
+import useCustomUser from './composables/useCustomUser'
 
-const { user } = useAuthentication()
 const { apolloClient } = useGraphql()
 const { loadCustomUser } = useCustomUser()
 
 provide(DefaultApolloClient, apolloClient)
-
-if (user.value) loadCustomUser(user.value.uid)
-
 </script>

@@ -6,14 +6,13 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Reservation } from 'src/reservations/entities/reservation.entity';
 import { ObjectId } from 'mongodb';
 
 @Entity()
 @ObjectType({ description: 'room' })
 export class Room {
   @Field(() => ID, { description: 'id of the room' })
-  @ObjectIdColumn({ name: '_id' })
+  @ObjectIdColumn()
   id: ObjectId;
 
   @Field() // GraphQL
@@ -23,9 +22,6 @@ export class Room {
   @Field()
   @Column()
   description: string;
-
-  @Field(() => Reservation, { nullable: true })
-  reservation: Reservation;
 
   @Column({ nullable: true })
   reservationId: string;
@@ -40,11 +36,11 @@ export class Room {
 
   @Field()
   @Column()
-  Location: string;
+  location: string;
 
   @Field()
   @Column()
-  AccessCode: string;
+  accessCode: string;
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

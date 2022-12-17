@@ -9,7 +9,15 @@ import { setContext } from '@apollo/client/link/context'
 export default () => {
   const { user } = useAuthentication()
 
-  const cache = new InMemoryCache()
+  const cache = new InMemoryCache({
+    typePolicies: {
+      Rooms: {
+        merge(existing, incoming, { mergeObjects }) {
+          return mergeObjects(existing, incoming)
+        },
+      },
+    },
+  })
   const httpLink = createHttpLink({
     uri: 'http://[::1]:3003/graphql',
     credentials: 'same-origin',

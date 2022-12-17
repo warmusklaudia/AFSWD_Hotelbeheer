@@ -1,0 +1,11 @@
+{
+  "fr": {
+    "navigation.home": "Maison",
+    "navigation.rooms": "Pièces",
+    "navigation.services": "Prestations de service",
+    "navigation.reservations": "Réservations\r",
+    "navigation.user": "Utilisateur",
+    "footer.disclaimer": "Clause de non-responsabilité",
+    "account.log.out": "Se déconnecter"
+  }
+}

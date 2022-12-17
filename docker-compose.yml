@@ -1,0 +1,32 @@
+#docker compose that builds the dockerfiles in the api and pwa folders and runs them on port 8000 and 3000 respectively, it also builds the mongodb
+
+version: '3.7'
+services:
+  db:
+    hostname: db
+    image: mongo
+    restart: on-failure:5
+    volumes:
+      - dbvolume:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: api
+    ports:
+      - 27037:27017
+  api:
+    build:
+      context: ./api
+      dockerfile: ./dockerfile
+    ports:
+      - 3003:3003
+    depends_on:
+      - db
+  pwa:
+    build:
+      context: ./pwa
+      dockerfile: ./dockerfile
+    ports:
+      - 5173:80
+    depends_on:
+      - api
+volumes:
+  dbvolume:

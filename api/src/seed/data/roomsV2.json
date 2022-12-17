@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Manwë Suite",
+    "description": "De Manwë suite is onze luxe suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een eigen terras met uitzicht op de tuin. De suite is voorzien van een flatscreen tv, een minibar, een koffiezetapparaat en een waterkoker.",
+    "rating": 5,
+    "category": "Luxe",
+    "location": "sun",
+    "accessCode": "15321"
+  },
+  {
+    "name": "Varda Suite",
+    "description": "De Varda suite is onze luxe suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een eigen terras met uitzicht op de tuin. De suite is voorzien van een flatscreen tv, een minibar, een koffiezetapparaat en een waterkoker.",
+    "rating": 4,
+    "category": "Luxe",
+    "location": "sun",
+    "accessCode": "1234"
+  },
+  {
+    "name": "Melkor Suite",
+    "description": "De Melkor suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar.",
+    "rating": 3,
+    "category": "Standard",
+    "location": "other",
+    "accessCode": "1234"
+  },
+  {
+    "name": "Yavanna Suite",
+    "description": "De Yavanna suite is onze luxe suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een eigen terras met uitzicht op de tuin. De suite is voorzien van een flatscreen tv, een minibar, een koffiezetapparaat en een waterkoker.",
+    "rating": 3,
+    "category": "Luxe",
+    "location": "other",
+    "accessCode": "1234"
+  },
+  {
+    "name": "Aulë Suite",
+    "description": "De Aulë suite is onze luxe suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een eigen terras met uitzicht op de tuin. De suite is voorzien van een flatscreen tv, een minibar, een koffiezetapparaat en een waterkoker.",
+    "rating": 3,
+    "category": "Luxe",
+    "location": "sun",
+    "accessCode": "1234"
+  },
+  {
+    "name": "Nienna Suite",
+    "description": "De Nienna suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar.",
+    "rating": 4,
+    "category": "Standard",
+    "location": "other",
+    "accessCode": "1234"
+  },
+  {
+    "name": "Oromë Suite",
+    "description": "De Oromë suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar",
+    "rating": 4,
+    "category": "Standard",
+    "location": "other",
+    "accessCode": "1234"
+  },
+  {
+    "name": "Vána  Suite",
+    "description": "De Vána suite is onze standaard suite. De suite is voorzien van een tweepersoonsbed, een zithoek, een badkamer met douche en een apart toilet. De suite is voorzien van een flatscreen tv en een minibar",
+    "rating": 4,
+    "category": "Standard",
+    "location": "other",
+    "accessCode": "1234"
+  }
+]

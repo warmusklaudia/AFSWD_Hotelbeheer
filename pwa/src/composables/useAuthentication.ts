@@ -89,8 +89,9 @@ export default () => {
         if (u) {
           setUser(u)
           resolve()
+        } else {
+          resolve()
         }
-        resolve()
       })
     })
   }
