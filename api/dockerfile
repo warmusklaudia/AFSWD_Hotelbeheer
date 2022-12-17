@@ -35,12 +35,12 @@ COPY --from=deps /tmp/deps.json ./package.json
 # Only take the packages we need
 RUN npm ci
 COPY --from=build-stage /api/dist /api/dist
-COPY ./hotelbeheer-4e5e7-firebase-adminsdk-68ndg-09517523b6.json /api/dist/hotelbeheer-4e5e7-firebase-adminsdk-68ndg-09517523b6.json
+COPY ./serviceAccount.json /api/dist/serviceAccount.json
 WORKDIR /api/dist
 
 # Expose the port for easier access
 EXPOSE 3003
 #set TERMINAL GOOGLE_APPLICATION_CREDENTIALS to the path of the service account key file
-ENV GOOGLE_APPLICATION_CREDENTIALS=/api/dist/hotelbeheer-4e5e7-firebase-adminsdk-68ndg-09517523b6.json
+ENV GOOGLE_APPLICATION_CREDENTIALS=/api/dist/serviceAccount.json
 
 CMD [ "node", "main.js" ]
