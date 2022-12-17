@@ -34,7 +34,12 @@ COPY --from=deps /tmp/deps.json ./package.json
 # Only take the packages we need
 RUN npm ci
 COPY --from=build-stage /api/dist /api/dist
+COPY ./serviceAccount.json /api/dist/serviceAccount.json
 WORKDIR /api/dist
 
 # Expose the port for easier access
-EXPOSE 3000
+EXPOSE 3003
+#set TERMINAL GOOGLE_APPLICATION_CREDENTIALS to the path of the service account key file
+ENV GOOGLE_APPLICATION_CREDENTIALS=/api/dist/serviceAccount.json
+
+CMD [ "node", "main.js" ]
