@@ -1,10 +1,17 @@
 <template>
   <div>
-    <RouterView class="min-h-screen" />
+    <RouterView class="bg-themeWhite min-h-screen" />
   </div>
 </template>
 
-<style setup lang="ts">
-import useFirebase from "@/composables/useFirebase";
+<script setup lang="ts">
+import useGraphql from './composables/useGraphQL'
+import { provide } from '@vue/runtime-core'
+import { DefaultApolloClient } from '@vue/apollo-composable'
+import useCustomUser from './composables/useCustomUser'
 
-</style>
+const { apolloClient } = useGraphql()
+const { loadCustomUser } = useCustomUser()
+
+provide(DefaultApolloClient, apolloClient)
+</script>

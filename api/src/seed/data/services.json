@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Room service",
+    "description": "Ontvang je bestellingen in je hotelkamer.",
+    "price": 69.99
+  },
+  {
+    "name": "Wake-up call",
+    "description": "Ontvang een telefoontje op een afgesproken tijdstip door de receptie om je te wekken.",
+    "price": 73.99
+  },
+  {
+    "name": "Spa service",
+    "description": "Krijg een ontspannende massage van onze professionele masseurs.",
+    "price": 199.99
+  }
+]

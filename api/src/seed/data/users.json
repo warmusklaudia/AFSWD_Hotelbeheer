@@ -1,0 +1,24 @@
+[
+  {
+    "uid": "eDUSgCaLdndAEZjoA7G8TuA6keg2",
+    "role": {
+      "name": "admin"
+    },
+    "firstName": "Martijn",
+    "lastName": "Loth",
+    "amountCredits": 0,
+    "imgUrl": "",
+    "preferredLanguage": "en"
+  },
+  {
+    "uid": "elOauEXzndYRlGYcz0HJXfaXuIl1",
+    "role": {
+      "name": "user"
+    },
+    "firstName": "Christophe",
+    "lastName": "Laprudence",
+    "amountCredits": 0,
+    "imgUrl": "",
+    "preferredLanguage": "en"
+  }
+]

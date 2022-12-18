@@ -3,7 +3,7 @@ version: '3.1'
 services:
   mongodb:
     image: mongo
-    restart: on-failure
+    restart: on-failure:5
     ports:
       - 27037:27017
     environment:
