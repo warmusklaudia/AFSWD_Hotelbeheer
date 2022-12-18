@@ -22,16 +22,52 @@ export class DatabaseSeedCommand {
     console.log('🌱 Seeding done 🏁')
   }
 
+  //npx nestjs-command seed:database:rooms
+  @Command({
+    command: 'seed:database:rooms',
+    describe: 'seed room data to the database',
+  })
+  async seedRooms() {
+    console.log('🌱 Start seeding')
+    const r = await this.seedService.addRooms()
+    console.log(r)
+    console.log('🌱 Seeding done 🏁')
+  }
+
   //npx nestjs-command seed:database:services
   @Command({
     command: 'seed:database:services',
-    describe: 'seed the database',
+    describe: 'seed service data to the database',
   })
   async seedServices() {
     console.log('🌱 Start seeding')
-    const r = await this.seedService.addServices()
-    console.log(r)
+    const s = await this.seedService.addServices()
+    console.log(s)
     console.log('🌱 Seeding done 🏁')
+  }
+
+  //npx nestjs-command seed:database:prices
+  @Command({
+    command: 'seed:database:prices',
+    describe: 'seed price data to the database',
+  })
+  async seedPrices() {
+    console.log('🌱 Start seeding')
+    const p = await this.seedService.addPrices()
+    console.log(p)
+    console.log('🌱 seeding done 🏁')
+  }
+
+  //npx nestjs-command seed:database:users
+  @Command({
+    command: 'seed:database:users',
+    describe: 'seed user data to the database',
+  })
+  async seedUsers() {
+    console.log('🌱 Start seeding')
+    const u = await this.seedService.addUsers()
+    console.log(u)
+    console.log('🌱 seeding done 🏁')
   }
 
   //npx nestjs-command seed:reset

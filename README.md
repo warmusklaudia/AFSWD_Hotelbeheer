@@ -27,11 +27,20 @@
 
 ## Seed commando's API
 
-Seeden van rooms
+Seeden de database met kamsers, services, prijzen en users
 npx nestjs-command seed:database
+
+Seeden van rooms
+npx nestjs-command seed:database:rooms
 
 Seeden van services
 npx nestjs-command seed:database:services
+
+Seeden van prijzen
+npx nestjs-command seed:database:prices
+
+Seeden van users
+npx nestjs-command seed:database:users
 
 Resetten van de database
 npx nestjs-command seed:database:reset
@@ -100,7 +109,7 @@ Klaudia: 28:13:40
 
 ### Gepresteerde uren totaal
 
-gezamenlijk: 206:53:48
+gezamenlijk: 207:53:48
 Carmino: 106:51:33
 Klaudia: 101:02:15
 
