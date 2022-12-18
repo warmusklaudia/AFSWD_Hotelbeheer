@@ -66,7 +66,7 @@ optioneel: maak een gebruiker in graphql aan voor docent@howest.be
 
 ## Extra files te voorzien
 
-plaats in utils hotel-translations.json & token.json voor de i18n
+plaats in utils hotel-translations.json & token.json van google sheets voor de i18n. In folder zul je al voorbeeld files vinden.
 
 ## Checklisten (frontend/backend) met extra uitleg waar nodig.
 
