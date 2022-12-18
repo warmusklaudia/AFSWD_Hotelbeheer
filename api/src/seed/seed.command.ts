@@ -17,6 +17,7 @@ export class DatabaseSeedCommand {
       this.seedService.addRooms(),
       this.seedService.addServices(),
       this.seedService.addPrices(),
+      this.seedService.addUsers(),
     ])
     console.log('🌱 Seeding done 🏁')
   }
@@ -44,6 +45,7 @@ export class DatabaseSeedCommand {
       this.seedService.deleteAllRooms(),
       this.seedService.deleteAllServices(),
       this.seedService.deletePrices(),
+      this.seedService.deleteUsers(),
     ])
     console.log('🌱 Deleting done 🏁')
   }

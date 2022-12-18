@@ -8,6 +8,12 @@ export const ADD_REQUESTED_SERVICE = gql`
       createRequestedServiceInput: $createRequestedServiceInput
     ) {
       id
+      service {
+        id
+        name
+        price
+      }
+      requestedDate
     }
   }
 `

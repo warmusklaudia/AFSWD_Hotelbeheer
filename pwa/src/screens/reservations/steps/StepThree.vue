@@ -117,7 +117,10 @@ import standard from '../../../assets/standard-suite.webp'
 import { ADD_RESERVATION } from '../../../graphql/mutation.reservation'
 import { UDATE_ROOM_RESERVATION } from '../../../graphql/mutation.room'
 import useSocket from '../../../composables/useSocket'
+import { GET_RESERVATIONS_BY_USER_ID } from '../../../graphql/query.reservation'
+import useAuthentication from '../../../composables/useAuthentication'
 
+const { user } = useAuthentication()
 const errorMessage = ref('')
 const {
   reservationFormInput,
@@ -134,9 +137,25 @@ const ReservationErrors = reactive({
   room: '',
 })
 
-const { mutate: addReservation } = useMutation(ADD_RESERVATION, () => ({
+const { mutate: createReservation } = useMutation(ADD_RESERVATION, () => ({
   variables: {
     CreateReservationInput: reservationFormInput,
+  },
+  update(cache, { data: { createReservation } }) {
+    let data: any = cache.readQuery({
+      query: GET_RESERVATIONS_BY_USER_ID,
+      variables: { uid: user.value?.uid! },
+    })
+    cache.writeQuery({
+      query: GET_RESERVATIONS_BY_USER_ID,
+      variables: { uid: user.value?.uid! },
+      data: {
+        findReservationsByUserId: [
+          ...data.findReservationsByUserId,
+          createReservation,
+        ],
+      },
+    })
   },
 }))
 
@@ -181,7 +200,7 @@ const IsReservationValid = (): boolean => {
 const submitForm = async () => {
   if (IsReservationValid()) return
 
-  const reservation = await addReservation().catch((err) => {
+  const reservation = await createReservation().catch((err) => {
     errorMessage.value = err.message
   })
 

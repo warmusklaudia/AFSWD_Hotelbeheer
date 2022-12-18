@@ -150,6 +150,7 @@ import { GET_SERVICES } from '../../graphql/query.service'
 import { ADD_REQUESTED_SERVICE } from '../../graphql/mutation.requestedService'
 import useAuthentication from '../../composables/useAuthentication'
 import useSocket from '../../composables/useSocket'
+import { GET_REQUESTED_SERVICES_BY_USER_ID } from '../../graphql/query.requestedService'
 
 const { push } = useRouter()
 const { sendNewRequestedService } = useSocket()
@@ -175,7 +176,6 @@ const serviceInput = reactive({
 const handleServiceChange = () => {
   if (!service.value) return
 
-  console.log(service.value)
   serviceInput.serviceId = service.value.id
 }
 
@@ -200,11 +200,35 @@ const IsFormValid = (): boolean => {
   return false
 }
 
-const { mutate: addRequestedService } = useMutation(
+const {
+  result: resServices,
+  loading: loadingServices,
+  error: errorServices,
+} = useQuery(GET_REQUESTED_SERVICES_BY_USER_ID, () => ({
+  uid: user.value?.uid!,
+}))
+
+const { mutate: createRequestedService } = useMutation(
   ADD_REQUESTED_SERVICE,
   () => ({
     variables: {
       createRequestedServiceInput: serviceInput,
+    },
+    update(cache, { data: { createRequestedService } }) {
+      let data: any = cache.readQuery({
+        query: GET_REQUESTED_SERVICES_BY_USER_ID,
+        variables: { uid: user.value?.uid! },
+      })
+      cache.writeQuery({
+        query: GET_REQUESTED_SERVICES_BY_USER_ID,
+        variables: { uid: user.value?.uid! },
+        data: {
+          findRequestedServicesByUserId: [
+            ...data.findRequestedServicesByUserId,
+            createRequestedService,
+          ],
+        },
+      })
     },
   }),
 )
@@ -212,7 +236,7 @@ const { mutate: addRequestedService } = useMutation(
 const submitForm = async () => {
   if (IsFormValid()) return
 
-  const service = await addRequestedService().catch((err) => {
+  const service = await createRequestedService().catch((err) => {
     errorMessage.value = err.message
   })
 

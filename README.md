@@ -77,6 +77,10 @@ i18n multi language
 socket.io
 Testen met Cypress
 Docker
+User foto's opslaan in Firebase Storage
+Overzicht van reservations
+Popup's voor werklijst cleaning, pricing, reservations
+Cache updaten
 
 ### Backend
 
@@ -104,11 +108,15 @@ Klaudia: 100:02:15
 
 Multistep form voor het aanmaken van een reservatie
 Applicatie in docker deployen
+Custom user correct ophalen bij het inloggen en indien admin - doorsturen naar de juiste page
+Cache updaten
 
 ## Grootste behaalde succes
 
 Multistep form voor het aanmaken van een reservatie
 Typorm met nestjs werkende krijgen
+Custom user correct ophalen bij het inloggen en indien admin - doorsturen naar de juiste page
+Realtime
 
 ## Algemene opmerkingen of suggesties.
 
@@ -116,3 +124,4 @@ Zorgen dat wanneer een gebruiker een reservatie maakt de gebruiker zijn credits 
 implenteren van stripe voor betalingen te doen
 meerdere kamers kunnen reserveren in 1 reservering (kleine aanpassing nodig in frontend)
 Anonieme gebruiker kan een reservatie maken
+Historiek van notifications bij admin
