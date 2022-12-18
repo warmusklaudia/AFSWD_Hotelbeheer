@@ -102,7 +102,7 @@ Klaudia: 28:13:40
 
 gezamenlijk: 206:53:48
 Carmino: 106:51:33
-Klaudia: 100:02:15
+Klaudia: 101:02:15
 
 ## Grootste moeilijkheid (al dan niet opgelost, of omzeild)
 
